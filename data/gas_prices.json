@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-17T23:52:16.309666+00:00",
+    "last_updated_utc": "2026-09-17T23:52:38.721168+00:00",
     "last_updated_formatted": "September 17, 2026 at 11:52 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
@@ -47,8 +47,8 @@
   },
   "cheapest_by_city": {
     "Surrey": "surrey_7812120st",
-    "White Rock": "white rock_1595nicholrd",
-    "Delta": "delta_8781120st"
+    "Delta": "delta_8781120st",
+    "White Rock": "white rock_1595nicholrd"
   },
   "stations": [
     {
@@ -127,6 +127,31 @@
       }
     },
     {
+      "id": "surrey_6422120st",
+      "station_name": "Esso",
+      "price": 193.9,
+      "price_formatted": "193.9¢",
+      "price_per_litre": "$1.939",
+      "fuel_type": "regular",
+      "address": "6422 120 St",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:47 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.11968,
+      "longitude": -122.88977,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "surrey_8024120st",
       "station_name": "Petro-Canada",
       "price": 193.9,
@@ -149,31 +174,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "surrey_6422120st",
-      "station_name": "Esso",
-      "price": 193.9,
-      "price_formatted": "193.9¢",
-      "price_per_litre": "$1.939",
-      "fuel_type": "regular",
-      "address": "6422 120 St",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 3:13 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.11968,
-      "longitude": -122.88977,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -224,6 +224,31 @@
         "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
         "android_geo": "geo:0,0?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_6221kinggeorgeblvd",
+      "station_name": "Chevron",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
+      "fuel_type": "regular",
+      "address": "6221 King George Blvd",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:46 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1157164,
+      "longitude": -122.8451179,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -377,31 +402,6 @@
       }
     },
     {
-      "id": "surrey_18398fraserhwy",
-      "station_name": "Canco",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "18398 Fraser Hwy",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 4:24 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.17019,
-      "longitude": -122.81187,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "delta_7389riverrd",
       "station_name": "Canco",
       "price": 199.9,
@@ -487,7 +487,7 @@
       "city": "White Rock",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 17, 4:02 PM",
+      "last_updated": "Sep 17, 4:47 PM",
       "source": "GasBuddy via GVRD (White Rock)",
       "source_url": "https://www.gvrd.com/gas-prices/white-rock.html",
       "latitude": 49.03091,
