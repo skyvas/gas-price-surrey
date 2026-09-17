@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-17T23:35:43.646738+00:00",
-    "last_updated_formatted": "September 17, 2026 at 11:35 PM UTC",
+    "last_updated_utc": "2026-09-17T23:40:24.575312+00:00",
+    "last_updated_formatted": "September 17, 2026 at 11:40 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -46,9 +46,9 @@
     "cheapest_overall_id": "surrey_7812120st"
   },
   "cheapest_by_city": {
-    "Surrey": "surrey_7812120st",
+    "White Rock": "white rock_1595nicholrd",
     "Delta": "delta_6389120st",
-    "White Rock": "white rock_1595nicholrd"
+    "Surrey": "surrey_7812120st"
   },
   "stations": [
     {
@@ -144,6 +144,29 @@
       }
     },
     {
+      "id": "surrey_15775fraserhwy",
+      "station_name": "Canco",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
+      "fuel_type": "regular",
+      "address": "15775 Fraser Hwy",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:31 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1678,
+      "longitude": -122.7842,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1678,-122.7842",
+        "android_geo": "geo:49.1678,-122.7842?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1678,-122.7842"
+      }
+    },
+    {
       "id": "surrey_6191kinggeorgeblvd",
       "station_name": "Wesco",
       "price": 195.9,
@@ -177,7 +200,7 @@
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 17, 4:23 PM",
+      "last_updated": "Sep 17, 4:31 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.0601,
@@ -210,6 +233,29 @@
         "apple_maps": "https://maps.apple.com/?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&ll=49.1983,-122.8398",
         "android_geo": "geo:49.1983,-122.8398?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&ll=49.1983,-122.8398"
+      }
+    },
+    {
+      "id": "surrey_1279172ave",
+      "station_name": "Shell",
+      "price": 199.9,
+      "price_formatted": "199.9¢",
+      "price_per_litre": "$1.999",
+      "fuel_type": "regular",
+      "address": "12791 72 Ave",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:28 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1339,
+      "longitude": -122.8687,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687",
+        "android_geo": "geo:49.1339,-122.8687?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687"
       }
     },
     {
@@ -279,52 +325,6 @@
         "apple_maps": "https://maps.apple.com/?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC&ll=49.1147,-122.6847",
         "android_geo": "geo:49.1147,-122.6847?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC&ll=49.1147,-122.6847"
-      }
-    },
-    {
-      "id": "surrey_1279172ave",
-      "station_name": "Shell",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "12791 72 Ave",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 3:27 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1339,
-      "longitude": -122.8687,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687",
-        "android_geo": "geo:49.1339,-122.8687?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687"
-      }
-    },
-    {
-      "id": "surrey_10732128st",
-      "station_name": "Canco",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "10732 128 St",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 2:05 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1979,
-      "longitude": -122.8647,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC&ll=49.1979,-122.8647",
-        "android_geo": "geo:49.1979,-122.8647?q=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC&ll=49.1979,-122.8647"
       }
     },
     {
