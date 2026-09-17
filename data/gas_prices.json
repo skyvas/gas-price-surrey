@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-17T23:41:58.810385+00:00",
-    "last_updated_formatted": "September 17, 2026 at 11:41 PM UTC",
+    "last_updated_utc": "2026-09-17T23:42:55.525690+00:00",
+    "last_updated_formatted": "September 17, 2026 at 11:42 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -46,9 +46,9 @@
     "cheapest_overall_id": "surrey_7812120st"
   },
   "cheapest_by_city": {
+    "White Rock": "white rock_1595nicholrd",
     "Delta": "delta_6389120st",
-    "Surrey": "surrey_7812120st",
-    "White Rock": "white rock_1595nicholrd"
+    "Surrey": "surrey_7812120st"
   },
   "stations": [
     {
@@ -249,13 +249,13 @@
       "last_updated": "Sep 17, 4:38 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1191505,
-      "longitude": -122.7130031,
+      "latitude": 49.1190939,
+      "longitude": -122.7129957,
       "map_urls": {
         "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1191505,-122.7130031",
-        "android_geo": "geo:49.1191505,-122.7130031?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1191505,-122.7130031"
+        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1190939,-122.7129957",
+        "android_geo": "geo:49.1190939,-122.7129957?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1190939,-122.7129957"
       }
     },
     {
