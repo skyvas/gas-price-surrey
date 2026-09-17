@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-17T23:40:24.575312+00:00",
-    "last_updated_formatted": "September 17, 2026 at 11:40 PM UTC",
+    "last_updated_utc": "2026-09-17T23:41:58.810385+00:00",
+    "last_updated_formatted": "September 17, 2026 at 11:41 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -46,9 +46,9 @@
     "cheapest_overall_id": "surrey_7812120st"
   },
   "cheapest_by_city": {
-    "White Rock": "white rock_1595nicholrd",
     "Delta": "delta_6389120st",
-    "Surrey": "surrey_7812120st"
+    "Surrey": "surrey_7812120st",
+    "White Rock": "white rock_1595nicholrd"
   },
   "stations": [
     {
@@ -236,6 +236,29 @@
       }
     },
     {
+      "id": "surrey_1838364ave",
+      "station_name": "Petro-Canada",
+      "price": 199.9,
+      "price_formatted": "199.9¢",
+      "price_per_litre": "$1.999",
+      "fuel_type": "regular",
+      "address": "18383 64 Ave",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:38 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1191505,
+      "longitude": -122.7130031,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1191505,-122.7130031",
+        "android_geo": "geo:49.1191505,-122.7130031?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1191505,-122.7130031"
+      }
+    },
+    {
       "id": "surrey_1279172ave",
       "station_name": "Shell",
       "price": 199.9,
@@ -302,29 +325,6 @@
         "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&ll=49.0515,-122.8016",
         "android_geo": "geo:49.0515,-122.8016?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&ll=49.0515,-122.8016"
-      }
-    },
-    {
-      "id": "surrey_19415langleybypass",
-      "station_name": "<a href=\"http://www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx\" style=\"color:",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "19415 Langley Bypass",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 4:00 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1147,
-      "longitude": -122.6847,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC&ll=49.1147,-122.6847",
-        "android_geo": "geo:49.1147,-122.6847?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=%3Ca%20href%3D%22http%3A//www.Vancouvergasprices.com/Super_Save_Gas_Gas_Stations/index.aspx%22%20style%3D%22color%3A%2C%2019415%20Langley%20Bypass%2C%20Surrey%2C%20BC&ll=49.1147,-122.6847"
       }
     },
     {
