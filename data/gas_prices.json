@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-17T23:42:55.525690+00:00",
-    "last_updated_formatted": "September 17, 2026 at 11:42 PM UTC",
+    "last_updated_utc": "2026-09-17T23:52:16.309666+00:00",
+    "last_updated_formatted": "September 17, 2026 at 11:52 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -46,9 +46,9 @@
     "cheapest_overall_id": "surrey_7812120st"
   },
   "cheapest_by_city": {
+    "Surrey": "surrey_7812120st",
     "White Rock": "white rock_1595nicholrd",
-    "Delta": "delta_6389120st",
-    "Surrey": "surrey_7812120st"
+    "Delta": "delta_8781120st"
   },
   "stations": [
     {
@@ -65,13 +65,90 @@
       "last_updated": "Sep 17, 3:08 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1453,
+      "latitude": 49.14528,
       "longitude": -122.8901,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC&ll=49.1453,-122.8901",
-        "android_geo": "geo:49.1453,-122.8901?q=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC&ll=49.1453,-122.8901"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Centex%2C%207812%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "delta_8781120st",
+      "station_name": "Canco",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "fuel_type": "regular",
+      "address": "8781 120 St",
+      "city": "Delta",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:41 PM",
+      "source": "GasBuddy via GVRD (Delta)",
+      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
+      "latitude": 49.15447,
+      "longitude": -122.89043,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "delta_10240riverrd",
+      "station_name": "Canco",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "fuel_type": "regular",
+      "address": "10240 River Rd",
+      "city": "Delta",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:38 PM",
+      "source": "GasBuddy via GVRD (Delta)",
+      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
+      "latitude": 49.15722,
+      "longitude": -122.93944,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_8024120st",
+      "station_name": "Petro-Canada",
+      "price": 193.9,
+      "price_formatted": "193.9¢",
+      "price_per_litre": "$1.939",
+      "fuel_type": "regular",
+      "address": "8024 120 St",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:42 PM",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1874489,
+      "longitude": -122.8900738,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%208024%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -88,13 +165,15 @@
       "last_updated": "Sep 17, 3:13 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1197,
-      "longitude": -122.8904,
+      "latitude": 49.11968,
+      "longitude": -122.88977,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&ll=49.1197,-122.8904",
-        "android_geo": "geo:49.1197,-122.8904?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&ll=49.1197,-122.8904"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -108,16 +187,18 @@
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 17, 3:13 PM",
+      "last_updated": "Sep 17, 4:47 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1189,
-      "longitude": -122.8912,
+      "latitude": 49.11909,
+      "longitude": -122.8908,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC&ll=49.1189,-122.8912",
-        "android_geo": "geo:49.1189,-122.8912?q=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC&ll=49.1189,-122.8912"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -134,13 +215,15 @@
       "last_updated": "Sep 17, 3:07 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1481,
-      "longitude": -122.8913,
+      "latitude": 49.15447,
+      "longitude": -122.89043,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&ll=49.1481,-122.8913",
-        "android_geo": "geo:49.1481,-122.8913?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&ll=49.1481,-122.8913"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -157,13 +240,15 @@
       "last_updated": "Sep 17, 4:31 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1678,
-      "longitude": -122.7842,
+      "latitude": 49.16022,
+      "longitude": -122.78558,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1678,-122.7842",
-        "android_geo": "geo:49.1678,-122.7842?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1678,-122.7842"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -180,13 +265,15 @@
       "last_updated": "Sep 17, 2:35 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1152,
-      "longitude": -122.8465,
+      "latitude": 49.11521,
+      "longitude": -122.84482,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&ll=49.1152,-122.8465",
-        "android_geo": "geo:49.1152,-122.8465?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&ll=49.1152,-122.8465"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -203,13 +290,15 @@
       "last_updated": "Sep 17, 4:31 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.0601,
-      "longitude": -122.8289,
+      "latitude": 49.06769,
+      "longitude": -122.82505,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC&ll=49.0601,-122.8289",
-        "android_geo": "geo:49.0601,-122.8289?q=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC&ll=49.0601,-122.8289"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2014313%20Crescent%20Road%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -226,13 +315,15 @@
       "last_updated": "Sep 17, 2:36 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1983,
-      "longitude": -122.8398,
+      "latitude": 49.20368,
+      "longitude": -122.83635,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&ll=49.1983,-122.8398",
-        "android_geo": "geo:49.1983,-122.8398?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&ll=49.1983,-122.8398"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -249,13 +340,15 @@
       "last_updated": "Sep 17, 4:38 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1190939,
-      "longitude": -122.7129957,
+      "latitude": 49.11915,
+      "longitude": -122.713,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1190939,-122.7129957",
-        "android_geo": "geo:49.1190939,-122.7129957?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&ll=49.1190939,-122.7129957"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -272,13 +365,15 @@
       "last_updated": "Sep 17, 4:28 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1339,
-      "longitude": -122.8687,
+      "latitude": 49.13423,
+      "longitude": -122.86835,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687",
-        "android_geo": "geo:49.1339,-122.8687?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&ll=49.1339,-122.8687"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -295,82 +390,15 @@
       "last_updated": "Sep 17, 4:24 PM",
       "source": "GasBuddy via GVRD (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1387,
-      "longitude": -122.7126,
+      "latitude": 49.17019,
+      "longitude": -122.81187,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1387,-122.7126",
-        "android_geo": "geo:49.1387,-122.7126?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&ll=49.1387,-122.7126"
-      }
-    },
-    {
-      "id": "surrey_2692152st",
-      "station_name": "Petro-Canada",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "2692 152 St",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 4:17 PM",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.0515,
-      "longitude": -122.8016,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&ll=49.0515,-122.8016",
-        "android_geo": "geo:49.0515,-122.8016?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&ll=49.0515,-122.8016"
-      }
-    },
-    {
-      "id": "delta_8781120st",
-      "station_name": "Canco",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "8781 120 St",
-      "city": "Delta",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 4:31 PM",
-      "source": "GasBuddy via GVRD (Delta)",
-      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1627,
-      "longitude": -122.8914,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC&ll=49.1627,-122.8914",
-        "android_geo": "geo:49.1627,-122.8914?q=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC&ll=49.1627,-122.8914"
-      }
-    },
-    {
-      "id": "delta_10240riverrd",
-      "station_name": "Canco",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "10240 River Rd",
-      "city": "Delta",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 2:05 PM",
-      "source": "GasBuddy via GVRD (Delta)",
-      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1956,
-      "longitude": -122.9158,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC&ll=49.1956,-122.9158",
-        "android_geo": "geo:49.1956,-122.9158?q=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC&ll=49.1956,-122.9158"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -387,13 +415,15 @@
       "last_updated": "Sep 17, 1:53 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1495,
-      "longitude": -123.0112,
+      "latitude": 49.14086,
+      "longitude": -123.0138,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC&ll=49.1495,-123.0112",
-        "android_geo": "geo:49.1495,-123.0112?q=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC&ll=49.1495,-123.0112"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -410,13 +440,15 @@
       "last_updated": "Sep 17, 4:28 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1554,
-      "longitude": -122.9103,
+      "latitude": 49.15573,
+      "longitude": -122.91196,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC&ll=49.1554,-122.9103",
-        "android_geo": "geo:49.1554,-122.9103?q=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC&ll=49.1554,-122.9103"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%208380%20112%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -433,13 +465,15 @@
       "last_updated": "Sep 17, 3:23 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.0905,
-      "longitude": -123.0768,
+      "latitude": 49.09014,
+      "longitude": -123.08465,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC&ll=49.0905,-123.0768",
-        "android_geo": "geo:49.0905,-123.0768?q=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC&ll=49.0905,-123.0768"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -456,13 +490,15 @@
       "last_updated": "Sep 17, 4:02 PM",
       "source": "GasBuddy via GVRD (White Rock)",
       "source_url": "https://www.gvrd.com/gas-prices/white-rock.html",
-      "latitude": 49.0298,
-      "longitude": -122.8028,
+      "latitude": 49.03091,
+      "longitude": -122.8348,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC&ll=49.0298,-122.8028",
-        "android_geo": "geo:49.0298,-122.8028?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC&ll=49.0298,-122.8028"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC&dirflg=d"
       }
     },
     {
@@ -479,13 +515,15 @@
       "last_updated": "Sep 17, 8:31 AM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1661,
-      "longitude": -122.8915,
+      "latitude": 49.16637,
+      "longitude": -122.89076,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC&ll=49.1661,-122.8915",
-        "android_geo": "geo:49.1661,-122.8915?q=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC&ll=49.1661,-122.8915"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -502,13 +540,15 @@
       "last_updated": "Sep 17, 2:06 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.1504,
-      "longitude": -122.8914,
+      "latitude": 49.15447,
+      "longitude": -122.89043,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC&ll=49.1504,-122.8914",
-        "android_geo": "geo:49.1504,-122.8914?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC&ll=49.1504,-122.8914"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -525,13 +565,15 @@
       "last_updated": "Sep 17, 1:09 PM",
       "source": "GasBuddy via GVRD (Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.0898,
-      "longitude": -122.9754,
+      "latitude": 49.09196,
+      "longitude": -122.95773,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&ll=49.0898,-122.9754",
-        "android_geo": "geo:49.0898,-122.9754?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&ll=49.0898,-122.9754"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -548,13 +590,15 @@
       "last_updated": "Sep 17, 11:27 AM",
       "source": "GasBuddy via GVRD (Tsawwassen - Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
-      "latitude": 49.0249,
-      "longitude": -123.0697,
+      "latitude": 49.02445,
+      "longitude": -123.06825,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC&ll=49.0249,-123.0697",
-        "android_geo": "geo:49.0249,-123.0697?q=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC&ll=49.0249,-123.0697"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -571,13 +615,15 @@
       "last_updated": "Sep 17, 11:27 AM",
       "source": "GasBuddy via GVRD (Tsawwassen - Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
-      "latitude": 49.0245,
-      "longitude": -123.0691,
+      "latitude": 49.02494,
+      "longitude": -123.06816,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC&ll=49.0245,-123.0691",
-        "android_geo": "geo:49.0245,-123.0691?q=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC&ll=49.0245,-123.0691"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -594,13 +640,15 @@
       "last_updated": "Sep 17, 11:29 AM",
       "source": "GasBuddy via GVRD (Tsawwassen - Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
-      "latitude": 49.0308,
-      "longitude": -123.07,
+      "latitude": 49.03148,
+      "longitude": -123.06924,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC&ll=49.0308,-123.07",
-        "android_geo": "geo:49.0308,-123.07?q=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC&ll=49.0308,-123.07"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%201591%2056%20St%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
@@ -617,13 +665,15 @@
       "last_updated": "Sep 17, 8:02 AM",
       "source": "GasBuddy via GVRD (Tsawwassen - Delta)",
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
-      "latitude": 49.0392,
-      "longitude": -123.0845,
+      "latitude": 49.03917,
+      "longitude": -123.08939,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?q=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC&ll=49.0392,-123.0845",
-        "android_geo": "geo:49.0392,-123.0845?q=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?q=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC&ll=49.0392,-123.0845"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%204890%20Canoe%20Pass%20Way%2C%20Delta%2C%20BC&dirflg=d"
       }
     }
   ]

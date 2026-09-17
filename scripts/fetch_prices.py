@@ -33,36 +33,33 @@ CITY_NORMALIZATION = {
     "south delta": "Delta",
 }
 
-# Known station coordinates cache to avoid rate limits on Nominatim
+# Known verified station coordinates
 KNOWN_COORDINATES = {
-    "7812 120 St, Surrey": (49.1453, -122.8901),
-    "6422 120 St, Surrey": (49.1197, -122.8904),
-    "15775 Fraser Hwy, Surrey": (49.1678, -122.7842),
-    "6191 King George Blvd, Surrey": (49.1152, -122.8465),
-    "14313 Crescent Road, Surrey": (49.0601, -122.8289),
-    "13916 Grosvenor Rd, Surrey": (49.1983, -122.8398),
-    "12791 72 Ave, Surrey": (49.1339, -122.8687),
-    "18398 Fraser Hwy, Surrey": (49.1387, -122.7126),
-    "2692 152 St, Surrey": (49.0515, -122.8016),
-    "19415 Langley Bypass, Surrey": (49.1147, -122.6847),
-    "10732 128 St, Surrey": (49.1979, -122.8647),
-    "6389 120 St, Delta": (49.1189, -122.8912),
-    "7981 120 St, Delta": (49.1481, -122.8913),
-    "8781 120 St, Delta": (49.1627, -122.8914),
-    "10240 River Rd, Delta": (49.1956, -122.9158),
-    "7389 River Rd, Delta": (49.1495, -123.0112),
-    "8380 112 St, Delta": (49.1554, -122.9103),
-    "5277 48 Ave, Delta": (49.0905, -123.0768),
-    "8985 120 St, Delta": (49.1661, -122.8915),
-    "8111 120 St, Delta": (49.1504, -122.8914),
-    "9591 Ladner Trunk Rd, Delta": (49.0898, -122.9754),
-    "5610 12 Ave, Delta": (49.0249, -123.0697),
-    "1204 56 St, Delta": (49.0245, -123.0691),
-    "1591 56 St, Delta": (49.0308, -123.0700),
-    "4890 Canoe Pass Way, Delta": (49.0392, -123.0845),
-    "1595 Nichol Rd, White Rock": (49.0298, -122.8028),
-    "15223 16 Ave, White Rock": (49.0315, -122.8010),
-    "1558 Johnston Rd, White Rock": (49.0301, -122.8020),
+    "7812 120 St, Surrey": (49.14528, -122.89010),
+    "6422 120 St, Surrey": (49.11968, -122.88977),
+    "6389 120 St, Delta": (49.11909, -122.89080),
+    "7981 120 St, Delta": (49.15447, -122.89043),
+    "15775 Fraser Hwy, Surrey": (49.16022, -122.78558),
+    "6191 King George Blvd, Surrey": (49.11521, -122.84482),
+    "14313 Crescent Road, Surrey": (49.06769, -122.82505),
+    "13916 Grosvenor Rd, Surrey": (49.20368, -122.83635),
+    "18383 64 Ave, Surrey": (49.11915, -122.71300),
+    "12791 72 Ave, Surrey": (49.13423, -122.86835),
+    "18398 Fraser Hwy, Surrey": (49.17019, -122.81187),
+    "2692 152 St, Surrey": (49.05070, -122.80068),
+    "8781 120 St, Delta": (49.15447, -122.89043),
+    "10240 River Rd, Delta": (49.15722, -122.93944),
+    "7389 River Rd, Delta": (49.14086, -123.01380),
+    "8380 112 St, Delta": (49.15573, -122.91196),
+    "5277 48 Ave, Delta": (49.09014, -123.08465),
+    "1595 Nichol Rd, White Rock": (49.03091, -122.83480),
+    "8985 120 St, Delta": (49.16637, -122.89076),
+    "8111 120 St, Delta": (49.15447, -122.89043),
+    "9591 Ladner Trunk Rd, Delta": (49.09196, -122.95773),
+    "5610 12 Ave, Delta": (49.02445, -123.06825),
+    "1204 56 St, Delta": (49.02494, -123.06816),
+    "1591 56 St, Delta": (49.03148, -123.06924),
+    "4890 Canoe Pass Way, Delta": (49.03917, -123.08939),
 }
 
 # Syndicated live feeds
@@ -213,20 +210,24 @@ def get_coordinates(address: str, city: str):
     return 49.1044, -122.8011
 
 
-def generate_map_urls(station_name: str, address: str, city: str, lat: float, lon: float):
-    """Generate universal map links for iPhone, Android, and Web."""
-    query = f"{station_name}, {address}, {city}, BC"
-    encoded_query = urllib.parse.quote(query)
+def generate_map_urls(station_name: str, address: str, city: str, lat: float = None, lon: float = None):
+    """Generate universal map navigation links for iPhone, Android, and Web."""
+    destination = f"{station_name}, {address}, {city}, BC"
+    encoded_dest = urllib.parse.quote(destination)
 
     return {
-        # Universal Google Maps (Works on Android app & web browser)
-        "google_maps": f"https://www.google.com/maps/search/?api=1&query={encoded_query}",
-        # Apple Maps URL (Opens native Apple Maps app on iPhone/iPad)
-        "apple_maps": f"https://maps.apple.com/?q={encoded_query}&ll={lat},{lon}",
+        # Universal Google Maps Directions (Navigates directly to the station address on Android & Web)
+        "google_maps": f"https://www.google.com/maps/dir/?api=1&destination={encoded_dest}",
+        # Universal Google Maps Search Pin
+        "google_maps_search": f"https://www.google.com/maps/search/?api=1&query={encoded_dest}",
+        # Apple Maps Turn-by-Turn Directions (Opens native Apple Maps app on iPhone/iPad directly to the destination)
+        "apple_maps": f"https://maps.apple.com/?daddr={encoded_dest}&dirflg=d",
+        # Apple Maps Search Pin
+        "apple_maps_search": f"https://maps.apple.com/?q={encoded_dest}",
         # Android Intent URI for native navigation
-        "android_geo": f"geo:{lat},{lon}?q={encoded_query}",
+        "android_geo": f"geo:0,0?q={encoded_dest}",
         # iOS URL Scheme for direct Maps launch
-        "ios_maps_scheme": f"maps://?q={encoded_query}&ll={lat},{lon}",
+        "ios_maps_scheme": f"maps://?daddr={encoded_dest}&dirflg=d",
     }
 
 

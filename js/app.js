@@ -62,20 +62,18 @@
    * Get preferred Map navigation URL based on user device
    */
   function getPreferredMapUrl(station) {
-    if (!station || !station.map_urls) {
-      const q = encodeURIComponent(`${station.station_name}, ${station.address}, ${station.city}, BC`);
-      return `https://www.google.com/maps/search/?api=1&query=${q}`;
-    }
+    if (!station) return '#';
+
+    // Direct clean address-based destination matching the exact UI text
+    const destination = `${station.station_name}, ${station.address}, ${station.city}, BC`;
+    const encodedDest = encodeURIComponent(destination);
 
     if (isIOS) {
-      // Direct Apple Maps link opens native Maps on iPhone
-      return station.map_urls.apple_maps || station.map_urls.google_maps;
-    } else if (isAndroid) {
-      // Google Maps with query coordinates
-      return station.map_urls.google_maps;
+      // Direct Apple Maps turn-by-turn navigation on iOS (points specifically to the address)
+      return `https://maps.apple.com/?daddr=${encodedDest}&dirflg=d`;
     }
-    // Desktop and other platforms
-    return station.map_urls.google_maps;
+    // Google Maps turn-by-turn navigation on Android & Desktop (points specifically to the address)
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodedDest}`;
   }
 
   /**
