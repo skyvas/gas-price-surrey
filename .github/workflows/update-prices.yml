@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - gh-pages
     paths-ignore:
       - "README.md"
       - ".gitignore"
@@ -54,8 +55,12 @@ jobs:
             echo "No changes in gas price data."
           else
             git commit -m "Auto-update gas prices [skip ci]"
-            git pull --rebase origin main || true
-            git push origin main || echo "Push skipped or failed, proceeding to deployment"
+            TARGET_BRANCH="${{ github.ref_name }}"
+            if [ -z "$TARGET_BRANCH" ]; then
+              TARGET_BRANCH="gh-pages"
+            fi
+            git pull --rebase origin "$TARGET_BRANCH" || true
+            git push origin "$TARGET_BRANCH" || echo "Push skipped or failed, proceeding to deployment"
           fi
 
       - name: Setup GitHub Pages
