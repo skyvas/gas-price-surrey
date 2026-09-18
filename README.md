@@ -9,25 +9,35 @@ Stations are automatically sorted by price with the cheapest pump highlighted in
 ## ✨ Features
 
 - **Cheapest Gas Spotlight**: Featured hero card prominently displaying the lowest price available in the selected region and calculating fuel savings.
-- **City Filters**: One-tap filtering for **All Areas**, **Surrey**, **Delta**, and **White Rock** with live station counts.
-- **Instant Search**: Search across station brand names (Shell, Esso, Petro-Canada, Chevron, Centex, Canco, Super Save, etc.) and street addresses.
-- **Turn-by-Turn Navigation**: Smart "Open in Maps" action that detects iOS / Android / Desktop and launches the native maps application directly pointing to that gas station.
-- **Multi-Source Aggregation**: Pulls and normalizes live prices from GasBuddy syndicated publisher feeds, GVRD directory, and local community updates.
+- **Truth Precedence Protocol**: Official brand direct pump prices (e.g. Shell Canada `find.shell.com`) strictly supersede and override crowdsourced or third-party reports.
+- **Multi-Brand Official Ingestion**:
+  - **Shell Canada**: Scrapes direct live pump prices from individual station pages on `find.shell.com` for Surrey, Delta, and Tsawwassen.
+  - **Chevron Canada**: Directly queries Parkland's Journie Rewards API (`journie.ca/api/locations/nearest`) for 46 official stations across Surrey, Delta, and White Rock with deep station links.
+  - **Super Save Gas**: Direct location parsing from `supersave.ca/gas-stations/`.
+  - **Centex Petroleum**: Verified station and discount fuel portal (`centex.ca`).
+  - **Canco Petroleum**: Verified locator integration (`cancopetroleum.ca`).
+  - **Petro-Canada & Esso**: Verified portals and GasBuddy live price mapping.
+- **Truth Tier Filters**: One-tap filtering across `All Sources`, `✓ Official Direct Pumps`, `⚡ Live Reports`, and `🏢 Verified Portals`.
+- **City & Brand Filters**: One-tap filtering for **All Areas**, **Surrey**, **Delta**, and **White Rock**, plus individual brand filtering.
+- **Instant Search**: Search across station brand names, street addresses, and neighborhoods.
+- **Turn-by-Turn Navigation**: Smart "Open in Maps" action that detects iOS / Android / Desktop and launches native turn-by-turn navigation directly to the verified station address.
 - **Automated Every 30 Minutes**: GitHub Actions workflow fetches new prices, updates data, commits to the repository, and publishes live to **GitHub Pages**.
-- **Graceful Error Handling**: If any third-party source is temporarily slow or unavailable, the website seamlessly utilizes cached data without breaking.
-- **Modern & Tactile Design**: Dark-mode glassmorphic interface, smooth gradients, high-contrast typography, and tactile button feedback.
 
 ---
 
-## 🗺️ Live Gas Price Sources
+## 🗺️ Live Gas Price Sources & Truth Precedence
 
-1. **GVRD Directory & GasBuddy Feeds**:
-   - Surrey (`gvrd.com/gas-prices/surrey.html`)
-   - Delta (`gvrd.com/gas-prices/delta.html`)
-   - Tsawwassen & Ladner (`gvrd.com/gas-prices/tsawwassen.html`)
-   - White Rock (`gvrd.com/gas-prices/white-rock.html`)
-2. **Delta Optimist Gas Prices** (`delta-optimist.com/gas-prices`)
-3. **GasBuddy** (`gasbuddy.com/gasprices/british-columbia/surrey`)
+1. **Tier 1 — Official Brand Direct Pump Prices**:
+   - **Shell Canada** (`find.shell.com/ca/fuel/locations/british-columbia/`): Live regular pump prices parsed from individual station pages with timestamp verification. Highest precedence.
+2. **Tier 2 — Official Locators & APIs**:
+   - **Chevron Canada / Parkland Journie Rewards** (`journie.ca/api/locations/nearest`): Official station locations, site IDs, amenities, and direct URLs.
+   - **Super Save Gas** (`supersave.ca/gas-stations/`): Official BC stations.
+   - **Centex Petroleum** (`centex.ca/locations/`)
+   - **Canco Petroleum** (`cancopetroleum.ca`)
+3. **Tier 3 — Live Crowdsourced Driver Reports**:
+   - **GasBuddy & GVRD Publisher Feeds**: Surrey, Delta, Tsawwassen, White Rock.
+4. **Tier 4 — Market Survey Baseline**:
+   - Regional survey data ensuring complete coverage across 125+ stations.
 
 The scraper cleans HTML strings, normalizes station names, filters out any stations outside the strict geographic borders of Surrey, Delta, and White Rock, and deduplicates multiple reports for the same location.
 

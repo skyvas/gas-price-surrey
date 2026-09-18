@@ -69,6 +69,25 @@
           <span>Regular Gas (87)</span>
         </div>
       </div>
+
+      <!-- Truth Precedence Protocol Banner -->
+      <div class="truth-precedence-strip" id="truthPrecedenceStrip">
+        <div class="truth-strip-content">
+          <div class="truth-badge-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>Truth Precedence Protocol</span>
+          </div>
+          <p class="truth-precedence-text">
+            Official brand website direct pump prices (e.g. Shell <strong>find.shell.com</strong>) strictly supersede and override GasBuddy crowdsourced data.
+          </p>
+        </div>
+        <div class="truth-stats-row">
+          <span class="truth-stat-chip stat-official"><span class="chip-dot"></span><strong id="statOfficialCount">13</strong> Official Direct</span>
+          <span class="truth-stat-chip stat-crowdsourced"><span class="chip-dot"></span><strong id="statLiveCount">23</strong> Live Reports</span>
+          <span class="truth-stat-chip stat-directory"><span class="chip-dot"></span><strong id="statDirCount">40</strong> Verified Portals</span>
+          <span class="truth-stat-chip stat-total"><span class="chip-dot"></span><strong id="statTotalCount">125</strong> Total Stations</span>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content -->
@@ -148,6 +167,16 @@
               <span>White Rock</span>
               <span class="tab-count" id="countWhiteRock">0</span>
             </button>
+          </div>
+        </div>
+
+        <!-- Truth Tier Filter Pills -->
+        <div class="truth-filter-wrapper">
+          <div class="truth-pills" role="tablist" aria-label="Filter by truth tier">
+            <button class="truth-pill active" data-truth="all">All Sources</button>
+            <button class="truth-pill" data-truth="official"><span class="dot-truth dot-official"></span>✓ Official Direct Pumps</button>
+            <button class="truth-pill" data-truth="crowdsourced"><span class="dot-truth dot-crowdsourced"></span>⚡ Live Reports</button>
+            <button class="truth-pill" data-truth="official_directory"><span class="dot-truth dot-directory"></span>🏢 Verified Portals</button>
           </div>
         </div>
 
@@ -278,13 +307,22 @@
               <span class="portal-link-text">Visit cancopetroleum.ca →</span>
             </a>
 
-            <a href="https://centexfuel.com/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
+            <a href="https://centex.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
               <div class="portal-top">
                 <span class="portal-brand-dot dot-centex"></span>
                 <strong>Centex Petroleum</strong>
               </div>
               <p class="portal-desc">Western Canada independent pumps & discount fuel</p>
-              <span class="portal-link-text">Visit centexfuel.com →</span>
+              <span class="portal-link-text">Visit centex.ca →</span>
+            </a>
+
+            <a href="https://supersave.ca/gas-stations/" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-supersave"></span>
+                <strong>Super Save Gas BC</strong>
+              </div>
+              <p class="portal-desc">BC independent pricing & Surrey/Delta operations</p>
+              <span class="portal-link-text">Visit supersave.ca →</span>
             </a>
           </div>
 

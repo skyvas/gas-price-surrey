@@ -239,6 +239,87 @@ body {
 }
 
 /* ==========================================================================
+   Truth Precedence Protocol Strip
+   ========================================================================== */
+.truth-precedence-strip {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.85) 50%, rgba(30, 58, 138, 0.08) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.truth-strip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.truth-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--emerald-400);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.truth-precedence-text {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.truth-precedence-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.truth-stats-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.truth-stat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+}
+
+.truth-stat-chip strong {
+  color: #ffffff;
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stat-official .chip-dot { background: var(--emerald-400); box-shadow: 0 0 6px var(--emerald-400); }
+.stat-crowdsourced .chip-dot { background: var(--blue-500); box-shadow: 0 0 6px var(--blue-500); }
+.stat-directory .chip-dot { background: #c084fc; box-shadow: 0 0 6px #c084fc; }
+.stat-total .chip-dot { background: #94a3b8; }
+
+/* ==========================================================================
    Cheapest Gas Hero Spotlight
    ========================================================================== */
 .cheapest-hero-section {
@@ -516,6 +597,69 @@ body {
   background: rgba(255, 255, 255, 0.25);
 }
 
+/* ==========================================================================
+   Truth Tier Filter Pills
+   ========================================================================== */
+.truth-filter-wrapper {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  margin: -6px -16px 0 -16px;
+  padding: 0 16px 4px 16px;
+}
+
+.truth-filter-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.truth-pills {
+  display: flex;
+  gap: 6px;
+  min-width: max-content;
+}
+
+.truth-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.truth-pill:hover {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.truth-pill.active {
+  background: #064e3b;
+  color: #34d399;
+  border-color: #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+}
+
+.dot-truth {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-official { background: #10b981; box-shadow: 0 0 5px #10b981; }
+.dot-crowdsourced { background: #3b82f6; box-shadow: 0 0 5px #3b82f6; }
+.dot-directory { background: #c084fc; box-shadow: 0 0 5px #c084fc; }
+
 /* Brand Filter Pills */
 .brand-filter-wrapper {
   overflow-x: auto;
@@ -726,7 +870,8 @@ body {
 .brand-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
   margin-bottom: 4px;
 }
 
@@ -770,6 +915,48 @@ body {
   background: rgba(59, 130, 246, 0.12);
   padding: 2px 6px;
   border-radius: 4px;
+}
+
+/* Truth Precedence Card Badges */
+.truth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.truth-badge.tier-official {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.32) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.55);
+  color: #34d399;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+.truth-badge.tier-official svg {
+  stroke: #34d399;
+}
+
+.truth-badge.tier-crowdsourced {
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #60a5fa;
+}
+
+.truth-badge.tier-directory {
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+}
+
+.truth-badge.tier-baseline {
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  color: #94a3b8;
 }
 
 .station-card-address {

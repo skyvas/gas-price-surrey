@@ -17,6 +17,7 @@
   let currentFilter = {
     city: 'all',
     brand: 'all',
+    truth: 'all',
     search: ''
   };
 
@@ -31,6 +32,13 @@
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
   const showingCountText = document.getElementById('showingCountText');
   const sourcesList = document.getElementById('sourcesList');
+
+  // Truth Stats & Precedence Elements
+  const statOfficialCount = document.getElementById('statOfficialCount');
+  const statLiveCount = document.getElementById('statLiveCount');
+  const statDirCount = document.getElementById('statDirCount');
+  const statTotalCount = document.getElementById('statTotalCount');
+  const truthPills = document.querySelectorAll('.truth-pill');
 
   // Hero Card Elements
   const cheapestCard = document.getElementById('cheapestCard');
@@ -148,11 +156,24 @@
   function onDataLoaded() {
     if (appData.metadata) {
       updateTimeText.textContent = formatRelativeTime(appData.metadata.last_updated_utc);
+      updateTruthStats();
     }
 
     updateTabCounts();
     renderSources();
     render();
+  }
+
+  /**
+   * Update numbers inside Truth Precedence Protocol Banner
+   */
+  function updateTruthStats() {
+    if (!appData.metadata || !appData.metadata.truth_stats) return;
+    const stats = appData.metadata.truth_stats;
+    if (statOfficialCount) statOfficialCount.textContent = stats.official_direct_count || 0;
+    if (statLiveCount) statLiveCount.textContent = stats.crowdsourced_count || 0;
+    if (statDirCount) statDirCount.textContent = stats.official_directory_count || 0;
+    if (statTotalCount) statTotalCount.textContent = appData.stations ? appData.stations.length : 0;
   }
 
   /**
@@ -187,10 +208,11 @@
       chip.rel = 'noopener noreferrer';
       
       let label = src.name;
-      if (src.stations_reported !== undefined) {
-        label += ` • ${src.stations_reported} live`;
-      } else if (src.type) {
-        label += ` • ${src.type.split(' ')[0]}`;
+      if (src.status && src.status.includes('active')) {
+        label += ' • Active';
+      }
+      if (src.stations_reported !== undefined && src.stations_reported > 0) {
+        label += ` (${src.stations_reported} live)`;
       }
 
       chip.textContent = label;
@@ -199,7 +221,7 @@
   }
 
   /**
-   * Filter stations according to active city, brand, and multi-field search
+   * Filter stations according to active city, brand, truth tier, and multi-field search
    */
   function getFilteredStations() {
     let list = appData.stations || [];
@@ -216,6 +238,11 @@
         const sBrand = (s.brand || s.station_name || '').toLowerCase();
         return sBrand.includes(b);
       });
+    }
+
+    // Filter by truth tier
+    if (currentFilter.truth !== 'all') {
+      list = list.filter(s => s.truth_tier === currentFilter.truth);
     }
 
     // Filter by search query (brand, address, neighborhood, city, or source)
@@ -271,7 +298,7 @@
     }
     cheapestPillText.textContent = pillText;
 
-    // Savings badge
+    // Savings badge & Truth Badge
     if (parseFloat(priceDiff) > 0) {
       cheapestSavingsBadge.style.display = 'inline-block';
       cheapestSavingsBadge.textContent = `Save up to ${priceDiff}¢/L`;
@@ -286,7 +313,7 @@
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = topStation.source ? topStation.source.split('&')[0].trim() : 'Verified';
+    heroSource.textContent = topStation.truth_badge || (topStation.source ? topStation.source.split('&')[0].trim() : 'Verified');
 
     // Price
     heroPrice.textContent = topStation.price.toFixed(1);
@@ -321,6 +348,18 @@
       const mapUrl = getPreferredMapUrl(station);
       const officialUrl = station.brand_locator_url || station.brand_official_url;
 
+      // Truth Badge HTML
+      let truthBadgeHtml = '';
+      if (station.truth_tier === 'official') {
+        truthBadgeHtml = `<span class="truth-badge tier-official" title="Verified live pump price direct from official station web page (find.shell.com)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Official Direct Pump</span>`;
+      } else if (station.truth_tier === 'crowdsourced') {
+        truthBadgeHtml = `<span class="truth-badge tier-crowdsourced" title="Crowdsourced live driver report">${escapeHTML(station.truth_badge || '⚡ Live Driver Report')}</span>`;
+      } else if (station.truth_tier === 'official_directory') {
+        truthBadgeHtml = `<span class="truth-badge tier-directory" title="Official verified brand directory">${escapeHTML(station.truth_badge || '🏢 Verified Directory')}</span>`;
+      } else {
+        truthBadgeHtml = `<span class="truth-badge tier-baseline" title="Market survey baseline">${escapeHTML(station.truth_badge || 'Official Baseline')}</span>`;
+      }
+
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
       card.id = `station-${station.id}`;
@@ -333,6 +372,7 @@
               <h3 class="station-title">${escapeHTML(brandName)}</h3>
               <span class="station-city-pill">${escapeHTML(station.city)}</span>
               ${station.neighborhood ? `<span class="station-neighborhood-tag">${escapeHTML(station.neighborhood)}</span>` : ''}
+              ${truthBadgeHtml}
             </div>
             <p class="station-card-address">${escapeHTML(station.address)}</p>
           </div>
@@ -357,9 +397,9 @@
 
           <div class="card-actions-right">
             ${officialUrl ? `
-              <a href="${escapeHTML(officialUrl)}" class="btn-official-site" target="_blank" rel="noopener noreferrer" title="Visit official ${escapeHTML(brandName)} website & rewards">
+              <a href="${escapeHTML(officialUrl)}" class="btn-official-site" target="_blank" rel="noopener noreferrer" title="Visit official ${escapeHTML(brandName)} page & rewards">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                <span>Official Site</span>
+                <span>Official Page</span>
               </a>
             ` : ''}
             <a href="${mapUrl}" class="btn-open-maps" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} on ${escapeHTML(station.address)} in Maps">
@@ -417,6 +457,17 @@
       });
     });
 
+    // Truth Tier Filter Pills
+    truthPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        truthPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+
+        currentFilter.truth = pill.getAttribute('data-truth');
+        render();
+      });
+    });
+
     // Brand Filter Pills
     brandPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -450,12 +501,18 @@
       currentFilter.search = '';
       currentFilter.city = 'all';
       currentFilter.brand = 'all';
+      currentFilter.truth = 'all';
       clearSearchBtn.style.display = 'none';
 
       filterTabs.forEach(t => {
         const isAll = t.getAttribute('data-city') === 'all';
         t.classList.toggle('active', isAll);
         t.setAttribute('aria-selected', isAll ? 'true' : 'false');
+      });
+
+      truthPills.forEach(p => {
+        const isAll = p.getAttribute('data-truth') === 'all';
+        p.classList.toggle('active', isAll);
       });
 
       brandPills.forEach(p => {
