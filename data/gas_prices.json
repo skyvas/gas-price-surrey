@@ -32,8 +32,8 @@
         ]
       }
     },
-    "last_updated_utc": "2026-09-18T20:45:46.634164+00:00",
-    "last_updated_formatted": "September 18, 2026 at 08:45 PM UTC",
+    "last_updated_utc": "2026-09-18T21:05:35.911701+00:00",
+    "last_updated_formatted": "September 18, 2026 at 09:05 PM UTC",
     "target_regions": "Surrey Area, Vancouver, Burnaby",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -112,17 +112,17 @@
   },
   "cheapest_by_region": {
     "surrey_area": "surrey_6191kinggeorgeblvd",
-    "vancouver": "vancouver_3110e54thave",
+    "vancouver": "vancouver_2890ehastingsst",
     "burnaby": "burnaby_5720hastingsst"
   },
   "cheapest_by_city": {
-    "West Vancouver": "west_vancouver_1613marinedr",
-    "Surrey": "surrey_6191kinggeorgeblvd",
     "North Vancouver": "north_vancouver_1270lynnvalleyrd",
     "Burnaby": "burnaby_5720hastingsst",
+    "West Vancouver": "west_vancouver_1613marinedr",
     "Delta": "delta_8781120st",
+    "Vancouver": "vancouver_2890ehastingsst",
     "White Rock": "white_rock_1595nicholrd",
-    "Vancouver": "vancouver_3110e54thave"
+    "Surrey": "surrey_6191kinggeorgeblvd"
   },
   "stations": [
     {
@@ -170,6 +170,194 @@
         "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%205720%20Hastings%20St%2C%20Burnaby%2C%20BC",
         "android_geo": "geo:0,0?q=Canco%2C%205720%20Hastings%20St%2C%20Burnaby%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Canco%2C%205720%20Hastings%20St%2C%20Burnaby%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "vancouver_2890ehastingsst",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
+      "brand_color": "#e31837",
+      "region": "vancouver",
+      "sub_area": "East Vancouver",
+      "neighborhood": "East Vancouver",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "prices": {
+        "regular": 192.9,
+        "midgrade_89": 206.9,
+        "premium_91": 216.9,
+        "ultra_93": 226.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "2890 E Hastings St",
+      "city": "Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:47 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+      "latitude": 49.26,
+      "longitude": -123.08,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%202890%20E%20Hastings%20St%2C%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "burnaby_7089lougheedhwy",
+      "station_name": "Esso",
+      "brand": "Esso",
+      "brand_official_url": "https://www.esso.ca",
+      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
+      "brand_color": "#eb1c24",
+      "region": "burnaby",
+      "sub_area": "Lougheed / Burquitlam",
+      "neighborhood": "Lougheed / Burquitlam",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "prices": {
+        "regular": 192.9,
+        "midgrade_89": 206.9,
+        "premium_91": 216.9,
+        "ultra_93": 226.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "7089 Lougheed Hwy",
+      "city": "Burnaby",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:59 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Burnaby)",
+      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
+      "latitude": 49.253,
+      "longitude": -122.9465,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "burnaby_4512lougheedhwy",
+      "station_name": "Esso",
+      "brand": "Esso",
+      "brand_official_url": "https://www.esso.ca",
+      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
+      "brand_color": "#eb1c24",
+      "region": "burnaby",
+      "sub_area": "Lougheed / Burquitlam",
+      "neighborhood": "Lougheed / Burquitlam",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "prices": {
+        "regular": 192.9,
+        "midgrade_89": 206.9,
+        "premium_91": 216.9,
+        "ultra_93": 226.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "4512 Lougheed Hwy",
+      "city": "Burnaby",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:58 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Burnaby)",
+      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
+      "latitude": 49.2488,
+      "longitude": -122.9805,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%204512%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "burnaby_3826canadaway",
+      "station_name": "Chevron",
+      "brand": "Chevron",
+      "brand_official_url": "https://www.chevron.ca",
+      "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
+      "brand_color": "#00205b",
+      "region": "burnaby",
+      "sub_area": "Central Burnaby / Canada Way",
+      "neighborhood": "Central Burnaby / Canada Way",
+      "price": 192.9,
+      "price_formatted": "192.9¢",
+      "price_per_litre": "$1.929",
+      "prices": {
+        "regular": 192.9,
+        "midgrade_89": 206.9,
+        "premium_91": 216.9,
+        "ultra_93": 226.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "3826 Canada Way",
+      "city": "Burnaby",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:56 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Burnaby)",
+      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
+      "latitude": 49.2488,
+      "longitude": -122.9805,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
+        "android_geo": "geo:0,0?q=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC&dirflg=d"
       }
     },
     {
@@ -264,100 +452,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%204505%20Canada%20Way%2C%20Burnaby%2C%20BC",
         "android_geo": "geo:0,0?q=Shell%2C%204505%20Canada%20Way%2C%20Burnaby%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Shell%2C%204505%20Canada%20Way%2C%20Burnaby%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "burnaby_3826canadaway",
-      "station_name": "Chevron",
-      "brand": "Chevron",
-      "brand_official_url": "https://www.chevron.ca",
-      "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
-      "brand_color": "#00205b",
-      "region": "burnaby",
-      "sub_area": "Central Burnaby / Canada Way",
-      "neighborhood": "Central Burnaby / Canada Way",
-      "price": 192.9,
-      "price_formatted": "192.9¢",
-      "price_per_litre": "$1.929",
-      "prices": {
-        "regular": 192.9,
-        "midgrade_89": 206.9,
-        "premium_91": 216.9,
-        "ultra_93": 226.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "3826 Canada Way",
-      "city": "Burnaby",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:34 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Burnaby)",
-      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
-      "latitude": 49.2488,
-      "longitude": -122.9805,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
-        "android_geo": "geo:0,0?q=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "burnaby_7089lougheedhwy",
-      "station_name": "Esso",
-      "brand": "Esso",
-      "brand_official_url": "https://www.esso.ca",
-      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
-      "brand_color": "#eb1c24",
-      "region": "burnaby",
-      "sub_area": "Lougheed / Burquitlam",
-      "neighborhood": "Lougheed / Burquitlam",
-      "price": 192.9,
-      "price_formatted": "192.9¢",
-      "price_per_litre": "$1.929",
-      "prices": {
-        "regular": 192.9,
-        "midgrade_89": 206.9,
-        "premium_91": 216.9,
-        "ultra_93": 226.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "7089 Lougheed Hwy",
-      "city": "Burnaby",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:26 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Burnaby)",
-      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
-      "latitude": 49.253,
-      "longitude": -122.9465,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
-        "android_geo": "geo:0,0?q=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Esso%2C%207089%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC&dirflg=d"
       }
     },
     {
@@ -593,53 +687,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "burnaby_3855douglasrd",
-      "station_name": "Centex",
-      "brand": "Centex",
-      "brand_official_url": "https://centex.ca",
-      "brand_rewards": "Centex Go & Independent Pump Discounts",
-      "brand_color": "#2c6c39",
-      "region": "burnaby",
-      "sub_area": "Central Burnaby",
-      "neighborhood": "Central Burnaby",
-      "price": 193.9,
-      "price_formatted": "193.9¢",
-      "price_per_litre": "$1.939",
-      "prices": {
-        "regular": 193.9,
-        "midgrade_89": 207.9,
-        "premium_91": 217.9,
-        "ultra_93": 227.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "3855 Douglas Rd",
-      "city": "Burnaby",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 12:27 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Burnaby)",
-      "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
-      "latitude": 49.2582,
-      "longitude": -123.0005,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
-        "android_geo": "geo:0,0?q=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC&dirflg=d"
       }
     },
     {
@@ -1066,6 +1113,100 @@
       }
     },
     {
+      "id": "vancouver_1289ebroadway",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
+      "brand_color": "#e31837",
+      "region": "vancouver",
+      "sub_area": "East Vancouver",
+      "neighborhood": "East Vancouver",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
+      "prices": {
+        "regular": 195.9,
+        "midgrade_89": 209.9,
+        "premium_91": 219.9,
+        "ultra_93": 229.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "1289 E Broadway",
+      "city": "Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:49 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+      "latitude": 49.2625,
+      "longitude": -123.0792,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_8038kinggeorgeblvd",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
+      "brand_color": "#e31837",
+      "region": "surrey_area",
+      "sub_area": "Surrey",
+      "neighborhood": "Whalley / City Centre",
+      "price": 196.9,
+      "price_formatted": "196.9¢",
+      "price_per_litre": "$1.969",
+      "prices": {
+        "regular": 196.9,
+        "midgrade_89": 210.9,
+        "premium_91": 220.9,
+        "ultra_93": 230.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "8038 King George Blvd",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 1:59 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1044,
+      "longitude": -122.8011,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "surrey_8024120st",
       "station_name": "Petro-Canada",
       "brand": "Petro-Canada",
@@ -1204,53 +1345,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "surrey_1279172ave",
-      "station_name": "Shell",
-      "brand": "Shell",
-      "brand_official_url": "https://www.shell.ca",
-      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
-      "brand_color": "#ffd500",
-      "region": "surrey_area",
-      "sub_area": "Surrey",
-      "neighborhood": "Newton",
-      "price": 196.9,
-      "price_formatted": "196.9¢",
-      "price_per_litre": "$1.969",
-      "prices": {
-        "regular": 196.9,
-        "midgrade_89": 210.9,
-        "premium_91": 220.9,
-        "ultra_93": 230.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "12791 72 Ave",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:02 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1342,
-      "longitude": -122.8684,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Shell%2C%2012791%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -1583,53 +1677,6 @@
       }
     },
     {
-      "id": "vancouver_1289ebroadway",
-      "station_name": "Petro-Canada",
-      "brand": "Petro-Canada",
-      "brand_official_url": "https://www.petro-canada.ca",
-      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
-      "brand_color": "#e31837",
-      "region": "vancouver",
-      "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
-      "price": 197.9,
-      "price_formatted": "197.9¢",
-      "price_per_litre": "$1.979",
-      "prices": {
-        "regular": 197.9,
-        "midgrade_89": 211.9,
-        "premium_91": 221.9,
-        "ultra_93": 231.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "1289 E Broadway",
-      "city": "Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:01 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.2625,
-      "longitude": -123.0792,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%201289%20E%20Broadway%2C%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "vancouver_1396e41stave",
       "station_name": "Shell",
       "brand": "Shell",
@@ -1771,53 +1818,6 @@
       }
     },
     {
-      "id": "vancouver_2918kingsway",
-      "station_name": "Chevron",
-      "brand": "Chevron",
-      "brand_official_url": "https://www.chevron.ca",
-      "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
-      "brand_color": "#00205b",
-      "region": "vancouver",
-      "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
-      "price": 198.9,
-      "price_formatted": "198.9¢",
-      "price_per_litre": "$1.989",
-      "prices": {
-        "regular": 198.9,
-        "midgrade_89": 212.9,
-        "premium_91": 222.9,
-        "ultra_93": 232.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "2918 Kingsway",
-      "city": "Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:27 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.2372,
-      "longitude": -123.0451,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Chevron%2C%202918%20Kingsway%2C%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "delta_7981120st",
       "station_name": "Esso",
       "brand": "Esso",
@@ -1941,7 +1941,7 @@
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 1:18 PM",
+      "last_updated": "Sep 18, 2:03 PM",
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2288,6 +2288,53 @@
       }
     },
     {
+      "id": "north_vancouver_1731capilanord",
+      "station_name": "Shell",
+      "brand": "Shell",
+      "brand_official_url": "https://www.shell.ca",
+      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
+      "brand_color": "#ffd500",
+      "region": "vancouver",
+      "sub_area": "North Vancouver",
+      "neighborhood": "Capilano",
+      "price": 201.9,
+      "price_formatted": "201.9¢",
+      "price_per_litre": "$2.019",
+      "prices": {
+        "regular": 201.9,
+        "midgrade_89": 215.9,
+        "premium_91": 225.9,
+        "ultra_93": 235.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "1731 Capilano Rd",
+      "city": "North Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 2:03 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (North Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
+      "latitude": 49.3275,
+      "longitude": -123.1118,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "north_vancouver_2698capilanord",
       "station_name": "Chevron",
       "brand": "Chevron",
@@ -2332,53 +2379,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%202698%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
         "android_geo": "geo:0,0?q=Chevron%2C%202698%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Chevron%2C%202698%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "north_vancouver_1731capilanord",
-      "station_name": "Shell",
-      "brand": "Shell",
-      "brand_official_url": "https://www.shell.ca",
-      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
-      "brand_color": "#ffd500",
-      "region": "vancouver",
-      "sub_area": "North Vancouver",
-      "neighborhood": "Capilano",
-      "price": 201.9,
-      "price_formatted": "201.9¢",
-      "price_per_litre": "$2.019",
-      "prices": {
-        "regular": 201.9,
-        "midgrade_89": 215.9,
-        "premium_91": 225.9,
-        "ultra_93": 235.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "1731 Capilano Rd",
-      "city": "North Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 11:39 AM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (North Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
-      "latitude": 49.3275,
-      "longitude": -123.1118,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC&dirflg=d"
       }
     },
     {
