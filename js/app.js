@@ -52,7 +52,8 @@
   const heroSource = document.getElementById('heroSource');
   const heroPrice = document.getElementById('heroPrice');
   const heroPricePerLitre = document.getElementById('heroPricePerLitre');
-  const heroMapBtn = document.getElementById('heroMapBtn');
+  const heroGoogleMapBtn = document.getElementById('heroGoogleMapBtn');
+  const heroAppleMapBtn = document.getElementById('heroAppleMapBtn');
 
   // Filter Tabs & Brand Pills
   const filterTabs = document.querySelectorAll('.filter-tab');
@@ -70,21 +71,21 @@
   const isAndroid = /Android/.test(navigator.userAgent);
 
   /**
-   * Get preferred Map navigation URL based on user device
-   * Anchored directly to exact address text matching the card
+   * Get direct Google Maps Directions URL anchored to exact address
    */
-  function getPreferredMapUrl(station) {
+  function getGoogleMapsUrl(station) {
     if (!station) return '#';
+    const dest = `${station.station_name || station.brand}, ${station.address}, ${station.city}, BC`;
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}`;
+  }
 
-    const destination = `${station.station_name}, ${station.address}, ${station.city}, BC`;
-    const encodedDest = encodeURIComponent(destination);
-
-    if (isIOS) {
-      // Direct Apple Maps turn-by-turn driving navigation on iOS
-      return `https://maps.apple.com/?daddr=${encodedDest}&dirflg=d`;
-    }
-    // Google Maps turn-by-turn navigation on Android & Desktop
-    return `https://www.google.com/maps/dir/?api=1&destination=${encodedDest}`;
+  /**
+   * Get direct Apple Maps Directions URL anchored to exact address
+   */
+  function getAppleMapsUrl(station) {
+    if (!station) return '#';
+    const dest = `${station.station_name || station.brand}, ${station.address}, ${station.city}, BC`;
+    return `https://maps.apple.com/?daddr=${encodeURIComponent(dest)}&dirflg=d`;
   }
 
   /**
@@ -93,6 +94,104 @@
   function getBrandSlug(name) {
     if (!name) return 'generic';
     return name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+  }
+
+  /**
+   * Return high-quality inline SVG logo for each brand
+   */
+  function getBrandLogoSvg(brandName, brandSlug) {
+    const slug = brandSlug || getBrandSlug(brandName);
+
+    if (slug.includes('shell')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Shell Logo">
+        <rect width="32" height="32" rx="6" fill="#DD1D21"/>
+        <path d="M16 5.5C12.5 5.5 8 9.5 7.5 15.5C7.2 19 9 22.2 11.5 24L12.8 25.5H19.2L20.5 24C23 22.2 24.8 19 24.5 15.5C24 9.5 19.5 5.5 16 5.5Z" fill="#FBCE07"/>
+        <path d="M16 6.5V25M12.5 8C13.5 13 13 20 13.8 25M19.5 8C18.5 13 19 20 18.2 25M9.5 11C11.5 15 13 21 14.5 25M22.5 11C20.5 15 19 21 17.5 25" stroke="#DD1D21" stroke-width="0.8" stroke-linecap="round"/>
+      </svg>`;
+    }
+
+    if (slug.includes('chevron')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Chevron Logo">
+        <rect width="32" height="32" rx="6" fill="#FFFFFF"/>
+        <path d="M7 8.5L16 14.5L25 8.5V13.5L16 19.5L7 13.5V8.5Z" fill="#005DAA"/>
+        <path d="M7 15L16 21L25 15V20L16 26L7 20V15Z" fill="#ED1C24"/>
+      </svg>`;
+    }
+
+    if (slug.includes('petro-canada') || slug.includes('petro')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Petro-Canada Logo">
+        <rect width="32" height="32" rx="6" fill="#D9262E"/>
+        <rect x="5" y="5" width="22" height="22" rx="4" fill="#FFFFFF"/>
+        <path d="M16 8L17.5 12H19.5L18 13.5L19.8 15.2L18.2 15.8L19.2 18.5L17.2 17.8L16.6 21.5H15.4L14.8 17.8L12.8 18.5L13.8 15.8L12.2 15.2L14 13.5L12.5 12H14.5L16 8Z" fill="#D9262E"/>
+        <rect x="23.5" y="7" width="2" height="18" fill="#D9262E"/>
+      </svg>`;
+    }
+
+    if (slug.includes('esso')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Esso Logo">
+        <rect width="32" height="32" rx="6" fill="#0C2340"/>
+        <ellipse cx="16" cy="16" rx="14" ry="10.5" fill="#FFFFFF" stroke="#D9262E" stroke-width="2"/>
+        <text x="16" y="20" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="11" fill="#003399" text-anchor="middle" letter-spacing="-0.5">Esso</text>
+      </svg>`;
+    }
+
+    if (slug.includes('mobil')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Mobil Logo">
+        <rect width="32" height="32" rx="6" fill="#FFFFFF"/>
+        <text x="16" y="21" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="10.5" fill="#003399" text-anchor="middle" letter-spacing="-0.3">M<tspan fill="#DC2626">o</tspan>bil</text>
+      </svg>`;
+    }
+
+    if (slug.includes('centex')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Centex Logo">
+        <rect width="32" height="32" rx="6" fill="#15803D"/>
+        <circle cx="16" cy="16" rx="11" fill="#16A34A"/>
+        <path d="M19.5 11.5C18.2 10.5 16.5 10 14.5 10C10.5 10 7.5 13 7.5 17C7.5 21 10.5 24 14.5 24C16.8 24 18.8 23 20 21.5L17.5 19.5C16.8 20.3 15.8 20.8 14.5 20.8C12.4 20.8 10.8 19.2 10.8 17C10.8 14.8 12.4 13.2 14.5 13.2C15.6 13.2 16.5 13.6 17.2 14.2L19.5 11.5Z" fill="#FFFFFF"/>
+        <path d="M19 13C21 14.5 22 17 21.5 19.5C21 17.5 20.5 16 19 14.5V13Z" fill="#FACC15"/>
+      </svg>`;
+    }
+
+    if (slug.includes('canco')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Canco Logo">
+        <rect width="32" height="32" rx="6" fill="#0284C7"/>
+        <circle cx="16" cy="16" r="10" fill="#0369A1"/>
+        <path d="M16 8L22 13V18C22 21.5 19.5 24 16 25C12.5 24 10 21.5 10 18V13L16 8Z" fill="#FFFFFF"/>
+        <text x="16" y="19" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="7.5" fill="#0284C7" text-anchor="middle">CANCO</text>
+      </svg>`;
+    }
+
+    if (slug.includes('super-save') || slug.includes('supersave')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Super Save Logo">
+        <rect width="32" height="32" rx="6" fill="#EAB308"/>
+        <ellipse cx="16" cy="16" rx="13" ry="10" fill="#1E3A8A"/>
+        <text x="16" y="17" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="6.5" fill="#FACC15" text-anchor="middle" letter-spacing="0.2">SUPER</text>
+        <text x="16" y="22" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="5" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">SAVE</text>
+      </svg>`;
+    }
+
+    if (slug.includes('domo')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Domo Logo">
+        <rect width="32" height="32" rx="6" fill="#DC2626"/>
+        <circle cx="16" cy="16" r="11" fill="#991B1B"/>
+        <text x="16" y="20" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-style="italic" font-size="8.5" fill="#FFFFFF" text-anchor="middle">DOMO</text>
+      </svg>`;
+    }
+
+    if (slug.includes('wesco')) {
+      return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Wesco Logo">
+        <rect width="32" height="32" rx="6" fill="#EA580C"/>
+        <text x="16" y="20.5" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="8" fill="#FFFFFF" text-anchor="middle">WESCO</text>
+      </svg>`;
+    }
+
+    // Default Gas Station Icon
+    return `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Fuel Pump">
+      <rect width="32" height="32" rx="6" fill="#1F2937"/>
+      <path d="M10 9H18V24H10V9Z" fill="#374151" stroke="#9CA3AF" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M12 12H16V15H12V12Z" fill="#10B981"/>
+      <path d="M18 13H20C21.1 13 22 13.9 22 15V21C22 22.1 21.1 23 20 23V23" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="21" cy="11" r="1.5" fill="#9CA3AF"/>
+    </svg>`;
   }
 
   /**
@@ -275,13 +374,20 @@
       heroStationAddress.textContent = 'Please adjust your filter.';
       heroPrice.textContent = '--.-';
       heroPricePerLitre.textContent = '$0.000 / Litre';
-      heroMapBtn.removeAttribute('href');
-      heroMapBtn.style.pointerEvents = 'none';
+      if (heroGoogleMapBtn) {
+        heroGoogleMapBtn.removeAttribute('href');
+        heroGoogleMapBtn.style.pointerEvents = 'none';
+      }
+      if (heroAppleMapBtn) {
+        heroAppleMapBtn.removeAttribute('href');
+        heroAppleMapBtn.style.pointerEvents = 'none';
+      }
       return;
     }
 
     cheapestCard.style.opacity = '1';
-    heroMapBtn.style.pointerEvents = 'auto';
+    if (heroGoogleMapBtn) heroGoogleMapBtn.style.pointerEvents = 'auto';
+    if (heroAppleMapBtn) heroAppleMapBtn.style.pointerEvents = 'auto';
 
     const topStation = filteredList[0];
     const maxPrice = filteredList[filteredList.length - 1].price;
@@ -306,10 +412,12 @@
       cheapestSavingsBadge.style.display = 'none';
     }
 
-    // Station brand & details
-    heroBrandIcon.textContent = (topStation.brand || topStation.station_name).charAt(0);
-    heroBrandIcon.className = `brand-avatar ${getBrandSlug(topStation.brand || topStation.station_name)}`;
-    heroStationName.textContent = topStation.brand || topStation.station_name;
+    // Station brand & details with logo
+    const brandName = topStation.brand || topStation.station_name;
+    const brandSlug = getBrandSlug(brandName);
+    heroBrandIcon.innerHTML = getBrandLogoSvg(brandName, brandSlug);
+    heroBrandIcon.className = `brand-avatar ${brandSlug}`;
+    heroStationName.textContent = brandName;
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
@@ -319,8 +427,9 @@
     heroPrice.textContent = topStation.price.toFixed(1);
     heroPricePerLitre.textContent = `${topStation.price_per_litre} / Litre`;
 
-    // Map CTA Link
-    heroMapBtn.href = getPreferredMapUrl(topStation);
+    // Map CTA Links for Google Maps & Apple Maps
+    if (heroGoogleMapBtn) heroGoogleMapBtn.href = getGoogleMapsUrl(topStation);
+    if (heroAppleMapBtn) heroAppleMapBtn.href = getAppleMapsUrl(topStation);
   }
 
   /**
@@ -345,8 +454,8 @@
       const diff = (station.price - minPrice).toFixed(1);
       const brandName = station.brand || station.station_name;
       const brandSlug = getBrandSlug(brandName);
-      const mapUrl = getPreferredMapUrl(station);
-      const officialUrl = station.brand_locator_url || station.brand_official_url;
+      const googleMapUrl = getGoogleMapsUrl(station);
+      const appleMapUrl = getAppleMapsUrl(station);
 
       // Concise Truth Badges for clean mobile rendering
       let truthBadgeHtml = '';
@@ -368,7 +477,7 @@
         <div class="card-top-row">
           <div class="station-details">
             <div class="brand-row">
-              <span class="brand-badge ${brandSlug}">${brandName.charAt(0)}</span>
+              <span class="brand-badge ${brandSlug}">${getBrandLogoSvg(brandName, brandSlug)}</span>
               <h3 class="station-title">${escapeHTML(brandName)}</h3>
               <span class="station-city-pill">${escapeHTML(station.city)}</span>
               ${station.neighborhood ? `<span class="station-neighborhood-tag">${escapeHTML(station.neighborhood)}</span>` : ''}
@@ -393,12 +502,24 @@
             <span class="meta-time">${escapeHTML(station.last_updated)}</span>
           </div>
 
-          <a href="${mapUrl}" class="btn-open-maps" target="_blank" rel="noopener noreferrer" aria-label="Directions to ${escapeHTML(brandName)} on ${escapeHTML(station.address)} in Maps">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-            </svg>
-            <span>Directions</span>
-          </a>
+          <div class="card-directions-actions">
+            <a href="${googleMapUrl}" class="btn-map-action btn-google" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} in Google Maps" title="Open in Google Maps">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                <circle cx="12" cy="9" r="2.5"></circle>
+              </svg>
+              <span class="map-label-short">Google</span>
+              <span class="map-label-full">Google Maps</span>
+            </a>
+
+            <a href="${appleMapUrl}" class="btn-map-action btn-apple" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} in Apple Maps" title="Open in Apple Maps">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+              </svg>
+              <span class="map-label-short">Apple</span>
+              <span class="map-label-full">Apple Maps</span>
+            </a>
+          </div>
         </div>
       `;
 

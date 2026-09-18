@@ -107,7 +107,7 @@ body {
    Header Section
    ========================================================================== */
 .app-header {
-  padding-top: max(16px, env(safe-area-inset-top));
+  padding-top: max(28px, calc(env(safe-area-inset-top) + 14px));
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -409,18 +409,23 @@ body {
 }
 
 .brand-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: var(--radius-sm);
+  width: 42px;
+  height: 42px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 1rem;
-  background: #1e293b;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: transparent;
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  padding: 0;
+}
+
+.brand-avatar svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .hero-station-name {
@@ -510,27 +515,50 @@ body {
   width: 100%;
 }
 
+.cheapest-actions.dual-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 .btn-navigate-hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
   width: 100%;
   min-height: 48px;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.90rem;
   border-radius: var(--radius-md);
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
   transition: all var(--transition-fast);
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-navigate-hero:hover {
+.btn-hero-google {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+}
+
+.btn-hero-google:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.btn-hero-apple {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hero-apple:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .btn-navigate-hero:active {
@@ -889,30 +917,24 @@ body {
 }
 
 .brand-badge {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 0.8rem;
-  color: #ffffff;
-  background: #1e293b;
+  background: transparent;
   flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 0;
 }
 
-/* Brand specific colors */
-.brand-badge.petro-canada { background: #d9262e; }
-.brand-badge.esso { background: #003399; }
-.brand-badge.shell { background: #facc15; color: #b91c1c; }
-.brand-badge.chevron { background: #0066b2; }
-.brand-badge.centex { background: #15803d; }
-.brand-badge.canco { background: #0284c7; }
-.brand-badge.super-save-gas { background: #eab308; color: #1e3a8a; }
-.brand-badge.wesco { background: #f97316; }
-.brand-badge.domo { background: #dc2626; }
-.brand-badge.mobil { background: #dc2626; }
+.brand-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 
 .station-title {
   font-size: 1.05rem;
@@ -1028,7 +1050,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -1050,33 +1072,74 @@ body {
   white-space: nowrap;
 }
 
-.btn-open-maps {
+.card-directions-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.btn-map-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
-  color: #ffffff;
+  color: #f1f5f9;
   text-decoration: none;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: var(--radius-sm);
-  min-height: 38px;
-  flex-shrink: 0;
+  min-height: 36px;
   transition: all var(--transition-fast);
   -webkit-tap-highlight-color: transparent;
 }
 
-.btn-open-maps:hover {
+.btn-map-action.btn-google {
+  color: #93c5fd;
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.btn-map-action.btn-google:hover {
   background: #2563eb;
   border-color: #3b82f6;
+  color: #ffffff;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
 }
 
-.btn-open-maps:active {
+.btn-map-action.btn-apple {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.btn-map-action.btn-apple:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+.btn-map-action:active {
   transform: scale(0.96);
+}
+
+.map-label-full {
+  display: none;
+}
+
+.map-label-short {
+  display: inline;
+}
+
+@media (min-width: 540px) {
+  .map-label-full {
+    display: inline;
+  }
+  .map-label-short {
+    display: none;
+  }
 }
 
 .station-neighborhood-tag {

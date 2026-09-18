@@ -19,9 +19,9 @@ Stations are automatically sorted by price with the cheapest pump highlighted in
   - **Petro-Canada & Esso**: Verified portals and GasBuddy live price mapping.
 - **Truth Tier Filters**: One-tap filtering across `All Sources`, `✓ Official Direct Pumps`, `⚡ Live Reports`, and `🏢 Verified Portals`.
 - **City & Brand Filters**: One-tap filtering for **All Areas**, **Surrey**, **Delta**, and **White Rock**, plus individual brand filtering.
-- **Instant Search**: Search across station brand names, street addresses, and neighborhoods.
-- **Turn-by-Turn Navigation**: Smart "Open in Maps" action that detects iOS / Android / Desktop and launches native turn-by-turn navigation directly to the verified station address.
-- **Automated Every 30 Minutes**: GitHub Actions workflow fetches new prices, updates data, commits to the repository, and publishes live to **GitHub Pages**.
+- **Authentic Brand Logos**: High-resolution vector logos for Shell, Chevron, Petro-Canada, Esso, Mobil, Centex, Canco, Super Save, Domo, and Wesco.
+- **Turn-by-Turn Navigation (Google Maps & Apple Maps)**: One-tap dual action buttons on all stations to launch directions in **Google Maps** or **Apple Maps** directly to the verified station address.
+- **Automated Every 5 Minutes**: GitHub Actions workflow fetches new prices, updates data, commits to the repository, and publishes live to **GitHub Pages**.
 
 ---
 
@@ -50,8 +50,8 @@ The scraper cleans HTML strings, normalizes station names, filters out any stati
 2. Click on **Settings** > **Pages**.
 3. Under **Build and deployment** > **Source**, select **GitHub Actions**.
 
-### 2. Automated 30-Minute Workflow (`.github/workflows/update-prices.yml`)
-- Runs on a cron schedule every 30 minutes: `*/30 * * * *`.
+### 2. Automated 5-Minute Workflow (`.github/workflows/update-prices.yml`)
+- Runs on a cron schedule every 5 minutes: `*/5 * * * *`.
 - Can also be triggered manually anytime via the **Run workflow** button under the **Actions** tab (`workflow_dispatch`).
 - Steps executed:
   1. Checks out repository.
