@@ -348,16 +348,16 @@
       const mapUrl = getPreferredMapUrl(station);
       const officialUrl = station.brand_locator_url || station.brand_official_url;
 
-      // Truth Badge HTML
+      // Concise Truth Badges for clean mobile rendering
       let truthBadgeHtml = '';
       if (station.truth_tier === 'official') {
-        truthBadgeHtml = `<span class="truth-badge tier-official" title="Verified live pump price direct from official station web page (find.shell.com)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Official Direct Pump</span>`;
+        truthBadgeHtml = `<span class="truth-badge tier-official" title="Verified live pump price direct from official station web page"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Official Pump</span>`;
       } else if (station.truth_tier === 'crowdsourced') {
-        truthBadgeHtml = `<span class="truth-badge tier-crowdsourced" title="Crowdsourced live driver report">${escapeHTML(station.truth_badge || '⚡ Live Driver Report')}</span>`;
+        truthBadgeHtml = `<span class="truth-badge tier-crowdsourced" title="Crowdsourced live driver report">⚡ Live Report</span>`;
       } else if (station.truth_tier === 'official_directory') {
-        truthBadgeHtml = `<span class="truth-badge tier-directory" title="Official verified brand directory">${escapeHTML(station.truth_badge || '🏢 Verified Directory')}</span>`;
+        truthBadgeHtml = `<span class="truth-badge tier-directory" title="Official verified brand directory">🏢 Verified</span>`;
       } else {
-        truthBadgeHtml = `<span class="truth-badge tier-baseline" title="Market survey baseline">${escapeHTML(station.truth_badge || 'Official Baseline')}</span>`;
+        truthBadgeHtml = `<span class="truth-badge tier-baseline" title="Market survey baseline">Market Baseline</span>`;
       }
 
       const card = document.createElement('article');
@@ -372,7 +372,6 @@
               <h3 class="station-title">${escapeHTML(brandName)}</h3>
               <span class="station-city-pill">${escapeHTML(station.city)}</span>
               ${station.neighborhood ? `<span class="station-neighborhood-tag">${escapeHTML(station.neighborhood)}</span>` : ''}
-              ${truthBadgeHtml}
             </div>
             <p class="station-card-address">${escapeHTML(station.address)}</p>
           </div>
@@ -390,25 +389,16 @@
 
         <div class="card-bottom-row">
           <div class="card-meta-left">
-            <span>${escapeHTML(station.last_updated)}</span>
-            <span>•</span>
-            <span>${escapeHTML(station.source ? station.source.split('&')[0].trim() : 'Official Directory')}</span>
+            ${truthBadgeHtml}
+            <span class="meta-time">${escapeHTML(station.last_updated)}</span>
           </div>
 
-          <div class="card-actions-right">
-            ${officialUrl ? `
-              <a href="${escapeHTML(officialUrl)}" class="btn-official-site" target="_blank" rel="noopener noreferrer" title="Visit official ${escapeHTML(brandName)} page & rewards">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                <span>Official Page</span>
-              </a>
-            ` : ''}
-            <a href="${mapUrl}" class="btn-open-maps" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} on ${escapeHTML(station.address)} in Maps">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-              </svg>
-              <span>Directions</span>
-            </a>
-          </div>
+          <a href="${mapUrl}" class="btn-open-maps" target="_blank" rel="noopener noreferrer" aria-label="Directions to ${escapeHTML(brandName)} on ${escapeHTML(station.address)} in Maps">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+            </svg>
+            <span>Directions</span>
+          </a>
         </div>
       `;
 
