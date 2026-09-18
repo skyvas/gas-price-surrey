@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-18T00:30:40.487093+00:00",
-    "last_updated_formatted": "September 18, 2026 at 12:30 AM UTC",
+    "last_updated_utc": "2026-09-18T00:31:33.338143+00:00",
+    "last_updated_formatted": "September 18, 2026 at 12:31 AM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -10,12 +10,12 @@
       "diesel",
       "premium"
     ],
-    "total_stations": 125,
+    "total_stations": 126,
     "truth_stats": {
       "official_direct_count": 13,
       "official_directory_count": 40,
       "crowdsourced_count": 23,
-      "baseline_count": 49,
+      "baseline_count": 50,
       "precedence_rule": "Official Brand Direct Pump Prices strictly supersede GasBuddy and crowdsourced data"
     },
     "sources": [
@@ -149,9 +149,9 @@
     "cheapest_overall_id": "surrey_7812120st"
   },
   "cheapest_by_city": {
-    "White Rock": "white rock_1520516ave",
     "Delta": "delta_8781120st",
-    "Surrey": "surrey_7812120st"
+    "Surrey": "surrey_7812120st",
+    "White Rock": "white rock_1520516ave"
   },
   "stations": [
     {
@@ -432,6 +432,41 @@
         "apple_maps_search": "https://maps.apple.com/?q=Super%20Save%20Gas%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Super%20Save%20Gas%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Super%20Save%20Gas%2C%2010732%20128%20St%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_15775fraserhwy",
+      "station_name": "Canco",
+      "brand": "Canco",
+      "brand_official_url": "https://cancopetroleum.ca",
+      "brand_locator_url": "https://cancopetroleum.ca/locations/",
+      "brand_rewards": "Canco Cash Rewards & Everyday Low Price",
+      "brand_color": "#f37021",
+      "neighborhood": "Fleetwood",
+      "price": 193.9,
+      "price_formatted": "193.9¢",
+      "price_per_litre": "$1.939",
+      "fuel_type": "regular",
+      "address": "15775 Fraser Hwy",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Market Survey Verified",
+      "is_live": false,
+      "is_official_direct": false,
+      "truth_tier": "baseline",
+      "truth_badge": "Official Brand Baseline",
+      "source": "Canco Petroleum Official Locator & Market Survey",
+      "source_url": "https://cancopetroleum.ca/locations/",
+      "latitude": 49.1602,
+      "longitude": -122.7856,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -922,6 +957,76 @@
         "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%2015175%2024%20Ave%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Esso%2C%2015175%2024%20Ave%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Esso%2C%2015175%2024%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_1357372ave",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_locator_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L + 20% pts)",
+      "brand_color": "#e31837",
+      "neighborhood": "Local District",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
+      "fuel_type": "regular",
+      "address": "13573 72 Ave",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 5:23 PM",
+      "is_live": true,
+      "is_official_direct": false,
+      "truth_tier": "crowdsourced",
+      "truth_badge": "⚡ GasBuddy Live Report",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1044,
+      "longitude": -122.8011,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_7195kinggeorgeblvd",
+      "station_name": "Esso",
+      "brand": "Esso",
+      "brand_official_url": "https://www.esso.ca",
+      "brand_locator_url": "https://www.esso.ca/en-ca/find-station",
+      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
+      "brand_color": "#eb1c24",
+      "neighborhood": "Local District",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
+      "fuel_type": "regular",
+      "address": "7195 King George Blvd",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 5:23 PM",
+      "is_live": true,
+      "is_official_direct": false,
+      "truth_tier": "crowdsourced",
+      "truth_badge": "⚡ GasBuddy Live Report",
+      "source": "GasBuddy via GVRD (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1044,
+      "longitude": -122.8011,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%207195%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -3760,41 +3865,6 @@
       }
     },
     {
-      "id": "surrey_15775fraserhwy",
-      "station_name": "Canco",
-      "brand": "Canco",
-      "brand_official_url": "https://cancopetroleum.ca",
-      "brand_locator_url": "https://cancopetroleum.ca/locations/",
-      "brand_rewards": "Canco Cash Rewards & Everyday Low Price",
-      "brand_color": "#f37021",
-      "neighborhood": "Fleetwood",
-      "price": 198.9,
-      "price_formatted": "198.9¢",
-      "price_per_litre": "$1.989",
-      "fuel_type": "regular",
-      "address": "15775 Fraser Hwy",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 4:52 PM",
-      "is_live": true,
-      "is_official_direct": false,
-      "truth_tier": "crowdsourced",
-      "truth_badge": "⚡ GasBuddy Live Report",
-      "source": "GasBuddy via GVRD (Surrey) (GasBuddy Live Report)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1602,
-      "longitude": -122.7856,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "delta_7389riverrd",
       "station_name": "Canco",
       "brand": "Canco",
@@ -3862,41 +3932,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
         "android_geo": "geo:0,0?q=Chevron%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Chevron%2C%207389%20River%20Rd%2C%20Delta%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "surrey_15989108ave",
-      "station_name": "Canco",
-      "brand": "Canco",
-      "brand_official_url": "https://cancopetroleum.ca",
-      "brand_locator_url": "https://cancopetroleum.ca/locations/",
-      "brand_rewards": "Canco Cash Rewards & Everyday Low Price",
-      "brand_color": "#f37021",
-      "neighborhood": "Local District",
-      "price": 199.9,
-      "price_formatted": "199.9¢",
-      "price_per_litre": "$1.999",
-      "fuel_type": "regular",
-      "address": "15989 108 Ave",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 5:18 PM",
-      "is_live": true,
-      "is_official_direct": false,
-      "truth_tier": "crowdsourced",
-      "truth_badge": "⚡ GasBuddy Live Report",
-      "source": "GasBuddy via GVRD (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1044,
-      "longitude": -122.8011,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Canco%2C%2015989%20108%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
