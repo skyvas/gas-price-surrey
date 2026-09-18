@@ -151,6 +151,20 @@
           </div>
         </div>
 
+        <!-- Brand Filter Pills -->
+        <div class="brand-filter-wrapper">
+          <div class="brand-pills" role="tablist" aria-label="Filter gas stations by brand">
+            <button class="brand-pill active" data-brand="all">All Brands</button>
+            <button class="brand-pill" data-brand="Chevron"><span class="dot-brand dot-chevron"></span>Chevron</button>
+            <button class="brand-pill" data-brand="Shell"><span class="dot-brand dot-shell"></span>Shell</button>
+            <button class="brand-pill" data-brand="Petro-Canada"><span class="dot-brand dot-petro"></span>Petro-Canada</button>
+            <button class="brand-pill" data-brand="Esso"><span class="dot-brand dot-esso"></span>Esso / Mobil</button>
+            <button class="brand-pill" data-brand="Canco"><span class="dot-brand dot-canco"></span>Canco</button>
+            <button class="brand-pill" data-brand="Centex"><span class="dot-brand dot-centex"></span>Centex</button>
+            <button class="brand-pill" data-brand="Super Save Gas"><span class="dot-brand dot-supersave"></span>Super Save</button>
+          </div>
+        </div>
+
         <!-- Search Bar -->
         <div class="search-container">
           <div class="search-input-wrapper">
@@ -158,7 +172,7 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="stationSearchInput" class="search-input" placeholder="Search by station (Shell, Esso) or street..." autocomplete="off">
+            <input type="text" id="stationSearchInput" class="search-input" placeholder="Search brand (Shell, Chevron...), street, or neighborhood..." autocomplete="off">
             <button id="clearSearchBtn" class="clear-search-btn" aria-label="Clear search" style="display: none;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
@@ -201,7 +215,7 @@
         </div>
       </section>
 
-      <!-- Information & Transparency Section -->
+      <!-- Information & Official Websites Section -->
       <section class="info-section">
         <div class="info-card">
           <div class="info-header">
@@ -212,13 +226,70 @@
                 <line x1="12" y1="8" x2="12.01" y2="8"></line>
               </svg>
             </div>
-            <h4>About Surrey & Fraser Valley Gas Prices</h4>
+            <h4>Official Brand Websites & Data Sources</h4>
           </div>
           <p class="info-text">
-            Prices are automatically retrieved and refreshed every 30 minutes through our automated data pipeline. Sources include local feeds from <strong>GasBuddy</strong>, <strong>GVRD directory</strong>, and community reports across Surrey, Delta (including Ladner & Tsawwassen), and White Rock.
+            This tracker searches and monitors <strong>70+ gas stations</strong> across Surrey, Delta (including Ladner & Tsawwassen), and White Rock. Data integrates official brand station networks (Petro-Canada, Shell, Chevron, Esso, Mobil, Canco, Centex, Super Save), real-time crowdsourced reports from GasBuddy/GVRD, and local energy news feeds.
           </p>
+
+          <div class="official-portals-grid">
+            <a href="https://www.chevron.ca" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-chevron"></span>
+                <strong>Chevron Canada</strong>
+              </div>
+              <p class="portal-desc">Official stations & Journie Rewards (Save up to 7¢/L)</p>
+              <span class="portal-link-text">Visit chevron.ca →</span>
+            </a>
+
+            <a href="https://www.shell.ca/en_ca/drivers/shell-station-locator.html" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-shell"></span>
+                <strong>Shell Canada</strong>
+              </div>
+              <p class="portal-desc">Station locator & BCAA / CAA partner discount (Save 3¢/L)</p>
+              <span class="portal-link-text">Visit shell.ca →</span>
+            </a>
+
+            <a href="https://www.petro-canada.ca/en/personal/gas-station-locations" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-petro"></span>
+                <strong>Petro-Canada</strong>
+              </div>
+              <p class="portal-desc">Station locations & Petro-Points / RBC card link (Save 3¢/L)</p>
+              <span class="portal-link-text">Visit petro-canada.ca →</span>
+            </a>
+
+            <a href="https://www.esso.ca/en-ca/find-station" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-esso"></span>
+                <strong>Esso & Mobil Canada</strong>
+              </div>
+              <p class="portal-desc">Official finder & PC Optimum rewards (Earn 10-40 pts/L)</p>
+              <span class="portal-link-text">Visit esso.ca →</span>
+            </a>
+
+            <a href="https://cancopetroleum.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-canco"></span>
+                <strong>Canco Petroleum</strong>
+              </div>
+              <p class="portal-desc">Independent BC price leader & Canco Cash Rewards</p>
+              <span class="portal-link-text">Visit cancopetroleum.ca →</span>
+            </a>
+
+            <a href="https://centexfuel.com/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-centex"></span>
+                <strong>Centex Petroleum</strong>
+              </div>
+              <p class="portal-desc">Western Canada independent pumps & discount fuel</p>
+              <span class="portal-link-text">Visit centexfuel.com →</span>
+            </a>
+          </div>
+
           <div class="info-sources-list" id="sourcesList">
-            <!-- Sources dynamically filled -->
+            <!-- Feed chips dynamically filled -->
           </div>
         </div>
       </section>

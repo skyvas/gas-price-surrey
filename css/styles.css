@@ -516,6 +516,71 @@ body {
   background: rgba(255, 255, 255, 0.25);
 }
 
+/* Brand Filter Pills */
+.brand-filter-wrapper {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  margin: -6px -16px 0 -16px;
+  padding: 0 16px 4px 16px;
+}
+
+.brand-filter-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.brand-pills {
+  display: flex;
+  gap: 6px;
+  min-width: max-content;
+}
+
+.brand-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.brand-pill:hover {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.brand-pill.active {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 2px 8px rgba(96, 165, 250, 0.25);
+}
+
+/* Brand Indicator Dots */
+.dot-brand {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.dot-chevron { background: #0066b2; }
+.dot-shell { background: #facc15; }
+.dot-petro { background: #d9262e; }
+.dot-esso { background: #003399; }
+.dot-canco { background: #0284c7; }
+.dot-centex { background: #15803d; }
+.dot-supersave { background: #eab308; }
+
 /* Search Bar */
 .search-container {
   width: 100%;
@@ -803,6 +868,49 @@ body {
   transform: scale(0.96);
 }
 
+.card-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.station-neighborhood-tag {
+  font-size: 0.70rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.btn-official-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  min-height: 38px;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-official-site:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-official-site:active {
+  transform: scale(0.96);
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;
@@ -876,7 +984,62 @@ body {
   font-size: 0.78rem;
   color: var(--text-secondary);
   line-height: 1.45;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+/* Official Portals Grid */
+.official-portals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.portal-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.portal-card:hover {
+  border-color: var(--blue-500);
+  background: #1e293b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.portal-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+  font-size: 0.88rem;
+}
+
+.portal-brand-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.portal-desc {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+.portal-link-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #60a5fa;
+  margin-top: 2px;
 }
 
 .info-sources-list {
