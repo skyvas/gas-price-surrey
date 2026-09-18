@@ -32,8 +32,8 @@
         ]
       }
     },
-    "last_updated_utc": "2026-09-18T21:18:45.295284+00:00",
-    "last_updated_formatted": "September 18, 2026 at 09:18 PM UTC",
+    "last_updated_utc": "2026-09-18T21:24:20.310580+00:00",
+    "last_updated_formatted": "September 18, 2026 at 09:24 PM UTC",
     "target_regions": "Surrey Area, Vancouver, Burnaby",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -116,12 +116,12 @@
     "burnaby": "burnaby_3826canadaway"
   },
   "cheapest_by_city": {
-    "Delta": "delta_8985120st",
-    "White Rock": "white_rock_1595nicholrd",
-    "Vancouver": "vancouver_2890ehastingsst",
-    "West Vancouver": "west_vancouver_1613marinedr",
     "Surrey": "surrey_6191kinggeorgeblvd",
+    "Vancouver": "vancouver_2890ehastingsst",
+    "White Rock": "white_rock_1595nicholrd",
     "North Vancouver": "north_vancouver_1270lynnvalleyrd",
+    "West Vancouver": "west_vancouver_1613marinedr",
+    "Delta": "delta_8985120st",
     "Burnaby": "burnaby_3826canadaway"
   },
   "stations": [
@@ -249,7 +249,7 @@
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 1:47 PM",
+      "last_updated": "Sep 18, 2:17 PM",
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1489,6 +1489,100 @@
       }
     },
     {
+      "id": "vancouver_4110oakst",
+      "station_name": "Shell",
+      "brand": "Shell",
+      "brand_official_url": "https://www.shell.ca",
+      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
+      "brand_color": "#ffd500",
+      "region": "vancouver",
+      "sub_area": "East Vancouver",
+      "neighborhood": "East Vancouver",
+      "price": 196.9,
+      "price_formatted": "196.9¢",
+      "price_per_litre": "$1.969",
+      "prices": {
+        "regular": 196.9,
+        "midgrade_89": 210.9,
+        "premium_91": 220.9,
+        "ultra_93": 230.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "4110 Oak St",
+      "city": "Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 2:20 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+      "latitude": 49.26,
+      "longitude": -123.08,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "vancouver_5680oakst",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
+      "brand_color": "#e31837",
+      "region": "vancouver",
+      "sub_area": "East Vancouver",
+      "neighborhood": "East Vancouver",
+      "price": 196.9,
+      "price_formatted": "196.9¢",
+      "price_per_litre": "$1.969",
+      "prices": {
+        "regular": 196.9,
+        "midgrade_89": 210.9,
+        "premium_91": 220.9,
+        "ultra_93": 230.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular",
+        "midgrade_89",
+        "premium_91",
+        "ultra_93"
+      ],
+      "address": "5680 Oak St",
+      "city": "Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 18, 2:17 PM",
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+      "latitude": 49.26,
+      "longitude": -123.08,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%205680%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "delta_8380112st",
       "station_name": "Shell",
       "brand": "Shell",
@@ -1518,7 +1612,7 @@
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 1:29 PM",
+      "last_updated": "Sep 18, 2:18 PM",
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1612,7 +1706,7 @@
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 1:20 PM",
+      "last_updated": "Sep 18, 2:23 PM",
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1674,100 +1768,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%202277%20Kingsway%2C%20Vancouver%2C%20BC",
         "android_geo": "geo:0,0?q=Petro-Canada%2C%202277%20Kingsway%2C%20Vancouver%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%202277%20Kingsway%2C%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "vancouver_1396e41stave",
-      "station_name": "Shell",
-      "brand": "Shell",
-      "brand_official_url": "https://www.shell.ca",
-      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
-      "brand_color": "#ffd500",
-      "region": "vancouver",
-      "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
-      "price": 197.9,
-      "price_formatted": "197.9¢",
-      "price_per_litre": "$1.979",
-      "prices": {
-        "regular": 197.9,
-        "midgrade_89": 211.9,
-        "premium_91": 221.9,
-        "ultra_93": 231.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "1396 E 41st Ave",
-      "city": "Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 12:55 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.234,
-      "longitude": -123.0765,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "vancouver_1390e33rdave",
-      "station_name": "Petro-Canada",
-      "brand": "Petro-Canada",
-      "brand_official_url": "https://www.petro-canada.ca",
-      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
-      "brand_color": "#e31837",
-      "region": "vancouver",
-      "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
-      "price": 197.9,
-      "price_formatted": "197.9¢",
-      "price_per_litre": "$1.979",
-      "prices": {
-        "regular": 197.9,
-        "midgrade_89": 211.9,
-        "premium_91": 221.9,
-        "ultra_93": 231.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "1390 E 33rd Ave",
-      "city": "Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 12:14 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.2415,
-      "longitude": -123.0772,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%201390%20E%2033rd%20Ave%2C%20Vancouver%2C%20BC&dirflg=d"
       }
     },
     {
