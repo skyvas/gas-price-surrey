@@ -221,8 +221,10 @@
     }
 
     try {
-      const cacheBuster = showSpin ? `?t=${Date.now()}` : '';
-      const response = await fetch(`data/gas_prices.json${cacheBuster}`);
+      const cacheBuster = `?t=${Date.now()}`;
+      const response = await fetch(`data/gas_prices.json${cacheBuster}`, {
+        cache: 'no-store'
+      });
       if (!response.ok) {
         throw new Error(`Failed to load data (${response.status})`);
       }
@@ -409,7 +411,7 @@
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = topStation.source || 'GasBuddy Live';
+    heroSource.textContent = '⚡ via Live Report, GasBuddy';
 
     // Price
     heroPrice.textContent = topStation.price.toFixed(1);
@@ -445,7 +447,7 @@
       const googleMapUrl = getGoogleMapsUrl(station);
       const appleMapUrl = getAppleMapsUrl(station);
 
-      const liveBadgeHtml = `<span class="live-badge" title="Live driver report via GasBuddy">⚡ Live Report</span>`;
+      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ via Live Report, GasBuddy</span>`;
 
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
