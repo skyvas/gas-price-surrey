@@ -341,7 +341,7 @@ body {
    ========================================================================== */
 .cheapest-hero-section {
   width: 100%;
-  margin-bottom: 6px;
+  margin-bottom: 24px;
 }
 
 .cheapest-card {
@@ -580,8 +580,8 @@ body {
 .controls-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 4px;
+  gap: 14px;
+  margin-top: 12px;
 }
 
 /* Horizontal Scrolling Filter Tabs */
@@ -976,24 +976,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 12px;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .card-meta-left {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 6px 8px;
-  font-size: 0.74rem;
-  color: var(--text-muted);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
   min-width: 0;
   flex: 1;
 }
 
 .meta-time {
-  font-size: 0.72rem;
+  font-size: 0.70rem;
   color: var(--text-secondary);
   white-space: nowrap;
 }
@@ -1003,6 +1001,7 @@ body {
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .btn-map-action {
@@ -1257,11 +1256,11 @@ body {
   }
 
   .main-content {
-    gap: 28px;
+    gap: 24px;
   }
 
   .cheapest-hero-section {
-    margin-bottom: 4px;
+    margin-bottom: 24px;
   }
 
   .cheapest-card {
@@ -1273,8 +1272,8 @@ body {
   }
 
   .controls-section {
-    gap: 12px;
-    margin-top: 4px;
+    gap: 14px;
+    margin-top: 8px;
   }
 
   .filter-tabs-wrapper {
@@ -1303,43 +1302,52 @@ body {
   }
 
   .card-bottom-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     padding-top: 10px;
   }
 
   .card-meta-left {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    flex-wrap: nowrap;
-    gap: 8px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .live-badge {
+    font-size: 0.68rem;
+    padding: 2px 7px;
+  }
+
+  .meta-time {
+    font-size: 0.70rem;
   }
 
   .card-directions-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: auto;
   }
 
   .btn-map-action {
-    width: 100%;
-    min-height: 42px;
-    justify-content: center;
-    font-size: 0.84rem;
-    padding: 8px 10px;
-    border-radius: var(--radius-md);
+    min-height: 36px;
+    font-size: 0.78rem;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
   }
 
   .map-label-full {
-    display: inline;
+    display: none;
   }
 
   .map-label-short {
-    display: none;
+    display: inline;
   }
 }
 

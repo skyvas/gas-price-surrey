@@ -411,7 +411,7 @@
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = '⚡ via Live Report, GasBuddy';
+    heroSource.textContent = '⚡ Via Live Report';
 
     // Price
     heroPrice.textContent = topStation.price.toFixed(1);
@@ -447,7 +447,7 @@
       const googleMapUrl = getGoogleMapsUrl(station);
       const appleMapUrl = getAppleMapsUrl(station);
 
-      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ via Live Report, GasBuddy</span>`;
+      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ Via Live Report</span>`;
 
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
