@@ -30,7 +30,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <link rel="stylesheet" href="css/styles.css?v=2.5">
+  <link rel="stylesheet" href="css/styles.css?v=3.0">
 </head>
 <body>
   <div class="app-container">
@@ -144,7 +144,8 @@
         <div class="filter-tabs-wrapper">
           <div class="filter-tabs" role="tablist" aria-label="Filter gas stations by city">
             <button class="filter-tab active" data-city="all" role="tab" aria-selected="true">
-              <span>All Areas</span>
+              <span class="tab-label-full">All Areas</span>
+              <span class="tab-label-short">All</span>
               <span class="tab-count" id="countAll">0</span>
             </button>
             <button class="filter-tab" data-city="Surrey" role="tab" aria-selected="false">
@@ -190,10 +191,10 @@
           </div>
         </div>
 
-        <!-- Section Title & Sort Indicator -->
+        <!-- Section Title & Station Count -->
         <div class="list-header">
           <div class="list-title-group">
-            <h2 class="list-heading" id="stationListHeading">Stations Sorted by Price</h2>
+            <h2 class="list-heading" id="stationListHeading">All Gas Stations</h2>
           </div>
           <span class="showing-count" id="showingCountText">Loading stations...</span>
         </div>
@@ -320,6 +321,6 @@
     </footer>
   </div>
 
-  <script src="js/app.js?v=2.5"></script>
+  <script src="js/app.js?v=3.0"></script>
 </body>
 </html>
