@@ -32,7 +32,7 @@
         ]
       }
     },
-    "last_updated_utc": "2026-09-18T21:24:20.310580+00:00",
+    "last_updated_utc": "2026-09-18T21:24:30.852884+00:00",
     "last_updated_formatted": "September 18, 2026 at 09:24 PM UTC",
     "target_regions": "Surrey Area, Vancouver, Burnaby",
     "fuel_type_default": "regular",
@@ -41,7 +41,7 @@
       "diesel",
       "premium"
     ],
-    "total_stations": 55,
+    "total_stations": 54,
     "data_source_description": "100% Real-Time GasBuddy Live Driver Reports",
     "sources": [
       {
@@ -49,7 +49,7 @@
         "url": "https://www.gvrd.com/gas-prices/surrey.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 10
+        "stations_reported": 9
       },
       {
         "name": "GasBuddy (Delta)",
@@ -117,12 +117,12 @@
   },
   "cheapest_by_city": {
     "Surrey": "surrey_6191kinggeorgeblvd",
-    "Vancouver": "vancouver_2890ehastingsst",
     "White Rock": "white_rock_1595nicholrd",
-    "North Vancouver": "north_vancouver_1270lynnvalleyrd",
-    "West Vancouver": "west_vancouver_1613marinedr",
     "Delta": "delta_8985120st",
-    "Burnaby": "burnaby_3826canadaway"
+    "North Vancouver": "north_vancouver_1270lynnvalleyrd",
+    "Vancouver": "vancouver_2890ehastingsst",
+    "Burnaby": "burnaby_3826canadaway",
+    "West Vancouver": "west_vancouver_1613marinedr"
   },
   "stations": [
     {
@@ -1345,53 +1345,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2013573%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "surrey_1218572ave",
-      "station_name": "Chevron",
-      "brand": "Chevron",
-      "brand_official_url": "https://www.chevron.ca",
-      "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
-      "brand_color": "#00205b",
-      "region": "surrey_area",
-      "sub_area": "Surrey",
-      "neighborhood": "Surrey Central",
-      "price": 196.9,
-      "price_formatted": "196.9¢",
-      "price_per_litre": "$1.969",
-      "prices": {
-        "regular": 196.9,
-        "midgrade_89": 210.9,
-        "premium_91": 220.9,
-        "ultra_93": 230.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "12185 72 Ave",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 18, 1:42 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1044,
-      "longitude": -122.8011,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Chevron%2C%2012185%2072%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
