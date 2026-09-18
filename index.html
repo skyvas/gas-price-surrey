@@ -46,15 +46,23 @@
               <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"></path>
             </svg>
           </div>
-          <div>
+          <div class="brand-text-col">
             <h1 class="header-h1">Gas Price Finder</h1>
             <p class="header-subtitle" id="headerSubtitle">Surrey • Delta • White Rock, BC</p>
           </div>
         </div>
 
         <div class="header-actions">
+          <button id="configToggleBtn" class="refresh-btn config-toggle-btn" aria-label="Area & Fuel Settings" title="Change City Area & Gasoline Type">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span class="refresh-label">Area &amp; Fuel</span>
+          </button>
+
           <button id="refreshBtn" class="refresh-btn" aria-label="Refresh gas prices" title="Refresh prices">
-            <svg id="refreshIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <svg id="refreshIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"></path>
             </svg>
             <span class="refresh-label">Refresh</span>
@@ -62,34 +70,53 @@
         </div>
       </div>
 
-      <!-- Live Sync Status Banner -->
+      <!-- Live Sync Status Banner (Clickable to open settings) -->
       <div class="status-strip">
         <div class="status-indicator">
           <span class="pulse-dot"></span>
           <span id="updateTimeText" class="update-text">Updating prices...</span>
         </div>
-        <div class="fuel-type-badge" id="activeFuelBadge">
+        <button id="statusFuelBadgeBtn" class="fuel-type-badge fuel-badge-interactive" title="Click to change gasoline type or area">
           <span class="fuel-dot"></span>
           <span id="fuelBadgeText">Regular Gas (87)</span>
-        </div>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-      <!-- City Area & Fuel Type Selector Bar with Save Default -->
-      <section class="region-selector-section" aria-label="Configure Area and Fuel Preferences">
-        <div class="preferences-bar">
-          <!-- Area Selector -->
+    <!-- Collapsible Preferences Drawer / Modal (Hidden by default, opened via Area & Fuel button) -->
+    <div id="configDrawer" class="config-drawer" style="display: none;" aria-hidden="true">
+      <div class="config-backdrop" id="configBackdrop"></div>
+      <div class="config-modal-card">
+        <div class="drawer-header">
+          <div class="drawer-title-group">
+            <span class="pref-modal-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <h3 class="drawer-title">Area &amp; Gasoline Preferences</h3>
+          </div>
+          <button id="closeConfigDrawerBtn" class="drawer-close-btn" aria-label="Close preferences">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="drawer-body">
+          <!-- City Area Selector -->
           <div class="pref-group">
             <div class="pref-label-row">
               <span class="pref-icon icon-emerald">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
                   <circle cx="12" cy="9" r="2.5"></circle>
                 </svg>
               </span>
-              <label for="regionSelect" class="pref-label">City Area</label>
+              <label for="regionSelect" class="pref-label">Metro City Area</label>
             </div>
             <div class="pref-select-wrapper">
               <select id="regionSelect" class="pref-select" aria-label="Choose Metro Vancouver City Area">
@@ -99,9 +126,7 @@
                 <option value="all_metro">All Metro Vancouver</option>
               </select>
               <span class="select-chevron">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </div>
           </div>
@@ -110,14 +135,14 @@
           <div class="pref-group">
             <div class="pref-label-row">
               <span class="pref-icon icon-blue">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                   <path d="M3 22h12"></path>
                   <path d="M4 9h10"></path>
                   <path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"></path>
                   <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"></path>
                 </svg>
               </span>
-              <label for="fuelTypeSelect" class="pref-label">Gasoline Type</label>
+              <label for="fuelTypeSelect" class="pref-label">Gasoline Octane</label>
             </div>
             <div class="pref-select-wrapper">
               <select id="fuelTypeSelect" class="pref-select" aria-label="Choose Fuel Octane Rating">
@@ -127,32 +152,35 @@
                 <option value="ultra_93">Ultra / 94 (93+ Octane)</option>
               </select>
               <span class="select-chevron">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </div>
           </div>
 
-          <!-- Save Default Button -->
-          <div class="pref-action-group">
+          <!-- Save Default & Done Buttons -->
+          <div class="drawer-actions">
             <button id="saveDefaultBtn" class="btn-save-default" aria-label="Save current area and fuel type as default" title="Save this area and gasoline type as your default">
-              <svg id="saveDefaultIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg id="saveDefaultIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
               </svg>
               <span id="saveBtnText">Save as Default</span>
             </button>
+            <button id="applyPreferencesBtn" class="btn-done-modal">Done</button>
+          </div>
+
+          <!-- Saved Notification Toast -->
+          <div id="saveToast" class="save-toast" style="display: none;" role="status" aria-live="polite">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span id="saveToastText">Area &amp; fuel saved as default!</span>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Saved Notification Toast -->
-        <div id="saveToast" class="save-toast" style="display: none;" role="status" aria-live="polite">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span id="saveToastText">Area &amp; fuel type saved as default!</span>
-        </div>
-      </section>
+    <!-- Main Content -->
+    <main class="main-content">
 
       <!-- Highlighted Cheapest Gas Banner / Card -->
       <section id="cheapestGasSection" class="cheapest-hero-section" aria-label="Cheapest Gas in Selected Area">

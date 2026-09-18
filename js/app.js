@@ -142,6 +142,14 @@
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
   const sourcesList = document.getElementById('sourcesList');
 
+  // Preferences Drawer Modal Elements
+  const configDrawer = document.getElementById('configDrawer');
+  const configToggleBtn = document.getElementById('configToggleBtn');
+  const closeConfigDrawerBtn = document.getElementById('closeConfigDrawerBtn');
+  const configBackdrop = document.getElementById('configBackdrop');
+  const applyPreferencesBtn = document.getElementById('applyPreferencesBtn');
+  const statusFuelBadgeBtn = document.getElementById('statusFuelBadgeBtn');
+
   // Hero Card Elements
   const cheapestCard = document.getElementById('cheapestCard');
   const cheapestPillText = document.getElementById('cheapestPillText');
@@ -156,6 +164,25 @@
   const heroPricePerLitre = document.getElementById('heroPricePerLitre');
   const heroGoogleMapBtn = document.getElementById('heroGoogleMapBtn');
   const heroAppleMapBtn = document.getElementById('heroAppleMapBtn');
+
+  /**
+   * Preferences Drawer Modal visibility controllers
+   */
+  function openConfigDrawer() {
+    if (!configDrawer) return;
+    if (regionSelect) regionSelect.value = currentFilter.region;
+    if (fuelTypeSelect) fuelTypeSelect.value = currentFilter.fuelType;
+    configDrawer.style.display = 'flex';
+    configDrawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeConfigDrawer() {
+    if (!configDrawer) return;
+    configDrawer.style.display = 'none';
+    configDrawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
 
   /**
    * Device and platform detection for Maps navigation
@@ -708,7 +735,7 @@
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = `⚡ Via Live Report • ${activeFuel.octane}`;
+    heroSource.textContent = '⚡ Via Live Report';
 
     // Price for selected gasoline type
     heroPrice.textContent = topPrice.toFixed(1);
@@ -748,7 +775,7 @@
       const googleMapUrl = getGoogleMapsUrl(station);
       const appleMapUrl = getAppleMapsUrl(station);
 
-      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ Via Live Report • ${activeFuel.octane}</span>`;
+      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ Live Report</span>`;
 
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
@@ -834,6 +861,28 @@
    * Event Listeners Setup
    */
   function setupEvents() {
+    // Preferences Drawer Modal Open & Close Triggers
+    if (configToggleBtn) {
+      configToggleBtn.addEventListener('click', openConfigDrawer);
+    }
+    if (statusFuelBadgeBtn) {
+      statusFuelBadgeBtn.addEventListener('click', openConfigDrawer);
+    }
+    if (closeConfigDrawerBtn) {
+      closeConfigDrawerBtn.addEventListener('click', closeConfigDrawer);
+    }
+    if (configBackdrop) {
+      configBackdrop.addEventListener('click', closeConfigDrawer);
+    }
+    if (applyPreferencesBtn) {
+      applyPreferencesBtn.addEventListener('click', closeConfigDrawer);
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && configDrawer && configDrawer.style.display !== 'none') {
+        closeConfigDrawer();
+      }
+    });
+
     // City Area / Region Dropdown
     if (regionSelect) {
       regionSelect.addEventListener('change', (e) => {
