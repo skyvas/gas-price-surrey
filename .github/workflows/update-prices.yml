@@ -1,4 +1,4 @@
-name: Update Gas Prices & Deploy to GitHub Pages
+name: Update Gas Prices on gh-pages
 
 on:
   schedule:
@@ -6,34 +6,30 @@ on:
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
   push:
     branches:
-      - main
       - gh-pages
+      - main
     paths-ignore:
       - "README.md"
       - ".gitignore"
       - "data/gas_prices.json"
 
-# Permissions required for committing data and deploying to GitHub Pages
+# Permissions required for committing updated data to the repository
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
-# Allow one concurrent deployment
+# Prevent concurrent push collisions
 concurrency:
-  group: "pages"
+  group: "update-prices"
   cancel-in-progress: false
 
 jobs:
   update-prices:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout repository
+      - name: Checkout repository on gh-pages
         uses: actions/checkout@v4
         with:
+          ref: gh-pages
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -46,7 +42,7 @@ jobs:
         run: |
           python scripts/fetch_prices.py
 
-      - name: Commit and push updated gas price data
+      - name: Commit and push updated gas price data to gh-pages
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -55,22 +51,6 @@ jobs:
             echo "No changes in gas price data."
           else
             git commit -m "Auto-update gas prices [skip ci]"
-            TARGET_BRANCH="${{ github.ref_name }}"
-            if [ -z "$TARGET_BRANCH" ]; then
-              TARGET_BRANCH="gh-pages"
-            fi
-            git pull --rebase origin "$TARGET_BRANCH" || true
-            git push origin "$TARGET_BRANCH" || echo "Push skipped or failed, proceeding to deployment"
+            git pull --rebase origin gh-pages || true
+            git push origin gh-pages
           fi
-
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "."
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
