@@ -12,13 +12,13 @@
   <!-- SVG Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M3 22h12M4 9h10M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5'/></svg>">
 
-  <title>Cheapest Gas Prices | Surrey, Delta & White Rock BC</title>
-  <meta name="description" content="Find the cheapest regular gas prices in Surrey, Delta, and White Rock, BC. Updated every 30 minutes with one-tap Maps navigation for iPhone and Android.">
-  <meta name="keywords" content="gas prices surrey, cheapest gas delta, white rock gas prices, vancouver gas prices, regular fuel BC">
+  <title>Cheapest Gas Prices | Metro Vancouver, Surrey & Burnaby BC</title>
+  <meta name="description" content="Find the cheapest regular gas prices in Surrey Area (Surrey, Delta, White Rock), Vancouver (Downtown, East Van, North/West Van), and Burnaby, BC. Real-time GasBuddy reports with one-tap Maps navigation.">
+  <meta name="keywords" content="gas prices surrey, cheapest gas delta, white rock gas prices, vancouver gas prices, burnaby gas prices, north vancouver gas, west vancouver gas, regular fuel BC">
 
   <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="Cheapest Gas Prices in Surrey, Delta & White Rock BC">
-  <meta property="og:description" content="Real-time fuel prices updated every 30 minutes. Navigate directly to the cheapest pump in one tap.">
+  <meta property="og:title" content="Cheapest Gas Prices in Surrey, Vancouver & Burnaby BC">
+  <meta property="og:description" content="Real-time fuel prices updated live from community pump reports. Navigate directly to the cheapest pump in one tap.">
   <meta property="og:type" content="website">
 
   <!-- Modern Typography from Google Fonts -->
@@ -30,7 +30,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <link rel="stylesheet" href="css/styles.css?v=3.1">
+  <link rel="stylesheet" href="css/styles.css?v=4.0">
 </head>
 <body>
   <div class="app-container">
@@ -48,7 +48,7 @@
           </div>
           <div>
             <h1 class="header-h1">Gas Price Finder</h1>
-            <p class="header-subtitle">Surrey • Delta • White Rock, BC</p>
+            <p class="header-subtitle" id="headerSubtitle">Surrey • Delta • White Rock, BC</p>
           </div>
         </div>
 
@@ -68,15 +68,92 @@
           <span class="pulse-dot"></span>
           <span id="updateTimeText" class="update-text">Updating prices...</span>
         </div>
-        <div class="fuel-type-badge">
+        <div class="fuel-type-badge" id="activeFuelBadge">
           <span class="fuel-dot"></span>
-          <span>Regular Gas (87)</span>
+          <span id="fuelBadgeText">Regular Gas (87)</span>
         </div>
       </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
+      <!-- City Area & Fuel Type Selector Bar with Save Default -->
+      <section class="region-selector-section" aria-label="Configure Area and Fuel Preferences">
+        <div class="preferences-bar">
+          <!-- Area Selector -->
+          <div class="pref-group">
+            <div class="pref-label-row">
+              <span class="pref-icon icon-emerald">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+              </span>
+              <label for="regionSelect" class="pref-label">City Area</label>
+            </div>
+            <div class="pref-select-wrapper">
+              <select id="regionSelect" class="pref-select" aria-label="Choose Metro Vancouver City Area">
+                <option value="surrey_area" selected>Surrey Area (Surrey, Delta, White Rock)</option>
+                <option value="vancouver">Vancouver (Downtown, East Van, North &amp; West Van)</option>
+                <option value="burnaby">Burnaby (All Burnaby Areas)</option>
+                <option value="all_metro">All Metro Vancouver</option>
+              </select>
+              <span class="select-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Gasoline Type Selector -->
+          <div class="pref-group">
+            <div class="pref-label-row">
+              <span class="pref-icon icon-blue">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 22h12"></path>
+                  <path d="M4 9h10"></path>
+                  <path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"></path>
+                  <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"></path>
+                </svg>
+              </span>
+              <label for="fuelTypeSelect" class="pref-label">Gasoline Type</label>
+            </div>
+            <div class="pref-select-wrapper">
+              <select id="fuelTypeSelect" class="pref-select" aria-label="Choose Fuel Octane Rating">
+                <option value="regular" selected>Regular (87 Octane)</option>
+                <option value="midgrade_89">Midgrade (89 Octane)</option>
+                <option value="premium_91">Premium (91 Octane)</option>
+                <option value="ultra_93">Ultra / 94 (93+ Octane)</option>
+              </select>
+              <span class="select-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Save Default Button -->
+          <div class="pref-action-group">
+            <button id="saveDefaultBtn" class="btn-save-default" aria-label="Save current area and fuel type as default" title="Save this area and gasoline type as your default">
+              <svg id="saveDefaultIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+              <span id="saveBtnText">Save as Default</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Saved Notification Toast -->
+        <div id="saveToast" class="save-toast" style="display: none;" role="status" aria-live="polite">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span id="saveToastText">Area &amp; fuel type saved as default!</span>
+        </div>
+      </section>
+
       <!-- Highlighted Cheapest Gas Banner / Card -->
       <section id="cheapestGasSection" class="cheapest-hero-section" aria-label="Cheapest Gas in Selected Area">
         <div class="cheapest-card" id="cheapestCard">
@@ -140,26 +217,10 @@
 
       <!-- Filter Controls & Search -->
       <section class="controls-section">
-        <!-- City Filter Tabs -->
+        <!-- Dynamic City / District Filter Tabs -->
         <div class="filter-tabs-wrapper">
-          <div class="filter-tabs" role="tablist" aria-label="Filter gas stations by city">
-            <button class="filter-tab active" data-city="all" role="tab" aria-selected="true">
-              <span class="tab-label-full">All Areas</span>
-              <span class="tab-label-short">All</span>
-              <span class="tab-count" id="countAll">0</span>
-            </button>
-            <button class="filter-tab" data-city="Surrey" role="tab" aria-selected="false">
-              <span>Surrey</span>
-              <span class="tab-count" id="countSurrey">0</span>
-            </button>
-            <button class="filter-tab" data-city="Delta" role="tab" aria-selected="false">
-              <span>Delta</span>
-              <span class="tab-count" id="countDelta">0</span>
-            </button>
-            <button class="filter-tab" data-city="White Rock" role="tab" aria-selected="false">
-              <span>White Rock</span>
-              <span class="tab-count" id="countWhiteRock">0</span>
-            </button>
+          <div class="filter-tabs" id="filterTabsContainer" role="tablist" aria-label="Filter gas stations by city or district">
+            <!-- Dynamically populated via app.js -->
           </div>
         </div>
 
@@ -172,8 +233,10 @@
             <button class="brand-pill" data-brand="Petro-Canada"><span class="dot-brand dot-petro"></span>Petro-Canada</button>
             <button class="brand-pill" data-brand="Esso"><span class="dot-brand dot-esso"></span>Esso / Mobil</button>
             <button class="brand-pill" data-brand="Canco"><span class="dot-brand dot-canco"></span>Canco</button>
-            <button class="brand-pill" data-brand="Centex"><span class="dot-brand dot-centex"></span>Centex</button>
             <button class="brand-pill" data-brand="Super Save Gas"><span class="dot-brand dot-supersave"></span>Super Save</button>
+            <button class="brand-pill" data-brand="Centex"><span class="dot-brand dot-centex"></span>Centex</button>
+            <button class="brand-pill" data-brand="Smart Gas"><span class="dot-brand dot-smartgas"></span>Smart Gas</button>
+            <button class="brand-pill" data-brand="Co-op"><span class="dot-brand dot-coop"></span>Co-op</button>
           </div>
         </div>
 
@@ -235,7 +298,7 @@
             <h4>Live Data Sources & Brand Portals</h4>
           </div>
           <p class="info-text">
-            This tracker exclusively monitors real-time regular gasoline prices from <strong>GasBuddy's live community driver reports</strong> across Surrey, Delta (including Ladner & Tsawwassen), and White Rock. Every displayed price reflects an authentic, recent report directly from drivers at the pump.
+            This tracker monitors real-time regular gasoline prices exclusively from <strong>GasBuddy's live community driver reports</strong> across the <strong>Surrey Area</strong> (Surrey, Delta, Ladner, Tsawwassen, White Rock), <strong>Vancouver</strong> (Downtown, East Vancouver, North &amp; West Vancouver), and <strong>Burnaby</strong>. Every displayed price reflects an authentic, recent report directly from drivers at the pump.
           </p>
 
           <div class="official-portals-grid">
@@ -244,7 +307,7 @@
                 <span class="portal-brand-dot dot-chevron"></span>
                 <strong>Chevron Canada</strong>
               </div>
-              <p class="portal-desc">Official stations & Journie Rewards (Save up to 7¢/L)</p>
+              <p class="portal-desc">Official stations &amp; Journie Rewards (Save up to 7¢/L)</p>
               <span class="portal-link-text">Visit chevron.ca →</span>
             </a>
 
@@ -253,7 +316,7 @@
                 <span class="portal-brand-dot dot-shell"></span>
                 <strong>Shell Canada</strong>
               </div>
-              <p class="portal-desc">Station locator & BCAA / CAA partner discount (Save 3¢/L)</p>
+              <p class="portal-desc">Station locator &amp; BCAA / CAA partner discount (Save 3¢/L)</p>
               <span class="portal-link-text">Visit shell.ca →</span>
             </a>
 
@@ -262,16 +325,16 @@
                 <span class="portal-brand-dot dot-petro"></span>
                 <strong>Petro-Canada</strong>
               </div>
-              <p class="portal-desc">Station locations & Petro-Points / RBC card link (Save 3¢/L)</p>
+              <p class="portal-desc">Station locations &amp; Petro-Points / RBC card link (Save 3¢/L)</p>
               <span class="portal-link-text">Visit petro-canada.ca →</span>
             </a>
 
             <a href="https://www.esso.ca/en-ca/find-station" target="_blank" rel="noopener noreferrer" class="portal-card">
               <div class="portal-top">
                 <span class="portal-brand-dot dot-esso"></span>
-                <strong>Esso & Mobil Canada</strong>
+                <strong>Esso &amp; Mobil Canada</strong>
               </div>
-              <p class="portal-desc">Official finder & PC Optimum rewards (Earn 10-40 pts/L)</p>
+              <p class="portal-desc">Official finder &amp; PC Optimum rewards (Earn 10-40 pts/L)</p>
               <span class="portal-link-text">Visit esso.ca →</span>
             </a>
 
@@ -280,17 +343,8 @@
                 <span class="portal-brand-dot dot-canco"></span>
                 <strong>Canco Petroleum</strong>
               </div>
-              <p class="portal-desc">Independent BC price leader & Canco Cash Rewards</p>
+              <p class="portal-desc">Independent BC price leader &amp; Canco Cash Rewards</p>
               <span class="portal-link-text">Visit cancopetroleum.ca →</span>
-            </a>
-
-            <a href="https://centex.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-centex"></span>
-                <strong>Centex Petroleum</strong>
-              </div>
-              <p class="portal-desc">Western Canada independent pumps & discount fuel</p>
-              <span class="portal-link-text">Visit centex.ca →</span>
             </a>
 
             <a href="https://supersave.ca/gas-stations/" target="_blank" rel="noopener noreferrer" class="portal-card">
@@ -298,8 +352,35 @@
                 <span class="portal-brand-dot dot-supersave"></span>
                 <strong>Super Save Gas BC</strong>
               </div>
-              <p class="portal-desc">BC independent pricing & Surrey/Delta operations</p>
+              <p class="portal-desc">BC independent pricing leader across Surrey, Delta &amp; Burnaby</p>
               <span class="portal-link-text">Visit supersave.ca →</span>
+            </a>
+
+            <a href="https://centex.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-centex"></span>
+                <strong>Centex Petroleum</strong>
+              </div>
+              <p class="portal-desc">Western Canada independent pumps &amp; discount fuel</p>
+              <span class="portal-link-text">Visit centex.ca →</span>
+            </a>
+
+            <a href="https://www.smartgas.ca" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-smartgas"></span>
+                <strong>Smart Gas</strong>
+              </div>
+              <p class="portal-desc">Independent low price fuel on Canada Way in Burnaby</p>
+              <span class="portal-link-text">Visit smartgas.ca →</span>
+            </a>
+
+            <a href="https://www.co-op.crs" target="_blank" rel="noopener noreferrer" class="portal-card">
+              <div class="portal-top">
+                <span class="portal-brand-dot dot-coop"></span>
+                <strong>Co-op Petroleum</strong>
+              </div>
+              <p class="portal-desc">Member equity cash back &amp; high quality fuels in Delta</p>
+              <span class="portal-link-text">Visit co-op.crs →</span>
             </a>
           </div>
 
@@ -313,7 +394,7 @@
     <!-- Footer -->
     <footer class="app-footer">
       <p class="footer-meta">
-        <span>Gas Price Finder • Surrey, Delta, White Rock BC</span>
+        <span>Gas Price Finder • Surrey, Vancouver &amp; Burnaby BC</span>
       </p>
       <p class="footer-subtext">
         Tapping <strong>Open in Maps</strong> opens the selected station directly in Apple Maps on iOS or Google Maps on Android.
@@ -321,6 +402,6 @@
     </footer>
   </div>
 
-  <script src="js/app.js?v=3.1"></script>
+  <script src="js/app.js?v=4.0"></script>
 </body>
 </html>

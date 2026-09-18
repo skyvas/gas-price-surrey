@@ -337,6 +337,188 @@ body {
 }
 
 /* ==========================================================================
+   City Area & Gasoline Type Preferences Bar
+   ========================================================================== */
+.region-selector-section {
+  width: 100%;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.preferences-bar {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(30, 41, 59, 0.8) 50%, rgba(15, 23, 42, 0.95) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: flex-end;
+  gap: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-normal);
+}
+
+@media (max-width: 768px) {
+  .preferences-bar {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.pref-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pref-label-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pref-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pref-icon.icon-emerald {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--emerald-400);
+}
+
+.pref-icon.icon-blue {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.pref-label {
+  font-size: 0.80rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.pref-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.pref-select {
+  width: 100%;
+  height: 44px;
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-md);
+  padding: 0 36px 0 12px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.pref-select:hover {
+  border-color: var(--emerald-400);
+  background: rgba(15, 23, 42, 0.96);
+}
+
+.pref-select:focus {
+  border-color: var(--emerald-400);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.22);
+}
+
+.pref-select option {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 10px;
+  font-weight: 500;
+}
+
+.pref-action-group {
+  display: flex;
+  align-items: flex-end;
+}
+
+.btn-save-default {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.3) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+  color: var(--emerald-300);
+  border-radius: var(--radius-md);
+  height: 44px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.btn-save-default:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(5, 150, 105, 0.45) 100%);
+  border-color: var(--emerald-400);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-save-default:active {
+  transform: scale(0.96);
+}
+
+.btn-save-default.saved {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border-color: #34d399;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
+/* Save Toast */
+.save-toast {
+  position: absolute;
+  top: -46px;
+  right: 16px;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.80rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  animation: toastFadeIn 0.3s ease-out;
+}
+
+@keyframes toastFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
    Cheapest Gas Hero Spotlight
    ========================================================================== */
 .cheapest-hero-section {
@@ -728,6 +910,8 @@ body {
 .dot-canco { background: #0284c7; }
 .dot-centex { background: #15803d; }
 .dot-supersave { background: #eab308; }
+.dot-smartgas { background: #10b981; }
+.dot-coop { background: #d9262e; }
 
 /* Search Bar */
 .search-container {

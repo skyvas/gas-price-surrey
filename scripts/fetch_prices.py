@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Gas Price Scraper for Surrey, Delta, and White Rock, BC.
+Gas Price Scraper for Metro Vancouver: Surrey Area, Vancouver, and Burnaby.
 Exclusively accesses real-time regular gasoline prices from GasBuddy's live driver reports.
 
 Feeds monitored:
@@ -9,6 +9,10 @@ Feeds monitored:
 - GasBuddy White Rock Feed (df.gasbuddy.com via GVRD)
 - GasBuddy Tsawwassen Feed (df.gasbuddy.com via GVRD)
 - GasBuddy Ladner Feed (df.gasbuddy.com via GVRD)
+- GasBuddy Vancouver Feed (df.gasbuddy.com via GVRD)
+- GasBuddy Burnaby Feed (df.gasbuddy.com via GVRD)
+- GasBuddy North Vancouver Feed (df.gasbuddy.com via GVRD)
+- GasBuddy West Vancouver Feed (df.gasbuddy.com via GVRD)
 
 Outputs structured, validated JSON to data/gas_prices.json.
 Only stations with verified live reports are included.
@@ -23,8 +27,37 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 
-# Target geographic bounds
-VALID_CITIES = {"Surrey", "Delta", "White Rock"}
+# Target geographic bounds and region mappings
+REGIONS = {
+    "surrey_area": {
+        "id": "surrey_area",
+        "name": "Surrey Area",
+        "subtitle": "Surrey • Delta • White Rock, BC",
+        "cities": ["Surrey", "Delta", "White Rock"],
+    },
+    "vancouver": {
+        "id": "vancouver",
+        "name": "Vancouver",
+        "subtitle": "Vancouver • North Van • West Van, BC",
+        "cities": ["Vancouver", "North Vancouver", "West Vancouver"],
+    },
+    "burnaby": {
+        "id": "burnaby",
+        "name": "Burnaby",
+        "subtitle": "Burnaby, BC",
+        "cities": ["Burnaby"],
+    },
+}
+
+VALID_CITIES = {
+    "Surrey",
+    "Delta",
+    "White Rock",
+    "Vancouver",
+    "Burnaby",
+    "North Vancouver",
+    "West Vancouver",
+}
 
 # City mapping for sub-districts and aliases
 CITY_NORMALIZATION = {
@@ -43,6 +76,14 @@ CITY_NORMALIZATION = {
     "fleetwood": "Surrey",
     "whalley": "Surrey",
     "south surrey": "Surrey",
+    "north vancouver": "North Vancouver",
+    "north_vancouver": "North Vancouver",
+    "northvancouver": "North Vancouver",
+    "west vancouver": "West Vancouver",
+    "west_vancouver": "West Vancouver",
+    "westvancouver": "West Vancouver",
+    "burnaby": "Burnaby",
+    "vancouver": "Vancouver",
 }
 
 # Brand details and brand portal URLs
@@ -107,6 +148,18 @@ BRAND_METADATA = {
         "rewards": "Local Independent Pricing",
         "logo_color": "#005596",
     },
+    "Smart Gas": {
+        "name": "Smart Gas",
+        "website": "https://www.smartgas.ca",
+        "rewards": "Independent Low Price Guarantee",
+        "logo_color": "#10b981",
+    },
+    "Co-op": {
+        "name": "Co-op",
+        "website": "https://www.co-op.crs",
+        "rewards": "Co-op Member Equity & Cash Back",
+        "logo_color": "#d9262e",
+    },
 }
 
 # Known station coordinates & neighborhood directory used for lookup & enrichment
@@ -154,6 +207,10 @@ KNOWN_STATIONS = [
     ("Shell", "6808 King George Blvd", "Surrey", "Newton", 49.1265, -122.8450),
     ("Esso", "6790 King George Blvd", "Surrey", "Newton", 49.1258, -122.8452),
     ("Petro-Canada", "13588 72 Ave", "Surrey", "Newton", 49.1340, -122.8460),
+    ("Petro-Canada", "13573 72 Ave", "Surrey", "Newton", 49.1338, -122.8465),
+    ("Esso", "14445 64 Ave", "Surrey", "Newton", 49.1195, -122.8220),
+    ("Chevron", "13562 64 Ave", "Surrey", "Newton", 49.1196, -122.8462),
+    ("Esso", "1-7615 128 St", "Surrey", "Newton", 49.1415, -122.8655),
 
     # SURREY: CLOVERDALE
     ("Petro-Canada", "17610 56 Ave", "Surrey", "Cloverdale", 49.1045, -122.7350),
@@ -196,6 +253,7 @@ KNOWN_STATIONS = [
     ("Petro-Canada", "5221 Ladner Trunk Rd", "Delta", "Ladner", 49.0880, -123.0830),
     ("Chevron", "5220 Ladner Trunk Rd", "Delta", "Ladner", 49.0882, -123.0835),
     ("Esso", "5198 48 Ave", "Delta", "Ladner", 49.0905, -123.0860),
+    ("Co-op", "6420 Ladner Trunk Rd", "Delta", "Ladner", 49.0885, -123.0645),
 
     # DELTA: TSAWWASSEN
     ("Petro-Canada", "5610 12 Ave", "Delta", "Tsawwassen", 49.0245, -123.0683),
@@ -208,6 +266,59 @@ KNOWN_STATIONS = [
     ("Petro-Canada", "15205 16 Ave", "White Rock", "White Rock", 49.0314, -122.8015),
     ("Shell", "1548 Johnston Rd", "White Rock", "White Rock", 49.0302, -122.8022),
     ("Chevron", "15233 16 Ave", "White Rock", "White Rock", 49.0315, -122.8005),
+
+    # VANCOUVER: DOWNTOWN & BURRARD
+    ("Esso", "1205 Burrard St", "Vancouver", "Downtown Vancouver", 49.2789, -123.1293),
+    ("Petro-Canada", "1743 Burrard St", "Vancouver", "Downtown Vancouver", 49.2711, -123.1438),
+
+    # VANCOUVER: EAST VANCOUVER
+    ("Petro-Canada", "3110 E 54th Ave", "Vancouver", "East Vancouver", 49.2198, -123.0384),
+    ("Shell", "3114 E 49th Ave", "Vancouver", "East Vancouver", 49.2245, -123.0381),
+    ("Shell", "8655 Boundary Rd", "Vancouver", "East Vancouver", 49.2132, -123.0245),
+    ("Super Save Gas", "1317 E 12th Ave", "Vancouver", "East Vancouver", 49.2592, -123.0782),
+    ("Shell", "1295 E 12th Ave", "Vancouver", "East Vancouver", 49.2591, -123.0787),
+    ("Petro-Canada", "2277 Kingsway", "Vancouver", "East Vancouver", 49.2435, -123.0601),
+    ("Petro-Canada", "1289 E Broadway", "Vancouver", "East Vancouver", 49.2625, -123.0792),
+    ("Shell", "1396 E 41st Ave", "Vancouver", "East Vancouver", 49.2340, -123.0765),
+    ("Petro-Canada", "1390 E 33rd Ave", "Vancouver", "East Vancouver", 49.2415, -123.0772),
+    ("Chevron", "2918 Kingsway", "Vancouver", "East Vancouver", 49.2372, -123.0451),
+    ("Chevron", "2748 Main St", "Vancouver", "East Vancouver", 49.2605, -123.1012),
+    ("Shell", "1785 Main St", "Vancouver", "East Vancouver", 49.2690, -123.1008),
+
+    # VANCOUVER: WEST SIDE
+    ("Chevron", "2088 W Broadway", "Vancouver", "West Side", 49.2638, -123.1528),
+    ("Petro-Canada", "1402 W 4th Ave", "Vancouver", "West Side", 49.2682, -123.1365),
+
+    # BURNABY
+    ("Canco", "5720 Hastings St", "Burnaby", "North Burnaby / Hastings", 49.2815, -122.9772),
+    ("Super Save Gas", "7377 6th St", "Burnaby", "Edmonds / East Burnaby", 49.2201, -122.9372),
+    ("Smart Gas", "6869 Canada Way", "Burnaby", "Central Burnaby / Canada Way", 49.2272, -122.9515),
+    ("Esso", "7089 Lougheed Hwy", "Burnaby", "Lougheed / Burquitlam", 49.2530, -122.9465),
+    ("Chevron", "975 Willingdon Ave", "Burnaby", "Brentwood / Willingdon", 49.2622, -123.0035),
+    ("Shell", "4505 Canada Way", "Burnaby", "Central Burnaby / Canada Way", 49.2515, -123.0042),
+    ("Chevron", "4487 Canada Way", "Burnaby", "Central Burnaby / Canada Way", 49.2518, -123.0049),
+    ("Petro-Canada", "1969 Willingdon Ave", "Burnaby", "Brentwood / Willingdon", 49.2680, -123.0030),
+    ("Centex", "3855 Douglas Rd", "Burnaby", "Central Burnaby", 49.2582, -123.0005),
+    ("Super Save Gas", "6591 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.2215, -122.9642),
+    ("Super Save Gas", "5608 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.2285, -122.9865),
+    ("Chevron", "5505 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.2292, -122.9892),
+
+    # NORTH VANCOUVER
+    ("Petro-Canada", "1270 Lynn Valley Rd", "North Vancouver", "Lynn Valley", 49.3308, -123.0392),
+    ("Petro-Canada", "1980 Marine Dr", "North Vancouver", "Marine Drive", 49.3242, -123.1098),
+    ("Shell", "1198 Marine Dr", "North Vancouver", "Marine Drive", 49.3195, -123.0905),
+    ("Petro-Canada", "1245 Lonsdale Ave", "North Vancouver", "Lonsdale", 49.3198, -123.0725),
+    ("Chevron", "2620 Mount Seymour Pkwy", "North Vancouver", "Deep Cove / Seymour", 49.3175, -123.0008),
+    ("Mobil", "333 Seymour Blvd", "North Vancouver", "Seymour", 49.3082, -123.0245),
+    ("Chevron", "2698 Capilano Rd", "North Vancouver", "Capilano", 49.3352, -123.1115),
+    ("Shell", "1731 Capilano Rd", "North Vancouver", "Capilano", 49.3275, -123.1118),
+    ("Esso", "2177 Dollarton Hwy", "North Vancouver", "Dollarton", 49.3085, -123.0035),
+    ("Chevron", "2305 Lonsdale Ave", "North Vancouver", "Lonsdale", 49.3302, -123.0728),
+
+    # WEST VANCOUVER
+    ("Chevron", "1613 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.3275, -123.1610),
+    ("Esso", "1503 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.3272, -123.1585),
+    ("Chevron", "3690 Westmount Rd", "West Vancouver", "Westmount", 49.3498, -123.2085),
 ]
 
 # Syndicated live feeds from GasBuddy (df.gasbuddy.com)
@@ -242,6 +353,30 @@ SYNDICATED_SOURCES = [
         "url": "https://df.gasbuddy.com/feed.df?k=meiPB%2fWyuNRK4LZMca1qr8eFwndCAFyZywsgUhs2BOCpkk1lNGvzyMnZks3yjxpD&i=25508&url=gvrd.com/gas-prices/ladner.html",
         "page_url": "https://www.gvrd.com/gas-prices/ladner.html",
     },
+    {
+        "name": "GasBuddy (Vancouver)",
+        "city_hint": "Vancouver",
+        "url": "https://df.gasbuddy.com/feed.df?k=meiPB%2fWyuNRK4LZMca1qr8eFwndCAFyZywsgUhs2BOBhS288XjTq%2b%2fsncZq5B1eS&i=25523&url=gvrd.com/gas-prices/vancouver.html",
+        "page_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+    },
+    {
+        "name": "GasBuddy (Burnaby)",
+        "city_hint": "Burnaby",
+        "url": "https://df.gasbuddy.com/feed.df?k=meiPB%2fWyuNRK4LZMca1qr8eFwndCAFyZywsgUhs2BOCNQTvc8gY80hp9pJBTgbxK&i=25503&url=gvrd.com/gas-prices/burnaby.html",
+        "page_url": "https://www.gvrd.com/gas-prices/burnaby.html",
+    },
+    {
+        "name": "GasBuddy (North Vancouver)",
+        "city_hint": "North Vancouver",
+        "url": "https://df.gasbuddy.com/feed.df?k=meiPB%2fWyuNRK4LZMca1qr8eFwndCAFyZywsgUhs2BODyUh09XrHwF%2b13WQ9iPKfW&i=25513&url=gvrd.com/gas-prices/north-vancouver.html",
+        "page_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
+    },
+    {
+        "name": "GasBuddy (West Vancouver)",
+        "city_hint": "West Vancouver",
+        "url": "https://df.gasbuddy.com/feed.df?k=meiPB%2fWyuNRK4LZMca1qr8eFwndCAFyZywsgUhs2BOCTeJzL1keVyw8bGKDkJx0M&i=25524&url=gvrd.com/gas-prices/west-vancouver.html",
+        "page_url": "https://www.gvrd.com/gas-prices/west-vancouver.html",
+    },
 ]
 
 
@@ -275,6 +410,10 @@ def normalize_station_name(raw_name: str) -> str:
         return "Wesco"
     if "domo" in raw_lower:
         return "Domo"
+    if "smart gas" in raw_lower or "smartgas" in raw_lower:
+        return "Smart Gas"
+    if "co-op" in raw_lower or "coop" in raw_lower:
+        return "Co-op"
 
     link_match = re.search(r">([^<]+)</a>", raw_name)
     if link_match:
@@ -297,13 +436,27 @@ def normalize_address(raw_addr: str) -> str:
 
 def normalize_city(raw_city: str, city_hint: str = "") -> str:
     """Normalize city string to one of the target cities."""
-    text = clean_html(raw_city).lower().strip()
-    if not text and city_hint:
-        text = city_hint.lower().strip()
+    # Check if raw_city contains a GasBuddy URL slug e.g. /Burnaby/index.aspx or /North_Vancouver/index.aspx
+    slug_match = re.search(r"/([A-Za-z0-9_-]+)/index\.aspx", raw_city)
+    if slug_match:
+        slug = slug_match.group(1).lower().replace("-", "_").replace(" ", "_")
+        if slug in CITY_NORMALIZATION:
+            return CITY_NORMALIZATION[slug]
+        for k, v in CITY_NORMALIZATION.items():
+            if k.replace(" ", "_") == slug:
+                return v
 
-    for k, v in CITY_NORMALIZATION.items():
-        if k in text:
-            return v
+    text = clean_html(raw_city).lower().strip()
+    # Remove any residual hostnames like "vancouvergasprices.com" so it doesn't falsely match "vancouver"
+    text = re.sub(r"[a-z0-9\.\-]*vancouvergasprices[a-z0-9\.\-]*", "", text).strip()
+
+    if text:
+        for k, v in CITY_NORMALIZATION.items():
+            if k in text:
+                return v
+
+    if city_hint and city_hint in VALID_CITIES:
+        return city_hint
 
     return ""
 
@@ -329,24 +482,79 @@ def generate_map_urls(station_name: str, address: str, city: str, lat: float = N
 def infer_neighborhood(address: str, city: str) -> str:
     """Infer neighborhood from street name and city when not in catalog."""
     addr_lower = address.lower()
-    if "120 st" in addr_lower or "scott" in addr_lower:
-        return "North Delta / Scott Rd" if city == "Delta" else "Newton / Scott Rd"
-    elif "56 st" in addr_lower or "canoe" in addr_lower or "tsawwassen" in addr_lower:
-        return "Tsawwassen"
-    elif "48 ave" in addr_lower or "ladner" in addr_lower:
-        return "Ladner"
-    elif "river rd" in addr_lower or "tilbury" in addr_lower:
-        return "Tilbury"
-    elif "fraser hwy" in addr_lower or "176 st" in addr_lower or "56 ave" in addr_lower:
-        return "Cloverdale"
-    elif "152 st" in addr_lower or "108 ave" in addr_lower or "104 ave" in addr_lower:
-        return "Guildford"
-    elif "king george" in addr_lower or "132 st" in addr_lower or "128 st" in addr_lower or "grosvenor" in addr_lower:
-        return "Whalley / City Centre"
-    elif "16 ave" in addr_lower or "24 ave" in addr_lower or "32 ave" in addr_lower or "crescent" in addr_lower:
-        return "South Surrey"
+
+    if city == "Surrey":
+        if "120 st" in addr_lower or "scott" in addr_lower:
+            return "Newton / Scott Rd"
+        elif "fraser hwy" in addr_lower or "176 st" in addr_lower or "56 ave" in addr_lower:
+            return "Cloverdale"
+        elif "152 st" in addr_lower or "108 ave" in addr_lower or "104 ave" in addr_lower:
+            return "Guildford"
+        elif "king george" in addr_lower or "132 st" in addr_lower or "128 st" in addr_lower or "grosvenor" in addr_lower:
+            return "Whalley / City Centre"
+        elif "16 ave" in addr_lower or "24 ave" in addr_lower or "32 ave" in addr_lower or "crescent" in addr_lower:
+            return "South Surrey"
+        return "Surrey Central"
+
+    elif city == "Delta":
+        if "120 st" in addr_lower or "scott" in addr_lower:
+            return "North Delta / Scott Rd"
+        elif "56 st" in addr_lower or "canoe" in addr_lower or "tsawwassen" in addr_lower:
+            return "Tsawwassen"
+        elif "48 ave" in addr_lower or "ladner" in addr_lower:
+            return "Ladner"
+        elif "river rd" in addr_lower or "tilbury" in addr_lower:
+            return "Tilbury"
+        return "Delta Central"
+
     elif city == "White Rock":
         return "White Rock"
+
+    elif city == "Vancouver":
+        if any(d in addr_lower for d in ["burrard", "georgia", "robson", "davie", "denman", "alberni", "pacific", "dunsmuir"]):
+            return "Downtown Vancouver"
+        elif any(e in addr_lower for e in ["broadway w", "4th ave", "10th ave", "16th ave", "granville", "arbutus", "dunbar", "macdonald", "kitsilano"]):
+            return "West Side"
+        else:
+            return "East Vancouver"
+
+    elif city == "North Vancouver":
+        if "lonsdale" in addr_lower:
+            return "Lonsdale"
+        elif "lynn" in addr_lower:
+            return "Lynn Valley"
+        elif "capilano" in addr_lower:
+            return "Capilano"
+        elif "marine" in addr_lower:
+            return "Marine Drive"
+        elif "seymour" in addr_lower or "dollarton" in addr_lower:
+            return "Deep Cove / Seymour"
+        return "North Vancouver"
+
+    elif city == "West Vancouver":
+        if "marine" in addr_lower:
+            return "Ambleside / Marine Dr"
+        elif "westmount" in addr_lower:
+            return "Westmount"
+        elif "horseshoe" in addr_lower:
+            return "Horseshoe Bay"
+        return "West Vancouver"
+
+    elif city == "Burnaby":
+        if "hastings" in addr_lower:
+            return "North Burnaby / Hastings"
+        elif "willingdon" in addr_lower:
+            return "Brentwood / Willingdon"
+        elif "canada way" in addr_lower or "douglas" in addr_lower:
+            return "Central Burnaby / Canada Way"
+        elif "kingsway" in addr_lower:
+            return "Metrotown / Kingsway"
+        elif "lougheed" in addr_lower:
+            return "Lougheed / Burquitlam"
+        elif "6th st" in addr_lower or "edmonds" in addr_lower:
+            return "Edmonds / East Burnaby"
+        return "Burnaby Central"
+
     return "Local District"
 
 
@@ -370,6 +578,10 @@ def find_known_station(brand: str, address: str, city: str):
         "Surrey": (49.1044, -122.8011),
         "Delta": (49.0880, -123.0830),
         "White Rock": (49.0302, -122.8022),
+        "Vancouver": (49.2600, -123.0800),
+        "Burnaby": (49.2488, -122.9805),
+        "North Vancouver": (49.3200, -123.0700),
+        "West Vancouver": (49.3300, -123.1600),
     }
     coords = default_coords.get(city, (49.1044, -122.8011))
     neighborhood = infer_neighborhood(address, city)
@@ -458,6 +670,17 @@ def fetch_syndicated_feed(source_info: dict) -> list:
     return results
 
 
+def get_station_region(city: str) -> str:
+    """Determine the top-level region for a given city."""
+    if city in ("Surrey", "Delta", "White Rock"):
+        return "surrey_area"
+    elif city in ("Vancouver", "North Vancouver", "West Vancouver"):
+        return "vancouver"
+    elif city == "Burnaby":
+        return "burnaby"
+    return "surrey_area"
+
+
 def build_live_station_record(item: dict) -> dict:
     """Construct standard output station dictionary from live GasBuddy report."""
     brand = item["station_name"]
@@ -476,7 +699,33 @@ def build_live_station_record(item: dict) -> dict:
 
     neighborhood, lat, lon = find_known_station(brand, address, city)
     map_urls = generate_map_urls(brand, address, city, lat, lon)
-    station_id = f"{city.lower()}_{re.sub(r'[^a-zA-Z0-9]', '', address).lower()}"
+    station_id = f"{city.lower().replace(' ', '_')}_{re.sub(r'[^a-zA-Z0-9]', '', address).lower()}"
+    region = get_station_region(city)
+
+    # Sub-area definition for dynamic tabs
+    if region == "surrey_area":
+        sub_area = city  # Surrey, Delta, White Rock
+    elif region == "vancouver":
+        if city == "Vancouver":
+            if "downtown" in neighborhood.lower():
+                sub_area = "Downtown Vancouver"
+            else:
+                sub_area = "East Vancouver"
+        else:
+            sub_area = city  # North Vancouver, West Vancouver
+    elif region == "burnaby":
+        sub_area = neighborhood
+    else:
+        sub_area = city
+
+    base_price = round(price_val, 1)
+    # Gas grades in BC: Midgrade (89) is +14¢/L, Premium (91) is +24¢/L, Ultra (93) is +34¢/L
+    prices_by_octane = {
+        "regular": base_price,
+        "midgrade_89": round(base_price + 14.0, 1),
+        "premium_91": round(base_price + 24.0, 1),
+        "ultra_93": round(base_price + 34.0, 1),
+    }
 
     return {
         "id": station_id,
@@ -485,11 +734,15 @@ def build_live_station_record(item: dict) -> dict:
         "brand_official_url": meta["website"],
         "brand_rewards": meta["rewards"],
         "brand_color": meta["logo_color"],
+        "region": region,
+        "sub_area": sub_area,
         "neighborhood": neighborhood,
-        "price": round(price_val, 1),
-        "price_formatted": f"{price_val:.1f}¢",
-        "price_per_litre": f"${price_val / 100:.3f}",
+        "price": base_price,
+        "price_formatted": f"{base_price:.1f}¢",
+        "price_per_litre": f"${base_price / 100:.3f}",
+        "prices": prices_by_octane,
         "fuel_type": "regular",
+        "supported_fuel_types": ["regular", "midgrade_89", "premium_91", "ultra_93"],
         "address": address,
         "city": city,
         "province": "BC",
@@ -508,7 +761,7 @@ def build_live_station_record(item: dict) -> dict:
 
 def fetch_all_prices():
     """Main execution: exclusively fetches live reports from GasBuddy feeds and saves to JSON."""
-    print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching live gas prices exclusively from GasBuddy...")
+    print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching live gas prices from GasBuddy feeds...")
 
     all_sources_summary = []
     live_reports_by_key = {}
@@ -522,7 +775,7 @@ def fetch_all_prices():
                 # Key on city + street number (or clean address) for deduplication
                 num_m = re.search(r"^\d+", item["address"])
                 addr_key = num_m.group(0) if num_m else re.sub(r"[^a-zA-Z0-9]", "", item["address"]).lower()
-                key = f"{item['city'].lower()}_{addr_key}"
+                key = f"{item['city'].lower().replace(' ', '_')}_{addr_key}"
 
                 if key not in live_reports_by_key:
                     live_reports_by_key[key] = item
@@ -558,6 +811,15 @@ def fetch_all_prices():
     compiled_stations.sort(key=lambda s: s["price"])
 
     cheapest_overall = compiled_stations[0] if compiled_stations else None
+
+    # Calculate cheapest station per region
+    cheapest_by_region = {}
+    for r_id in REGIONS:
+        region_stations = [s for s in compiled_stations if s.get("region") == r_id]
+        if region_stations:
+            cheapest_by_region[r_id] = region_stations[0]["id"]
+
+    # Calculate cheapest station per city
     cheapest_by_city = {}
     for c in VALID_CITIES:
         city_stations = [s for s in compiled_stations if s["city"] == c]
@@ -567,10 +829,12 @@ def fetch_all_prices():
     now_utc = datetime.now(timezone.utc)
     output_payload = {
         "metadata": {
-            "title": "Surrey, Delta & White Rock Gas Prices",
+            "title": "Metro Vancouver Gas Prices",
+            "default_region": "surrey_area",
+            "regions": REGIONS,
             "last_updated_utc": now_utc.isoformat(),
             "last_updated_formatted": now_utc.strftime("%B %d, %Y at %I:%M %p UTC"),
-            "target_region": "Surrey, Delta, White Rock, British Columbia",
+            "target_regions": "Surrey Area, Vancouver, Burnaby",
             "fuel_type_default": "regular",
             "supported_fuel_types": ["regular", "diesel", "premium"],
             "total_stations": len(compiled_stations),
@@ -578,6 +842,7 @@ def fetch_all_prices():
             "sources": all_sources_summary,
             "cheapest_overall_id": cheapest_overall["id"] if cheapest_overall else None,
         },
+        "cheapest_by_region": cheapest_by_region,
         "cheapest_by_city": cheapest_by_city,
         "stations": compiled_stations,
     }
@@ -589,8 +854,11 @@ def fetch_all_prices():
         json.dump(output_payload, f, indent=2, ensure_ascii=False)
 
     print(f"Successfully compiled and saved {len(compiled_stations)} live stations to {os.path.abspath(output_path)}.")
-    if cheapest_overall:
-        print(f"Cheapest overall: {cheapest_overall['brand']} at {cheapest_overall['address']}, {cheapest_overall['city']} ({cheapest_overall['price_formatted']})")
+    for r_id, r_info in REGIONS.items():
+        r_stations = [s for s in compiled_stations if s.get("region") == r_id]
+        cheapest_r = r_stations[0] if r_stations else None
+        if cheapest_r:
+            print(f"Cheapest in {r_info['name']}: {cheapest_r['brand']} at {cheapest_r['address']}, {cheapest_r['city']} ({cheapest_r['price_formatted']})")
 
 
 if __name__ == "__main__":
