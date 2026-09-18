@@ -2,16 +2,15 @@ name: Update Gas Prices & Deploy to GitHub Pages
 
 on:
   schedule:
-    # Run every 5 minutes
-    - cron: '*/5 * * * *'
+    - cron: "*/5 * * * *"
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
   push:
     branches:
       - main
     paths-ignore:
-      - 'README.md'
-      - '.gitignore'
-      - 'data/gas_prices.json'
+      - "README.md"
+      - ".gitignore"
+      - "data/gas_prices.json"
 
 # Permissions required for committing data and deploying to GitHub Pages
 permissions:
@@ -21,7 +20,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: false
 
 jobs:
@@ -40,7 +39,7 @@ jobs:
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Fetch and process latest gas prices
         run: |
@@ -65,7 +64,7 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "."
 
       - name: Deploy to GitHub Pages
         id: deployment
