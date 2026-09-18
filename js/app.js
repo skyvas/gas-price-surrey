@@ -17,7 +17,6 @@
   let currentFilter = {
     city: 'all',
     brand: 'all',
-    truth: 'all',
     search: ''
   };
 
@@ -33,12 +32,8 @@
   const showingCountText = document.getElementById('showingCountText');
   const sourcesList = document.getElementById('sourcesList');
 
-  // Truth Stats & Precedence Elements
-  const statOfficialCount = document.getElementById('statOfficialCount');
+  // Live Stats Elements
   const statLiveCount = document.getElementById('statLiveCount');
-  const statDirCount = document.getElementById('statDirCount');
-  const statTotalCount = document.getElementById('statTotalCount');
-  const truthPills = document.querySelectorAll('.truth-pill');
 
   // Hero Card Elements
   const cheapestCard = document.getElementById('cheapestCard');
@@ -255,7 +250,7 @@
   function onDataLoaded() {
     if (appData.metadata) {
       updateTimeText.textContent = formatRelativeTime(appData.metadata.last_updated_utc);
-      updateTruthStats();
+      updateLiveStats();
     }
 
     updateTabCounts();
@@ -264,15 +259,12 @@
   }
 
   /**
-   * Update numbers inside Truth Precedence Protocol Banner
+   * Update live stations count in header strip
    */
-  function updateTruthStats() {
-    if (!appData.metadata || !appData.metadata.truth_stats) return;
-    const stats = appData.metadata.truth_stats;
-    if (statOfficialCount) statOfficialCount.textContent = stats.official_direct_count || 0;
-    if (statLiveCount) statLiveCount.textContent = stats.crowdsourced_count || 0;
-    if (statDirCount) statDirCount.textContent = stats.official_directory_count || 0;
-    if (statTotalCount) statTotalCount.textContent = appData.stations ? appData.stations.length : 0;
+  function updateLiveStats() {
+    if (statLiveCount) {
+      statLiveCount.textContent = appData.stations ? appData.stations.length : 0;
+    }
   }
 
   /**
@@ -339,10 +331,6 @@
       });
     }
 
-    // Filter by truth tier
-    if (currentFilter.truth !== 'all') {
-      list = list.filter(s => s.truth_tier === currentFilter.truth);
-    }
 
     // Filter by search query (brand, address, neighborhood, city, or source)
     if (currentFilter.search) {
@@ -421,7 +409,7 @@
     heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = topStation.truth_badge || (topStation.source ? topStation.source.split('&')[0].trim() : 'Verified');
+    heroSource.textContent = topStation.source || 'GasBuddy Live';
 
     // Price
     heroPrice.textContent = topStation.price.toFixed(1);
@@ -457,17 +445,7 @@
       const googleMapUrl = getGoogleMapsUrl(station);
       const appleMapUrl = getAppleMapsUrl(station);
 
-      // Concise Truth Badges for clean mobile rendering
-      let truthBadgeHtml = '';
-      if (station.truth_tier === 'official') {
-        truthBadgeHtml = `<span class="truth-badge tier-official" title="Verified live pump price direct from official station web page"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg> Official Pump</span>`;
-      } else if (station.truth_tier === 'crowdsourced') {
-        truthBadgeHtml = `<span class="truth-badge tier-crowdsourced" title="Crowdsourced live driver report">⚡ Live Report</span>`;
-      } else if (station.truth_tier === 'official_directory') {
-        truthBadgeHtml = `<span class="truth-badge tier-directory" title="Official verified brand directory">🏢 Verified</span>`;
-      } else {
-        truthBadgeHtml = `<span class="truth-badge tier-baseline" title="Market survey baseline">Market Baseline</span>`;
-      }
+      const liveBadgeHtml = `<span class="live-badge" title="Live driver report via GasBuddy">⚡ Live Report</span>`;
 
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
@@ -498,7 +476,7 @@
 
         <div class="card-bottom-row">
           <div class="card-meta-left">
-            ${truthBadgeHtml}
+            ${liveBadgeHtml}
             <span class="meta-time">${escapeHTML(station.last_updated)}</span>
           </div>
 
@@ -568,17 +546,6 @@
       });
     });
 
-    // Truth Tier Filter Pills
-    truthPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        truthPills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
-
-        currentFilter.truth = pill.getAttribute('data-truth');
-        render();
-      });
-    });
-
     // Brand Filter Pills
     brandPills.forEach(pill => {
       pill.addEventListener('click', () => {
@@ -612,18 +579,12 @@
       currentFilter.search = '';
       currentFilter.city = 'all';
       currentFilter.brand = 'all';
-      currentFilter.truth = 'all';
       clearSearchBtn.style.display = 'none';
 
       filterTabs.forEach(t => {
         const isAll = t.getAttribute('data-city') === 'all';
         t.classList.toggle('active', isAll);
         t.setAttribute('aria-selected', isAll ? 'true' : 'false');
-      });
-
-      truthPills.forEach(p => {
-        const isAll = p.getAttribute('data-truth') === 'all';
-        p.classList.toggle('active', isAll);
       });
 
       brandPills.forEach(p => {

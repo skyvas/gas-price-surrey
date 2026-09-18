@@ -1,45 +1,30 @@
 # ⛽ Gas Price Finder (Surrey • Delta • White Rock, BC)
 
-A modern, mobile-first web application that displays live regular gasoline prices in **Surrey**, **Delta** (including Tsawwassen & Ladner), and **White Rock**, British Columbia.
+A modern, mobile-first web application that displays real-time regular gasoline prices in **Surrey**, **Delta** (including Tsawwassen & Ladner), and **White Rock**, British Columbia.
 
-Stations are automatically sorted by price with the cheapest pump highlighted in a featured hero card. Each station includes a one-tap **"Open in Maps"** button that deep links into **Apple Maps on iPhone** or **Google Maps on Android** directly to the station.
+Gasoline prices are sourced **exclusively from GasBuddy's real-time live community driver reports**. Stations are automatically sorted by price with the cheapest pump highlighted in a featured hero card. Each station includes one-tap **"Open in Maps"** buttons that deep-link directly into **Apple Maps on iPhone** or **Google Maps on Android**.
 
 ---
 
 ## ✨ Features
 
 - **Cheapest Gas Spotlight**: Featured hero card prominently displaying the lowest price available in the selected region and calculating fuel savings.
-- **Truth Precedence Protocol**: Official brand direct pump prices (e.g. Shell Canada `find.shell.com`) strictly supersede and override crowdsourced or third-party reports.
-- **Multi-Brand Official Ingestion**:
-  - **Shell Canada**: Scrapes direct live pump prices from individual station pages on `find.shell.com` for Surrey, Delta, and Tsawwassen.
-  - **Chevron Canada**: Directly queries Parkland's Journie Rewards API (`journie.ca/api/locations/nearest`) for 46 official stations across Surrey, Delta, and White Rock with deep station links.
-  - **Super Save Gas**: Direct location parsing from `supersave.ca/gas-stations/`.
-  - **Centex Petroleum**: Verified station and discount fuel portal (`centex.ca`).
-  - **Canco Petroleum**: Verified locator integration (`cancopetroleum.ca`).
-  - **Petro-Canada & Esso**: Verified portals and GasBuddy live price mapping.
-- **Truth Tier Filters**: One-tap filtering across `All Sources`, `✓ Official Direct Pumps`, `⚡ Live Reports`, and `🏢 Verified Portals`.
-- **City & Brand Filters**: One-tap filtering for **All Areas**, **Surrey**, **Delta**, and **White Rock**, plus individual brand filtering.
+- **100% Live GasBuddy Reports**: All prices are verified, real-time reports directly from drivers at the pump across Surrey, Delta, and White Rock. No synthetic baselines or unverified website scrapers.
+- **City & Brand Filters**: One-tap filtering for **All Areas**, **Surrey**, **Delta**, and **White Rock**, plus brand filtering (Chevron, Shell, Petro-Canada, Esso, Canco, Centex, Super Save, etc.).
 - **Authentic Brand Logos**: High-resolution vector logos for Shell, Chevron, Petro-Canada, Esso, Mobil, Centex, Canco, Super Save, Domo, and Wesco.
 - **Turn-by-Turn Navigation (Google Maps & Apple Maps)**: One-tap dual action buttons on all stations to launch directions in **Google Maps** or **Apple Maps** directly to the verified station address.
 - **Automated Every 5 Minutes**: GitHub Actions workflow fetches new prices, updates data, commits to the repository, and publishes live to **GitHub Pages**.
 
 ---
 
-## 🗺️ Live Gas Price Sources & Truth Precedence
+## 🗺️ Live Gas Price Sources
 
-1. **Tier 1 — Official Brand Direct Pump Prices**:
-   - **Shell Canada** (`find.shell.com/ca/fuel/locations/british-columbia/`): Live regular pump prices parsed from individual station pages with timestamp verification. Highest precedence.
-2. **Tier 2 — Official Locators & APIs**:
-   - **Chevron Canada / Parkland Journie Rewards** (`journie.ca/api/locations/nearest`): Official station locations, site IDs, amenities, and direct URLs.
-   - **Super Save Gas** (`supersave.ca/gas-stations/`): Official BC stations.
-   - **Centex Petroleum** (`centex.ca/locations/`)
-   - **Canco Petroleum** (`cancopetroleum.ca`)
-3. **Tier 3 — Live Crowdsourced Driver Reports**:
-   - **GasBuddy & GVRD Publisher Feeds**: Surrey, Delta, Tsawwassen, White Rock.
-4. **Tier 4 — Market Survey Baseline**:
-   - Regional survey data ensuring complete coverage across 125+ stations.
+Real-time syndication feeds from **GasBuddy** covering:
+- **Surrey**: City Centre, Whalley, Guildford, Fleetwood, Newton, Cloverdale, South Surrey.
+- **Delta**: North Delta, Tilbury, Ladner, Tsawwassen.
+- **White Rock**.
 
-The scraper cleans HTML strings, normalizes station names, filters out any stations outside the strict geographic borders of Surrey, Delta, and White Rock, and deduplicates multiple reports for the same location.
+The scraper normalizes station names, addresses, and geographic borders, and deduplicates multi-feed reports to ensure accurate, up-to-date pricing.
 
 ---
 
@@ -67,7 +52,7 @@ The scraper cleans HTML strings, normalizes station names, filters out any stati
 ```bash
 python3 scripts/fetch_prices.py
 ```
-This updates `data/gas_prices.json` with fresh live data.
+This updates `data/gas_prices.json` with fresh live GasBuddy data.
 
 ### 2. Run Local Web Server
 ```bash
@@ -79,12 +64,6 @@ Open [http://localhost:8000](http://localhost:8000) in your browser (or use mobi
 
 ## 📱 Mobile Optimizations
 
-- **iPhone**: Uses `apple-mobile-web-app-capable` tags, viewport safe area padding, and Apple Maps URL schemes (`maps://?q=...` / `https://maps.apple.com/?q=...`).
-- **Android**: Supports Google Maps intent and responsive touch targets (> 44px).
-- **Fast & Lightweight**: Zero external JavaScript frameworks, zero bloat, instant page load.
-
----
-
-## 🔮 Future Flexibility
-
-The data structure in `data/gas_prices.json` contains a `fuel_type: "regular"` field, making it straightforward to expand to **Diesel**, **Mid-Grade**, and **Premium** fuels or add price trends and historical lowest price tracking.
+- **iPhone**: Uses `apple-mobile-web-app-capable` tags, viewport safe area padding, and Apple Maps URL schemes (`maps://?daddr=...`).
+- **Android**: Supports Google Maps intent navigation and responsive touch targets (> 44px).
+- **Fast & Lightweight**: Pure Vanilla HTML, CSS, and JavaScript with zero build steps or heavy dependencies.

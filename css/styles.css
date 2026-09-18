@@ -248,13 +248,13 @@ body {
 }
 
 /* ==========================================================================
-   Truth Precedence Protocol Strip
+   GasBuddy Live Feed Strip
    ========================================================================== */
-.truth-precedence-strip {
+.live-feed-strip {
   background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.85) 50%, rgba(30, 58, 138, 0.08) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   border-radius: var(--radius-md);
-  padding: 10px 12px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -263,16 +263,16 @@ body {
   -webkit-backdrop-filter: blur(10px);
 }
 
-.truth-strip-content {
+.live-strip-content {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.truth-badge-label {
+.live-badge-label {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   color: var(--emerald-400);
   font-size: 0.74rem;
   font-weight: 700;
@@ -280,47 +280,45 @@ body {
   letter-spacing: 0.04em;
 }
 
-.truth-precedence-text {
-  font-size: 0.74rem;
+.live-feed-text {
+  font-size: 0.76rem;
   color: var(--text-secondary);
   line-height: 1.35;
 }
 
-.truth-precedence-text strong {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.truth-stats-row {
+.live-stats-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 8px;
   padding-top: 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.truth-stat-chip {
+.live-stat-chip {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 0.70rem;
+  gap: 5px;
+  font-size: 0.72rem;
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 2px 7px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 3px 9px;
   border-radius: var(--radius-full);
 }
 
-.truth-stat-chip strong {
+.live-stat-chip strong {
   color: #ffffff;
+  font-weight: 700;
 }
 
 .chip-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  background-color: var(--emerald-400);
   display: inline-block;
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.5);
 }
 
 .stat-official .chip-dot { background: var(--emerald-400); box-shadow: 0 0 6px var(--emerald-400); }
@@ -952,8 +950,8 @@ body {
   border-radius: 4px;
 }
 
-/* Truth Precedence Card Badges */
-.truth-badge {
+/* Live Report Card Badges */
+.live-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -963,35 +961,10 @@ body {
   border-radius: var(--radius-full);
   letter-spacing: 0.01em;
   white-space: nowrap;
-}
-
-.truth-badge.tier-official {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.32) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.55);
-  color: #34d399;
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
-}
-
-.truth-badge.tier-official svg {
-  stroke: #34d399;
-}
-
-.truth-badge.tier-crowdsourced {
-  background: rgba(59, 130, 246, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.35);
-  color: #60a5fa;
-}
-
-.truth-badge.tier-directory {
-  background: rgba(168, 85, 247, 0.12);
-  border: 1px solid rgba(168, 85, 247, 0.35);
-  color: #c084fc;
-}
-
-.truth-badge.tier-baseline {
-  background: rgba(148, 163, 184, 0.1);
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  color: #94a3b8;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: var(--emerald-400);
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.15);
 }
 
 .station-card-address {
