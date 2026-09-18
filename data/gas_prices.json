@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-18T17:38:28.334685+00:00",
+    "last_updated_utc": "2026-09-18T17:38:47.148843+00:00",
     "last_updated_formatted": "September 18, 2026 at 05:38 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
@@ -337,7 +337,7 @@
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 10:31 AM",
+      "last_updated": "Sep 18, 9:31 AM",
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
