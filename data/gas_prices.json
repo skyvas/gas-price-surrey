@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-18T00:03:21.630047+00:00",
-    "last_updated_formatted": "September 18, 2026 at 12:03 AM UTC",
+    "last_updated_utc": "2026-09-18T00:06:08.204663+00:00",
+    "last_updated_formatted": "September 18, 2026 at 12:06 AM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -10,7 +10,7 @@
       "diesel",
       "premium"
     ],
-    "total_stations": 73,
+    "total_stations": 74,
     "sources": [
       {
         "name": "GasBuddy via GVRD (Surrey)",
@@ -466,6 +466,38 @@
         "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
         "android_geo": "geo:0,0?q=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Esso%2C%207981%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_1838364ave",
+      "station_name": "Petro-Canada",
+      "brand": "Petro-Canada",
+      "brand_official_url": "https://www.petro-canada.ca",
+      "brand_locator_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
+      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L + 20% pts)",
+      "brand_color": "#e31837",
+      "neighborhood": "Cloverdale",
+      "price": 194.9,
+      "price_formatted": "194.9¢",
+      "price_per_litre": "$1.949",
+      "fuel_type": "regular",
+      "address": "18383 64 Ave",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Verified today",
+      "is_live": false,
+      "source": "Petro-Canada (Suncor) Official Locator & Market Survey",
+      "source_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
+      "latitude": 49.1192,
+      "longitude": -122.713,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -1493,38 +1525,6 @@
       }
     },
     {
-      "id": "surrey_2692152st",
-      "station_name": "Petro-Canada",
-      "brand": "Petro-Canada",
-      "brand_official_url": "https://www.petro-canada.ca",
-      "brand_locator_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
-      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L + 20% pts)",
-      "brand_color": "#e31837",
-      "neighborhood": "South Surrey",
-      "price": 196.9,
-      "price_formatted": "196.9¢",
-      "price_per_litre": "$1.969",
-      "fuel_type": "regular",
-      "address": "2692 152 St",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Verified today",
-      "is_live": false,
-      "source": "Petro-Canada (Suncor) Official Locator & Market Survey",
-      "source_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
-      "latitude": 49.0507,
-      "longitude": -122.8007,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "surrey_1518832ave",
       "station_name": "Petro-Canada",
       "brand": "Petro-Canada",
@@ -1845,6 +1845,38 @@
       }
     },
     {
+      "id": "delta_9591ladnertrunkrd",
+      "station_name": "Esso",
+      "brand": "Esso",
+      "brand_official_url": "https://www.esso.ca",
+      "brand_locator_url": "https://www.esso.ca/en-ca/find-station",
+      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
+      "brand_color": "#eb1c24",
+      "neighborhood": "Ladner",
+      "price": 196.9,
+      "price_formatted": "196.9¢",
+      "price_per_litre": "$1.969",
+      "fuel_type": "regular",
+      "address": "9591 Ladner Trunk Rd",
+      "city": "Delta",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Verified today",
+      "is_live": false,
+      "source": "Esso Canada (Imperial Oil) Official Locator & Market Survey",
+      "source_url": "https://www.esso.ca/en-ca/find-station",
+      "latitude": 49.092,
+      "longitude": -122.9577,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "delta_5221ladnertrunkrd",
       "station_name": "Petro-Canada",
       "brand": "Petro-Canada",
@@ -2069,35 +2101,35 @@
       }
     },
     {
-      "id": "surrey_1838364ave",
+      "id": "surrey_2692152st",
       "station_name": "Petro-Canada",
       "brand": "Petro-Canada",
       "brand_official_url": "https://www.petro-canada.ca",
       "brand_locator_url": "https://www.petro-canada.ca/en/personal/gas-station-locations",
       "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L + 20% pts)",
       "brand_color": "#e31837",
-      "neighborhood": "Cloverdale",
+      "neighborhood": "South Surrey",
       "price": 199.9,
       "price_formatted": "199.9¢",
       "price_per_litre": "$1.999",
       "fuel_type": "regular",
-      "address": "18383 64 Ave",
+      "address": "2692 152 St",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 17, 4:38 PM",
+      "last_updated": "Sep 17, 5:04 PM",
       "is_live": true,
       "source": "GasBuddy via GVRD (Surrey) & Petro-Canada (Suncor)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1192,
-      "longitude": -122.713,
+      "latitude": 49.0507,
+      "longitude": -122.8007,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%202692%20152%20St%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
@@ -2261,6 +2293,38 @@
       }
     },
     {
+      "id": "delta_5206ladnertrunkrd",
+      "station_name": "Chevron",
+      "brand": "Chevron",
+      "brand_official_url": "https://www.chevron.ca",
+      "brand_locator_url": "https://journie.ca",
+      "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
+      "brand_color": "#00205b",
+      "neighborhood": "Local District",
+      "price": 202.9,
+      "price_formatted": "202.9¢",
+      "price_per_litre": "$2.029",
+      "fuel_type": "regular",
+      "address": "5206 Ladner Trunk Rd",
+      "city": "Delta",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Sep 17, 4:57 PM",
+      "is_live": true,
+      "source": "GasBuddy via GVRD (Delta)",
+      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
+      "latitude": 49.1044,
+      "longitude": -122.8011,
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "android_geo": "geo:0,0?q=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Chevron%2C%205206%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d"
+      }
+    },
+    {
       "id": "delta_8985120st",
       "station_name": "Petro-Canada",
       "brand": "Petro-Canada",
@@ -2322,38 +2386,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
         "android_geo": "geo:0,0?q=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "delta_9591ladnertrunkrd",
-      "station_name": "Esso",
-      "brand": "Esso",
-      "brand_official_url": "https://www.esso.ca",
-      "brand_locator_url": "https://www.esso.ca/en-ca/find-station",
-      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
-      "brand_color": "#eb1c24",
-      "neighborhood": "Ladner",
-      "price": 205.9,
-      "price_formatted": "205.9¢",
-      "price_per_litre": "$2.059",
-      "fuel_type": "regular",
-      "address": "9591 Ladner Trunk Rd",
-      "city": "Delta",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Sep 17, 1:09 PM",
-      "is_live": true,
-      "source": "GasBuddy via GVRD (Delta) & Esso Canada (Imperial Oil)",
-      "source_url": "https://www.gvrd.com/gas-prices/delta.html",
-      "latitude": 49.092,
-      "longitude": -122.9577,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "android_geo": "geo:0,0?q=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Esso%2C%209591%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC&dirflg=d"
       }
     },
     {
