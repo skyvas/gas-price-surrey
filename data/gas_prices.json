@@ -161,15 +161,15 @@
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1152,
-      "longitude": -122.8448,
+      "latitude": 49.1979,
+      "longitude": -122.8647,
       "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC&dirflg=d"
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Canco%2C%2010732%20128%20St%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
