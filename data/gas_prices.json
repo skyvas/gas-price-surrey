@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-18T17:21:26.983145+00:00",
+    "last_updated_utc": "2026-09-18T17:21:42.079025+00:00",
     "last_updated_formatted": "September 18, 2026 at 05:21 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
@@ -52,9 +52,9 @@
     "cheapest_overall_id": "delta_8781120st"
   },
   "cheapest_by_city": {
+    "Surrey": "surrey_6221kinggeorgeblvd",
     "Delta": "delta_8781120st",
-    "White Rock": "white rock_1595nicholrd",
-    "Surrey": "surrey_6221kinggeorgeblvd"
+    "White Rock": "white rock_1595nicholrd"
   },
   "stations": [
     {
@@ -131,15 +131,15 @@
       "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
       "brand_color": "#00205b",
       "neighborhood": "Newton",
-      "price": 195.9,
-      "price_formatted": "195.9¢",
-      "price_per_litre": "$1.959",
+      "price": 196.9,
+      "price_formatted": "196.9¢",
+      "price_per_litre": "$1.969",
       "fuel_type": "regular",
       "address": "6221 King George Blvd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 10:20 AM",
+      "last_updated": "Sep 18, 9:53 AM",
       "is_live": true,
       "source": "via Live Report, GasBuddy",
       "source_name": "via Live Report, GasBuddy",
