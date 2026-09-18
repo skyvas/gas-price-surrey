@@ -1,8 +1,8 @@
 {
   "metadata": {
     "title": "Surrey, Delta & White Rock Gas Prices",
-    "last_updated_utc": "2026-09-18T17:21:42.079025+00:00",
-    "last_updated_formatted": "September 18, 2026 at 05:21 PM UTC",
+    "last_updated_utc": "2026-09-18T17:32:22.754306+00:00",
+    "last_updated_formatted": "September 18, 2026 at 05:32 PM UTC",
     "target_region": "Surrey, Delta, White Rock, British Columbia",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
@@ -53,8 +53,8 @@
   },
   "cheapest_by_city": {
     "Surrey": "surrey_6221kinggeorgeblvd",
-    "Delta": "delta_8781120st",
-    "White Rock": "white rock_1595nicholrd"
+    "White Rock": "white rock_1595nicholrd",
+    "Delta": "delta_8781120st"
   },
   "stations": [
     {
@@ -73,7 +73,7 @@
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 9:31 AM",
+      "last_updated": "Sep 18, 10:31 AM",
       "is_live": true,
       "source": "via Live Report, GasBuddy",
       "source_name": "via Live Report, GasBuddy",
@@ -131,15 +131,15 @@
       "brand_rewards": "Journie Rewards (Save up to 7¢/L)",
       "brand_color": "#00205b",
       "neighborhood": "Newton",
-      "price": 196.9,
-      "price_formatted": "196.9¢",
-      "price_per_litre": "$1.969",
+      "price": 195.9,
+      "price_formatted": "195.9¢",
+      "price_per_litre": "$1.959",
       "fuel_type": "regular",
       "address": "6221 King George Blvd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 9:53 AM",
+      "last_updated": "Sep 18, 10:20 AM",
       "is_live": true,
       "source": "via Live Report, GasBuddy",
       "source_name": "via Live Report, GasBuddy",
@@ -337,7 +337,7 @@
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Sep 18, 9:31 AM",
+      "last_updated": "Sep 18, 10:31 AM",
       "is_live": true,
       "source": "via Live Report, GasBuddy",
       "source_name": "via Live Report, GasBuddy",
