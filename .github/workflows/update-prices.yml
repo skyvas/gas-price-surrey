@@ -2,6 +2,11 @@ name: Update Gas Prices on gh-pages
 
 on:
   schedule:
+    # Fastest interval GitHub Actions allows (5 min). NOTE: GitHub gives no
+    # timing SLA — scheduled runs may be delayed or dropped under load, and
+    # this repo has historically run about every ~6h, not every 5 min.
+    # The site therefore shows the last SUCCESSFUL fetch time, and every run
+    # is logged to data/history.jsonl so the real cadence is auditable.
     - cron: "*/5 * * * *"
   workflow_dispatch: # Allows manual trigger from GitHub Actions tab
   push:
@@ -12,6 +17,7 @@ on:
       - "README.md"
       - ".gitignore"
       - "data/gas_prices.json"
+      - "data/history.jsonl"
 
 # Permissions required for committing updated data to the repository
 permissions:
@@ -25,6 +31,7 @@ concurrency:
 jobs:
   update-prices:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository on gh-pages
         uses: actions/checkout@v4
@@ -42,11 +49,25 @@ jobs:
         run: |
           python scripts/fetch_prices.py
 
+      - name: Validate output data
+        run: |
+          python - <<'PY'
+          import json
+          d = json.load(open("data/gas_prices.json"))
+          assert d["metadata"]["fetch_status"] in ("ok", "degraded"), "bad fetch_status"
+          assert isinstance(d["stations"], list), "stations is not a list"
+          assert d["metadata"]["total_stations"] == len(d["stations"])
+          prices = [s["price"] for s in d["stations"]]
+          assert all(100 <= p <= 300 for p in prices), "price outside 100-300c range"
+          assert all(set(s["prices"]) == {"regular"} for s in d["stations"]), "non-regular prices present"
+          print(f"Valid: {len(prices)} stations, status={d['metadata']['fetch_status']}")
+          PY
+
       - name: Commit and push updated gas price data to gh-pages
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/gas_prices.json
+          git add data/gas_prices.json data/history.jsonl
           if git diff --staged --quiet; then
             echo "No changes in gas price data."
           else
@@ -54,3 +75,47 @@ jobs:
             git pull --rebase origin gh-pages || true
             git push origin gh-pages
           fi
+
+      - name: Sync data files back to main
+        # The site deploys from gh-pages, but main is what people see on
+        # github.com — without this its data goes stale (it was Sep 2026).
+        # Only the two generated data files are copied; code stays in main.
+        run: |
+          git fetch origin main
+          git worktree add /tmp/main-sync origin/main
+          mkdir -p /tmp/main-sync/data
+          cp data/gas_prices.json data/history.jsonl /tmp/main-sync/data/
+          cd /tmp/main-sync
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/gas_prices.json data/history.jsonl
+          if git diff --staged --quiet; then
+            echo "main already has the latest data."
+          else
+            git commit -m "Sync gas price data from gh-pages [skip ci]"
+            git pull --rebase origin main || true
+            git push origin main
+          fi
+          cd -
+          git worktree remove --force /tmp/main-sync
+
+      - name: Summarize run
+        if: always()
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("data/gas_prices.json"))
+          m = d["metadata"]
+          print(f"## Gas price update: {m['fetch_status']}")
+          print(f"- Stations: {m['total_stations']} (feeds ok: "
+                f"{sum(1 for s in m['sources'] if 'active' in s['status'])}/{len(m['sources'])})")
+          print(f"- Last successful fetch (UTC): {m['last_updated_utc']}")
+          print(f"- Attempted (UTC): {m['fetch_attempted_at_utc']}")
+          print(f"- Median report age: {m['report_freshness']['median_age_minutes']} min, "
+                f"stale: {m['report_freshness']['stale_count']}, "
+                f"dropped stale: {m['report_freshness']['dropped_stale_count']}")
+          if m.get("nrcan_anchor"):
+              print(f"- NRCan Vancouver weekly avg: {m['nrcan_anchor']['vancouver_regular_weekly_cents']}c")
+          if m["fetch_errors"]:
+              print(f"- Errors: {'; '.join(m['fetch_errors'])}")
+          PY
