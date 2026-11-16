@@ -82,7 +82,11 @@ jobs:
         # Only the two generated data files are copied; code stays in main.
         run: |
           git fetch origin main
-          git worktree add /tmp/main-sync origin/main
+          # -b main is required: without it the worktree is a detached HEAD,
+          # the sync commit lands on no branch, and `git push origin main`
+          # fails with "src refspec main does not match any" — main never
+          # syncs even though the gh-pages commit succeeded.
+          git worktree add -b main /tmp/main-sync origin/main
           mkdir -p /tmp/main-sync/data
           cp data/gas_prices.json data/history.jsonl /tmp/main-sync/data/
           cd /tmp/main-sync
