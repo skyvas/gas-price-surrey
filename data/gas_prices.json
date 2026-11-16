@@ -32,83 +32,108 @@
         ]
       }
     },
-    "last_updated_utc": "2026-11-16T08:10:43.344634+00:00",
+    "last_updated_utc": "2026-11-16T08:10:55.147269+00:00",
     "last_updated_formatted": "November 16, 2026 at 08:10 AM UTC",
+    "fetch_attempted_at_utc": "2026-11-16T08:10:55.147269+00:00",
+    "fetch_status": "ok",
+    "fetch_errors": [],
     "target_regions": "Surrey Area, Vancouver, Burnaby",
     "fuel_type_default": "regular",
     "supported_fuel_types": [
-      "regular",
-      "diesel",
-      "premium"
+      "regular"
     ],
-    "total_stations": 50,
-    "data_source_description": "100% Real-Time GasBuddy Live Driver Reports",
+    "total_stations": 49,
+    "data_source_description": "100% Real-Time GasBuddy Live Driver Reports (regular gasoline only). Midgrade, premium and diesel are not reported by this feed and are not estimated.",
     "sources": [
       {
         "name": "GasBuddy (Surrey)",
         "url": "https://www.gvrd.com/gas-prices/surrey.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 8
+        "stations_reported": 8,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (Delta)",
         "url": "https://www.gvrd.com/gas-prices/delta.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 10
+        "stations_reported": 10,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (White Rock)",
         "url": "https://www.gvrd.com/gas-prices/white-rock.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 2
+        "stations_reported": 1,
+        "dropped_stale": 1
       },
       {
         "name": "GasBuddy (Tsawwassen)",
         "url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 3
+        "stations_reported": 3,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (Ladner)",
         "url": "https://www.gvrd.com/gas-prices/ladner.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 0
+        "stations_reported": 0,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (Vancouver)",
         "url": "https://www.gvrd.com/gas-prices/vancouver.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 9
+        "stations_reported": 9,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (Burnaby)",
         "url": "https://www.gvrd.com/gas-prices/burnaby.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 6
+        "stations_reported": 6,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (North Vancouver)",
         "url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 10
+        "stations_reported": 10,
+        "dropped_stale": 0
       },
       {
         "name": "GasBuddy (West Vancouver)",
         "url": "https://www.gvrd.com/gas-prices/west-vancouver.html",
         "type": "GasBuddy Real-Time Live Feed",
         "status": "active (verified)",
-        "stations_reported": 2
+        "stations_reported": 2,
+        "dropped_stale": 0
       }
     ],
-    "cheapest_overall_id": "burnaby_3855douglasrd"
+    "cheapest_overall_id": "burnaby_3855douglasrd",
+    "report_freshness": {
+      "reports_with_time": 49,
+      "median_age_minutes": 282,
+      "max_age_minutes": 884,
+      "stale_count": 15,
+      "dropped_stale_count": 1
+    },
+    "nrcan_anchor": {
+      "vancouver_regular_weekly_cents": 185.4,
+      "as_of": "Tue, 17 Nov 2026",
+      "source_url": "https://www2.nrcan.gc.ca/eneene/sources/pripri/prices_bycity_e.cfm?priceYear=2026&productID=1&locationID=2"
+    },
+    "price_sanity": "ok",
+    "price_sanity_note": "",
+    "data_notes": "Regular gasoline only. Each price is a GasBuddy community report with its own report time; reports older than 24h are dropped. NRCan weekly Vancouver average is a sanity anchor, not a station price."
   },
   "cheapest_by_region": {
     "surrey_area": "surrey_18398fraserhwy",
@@ -116,13 +141,13 @@
     "burnaby": "burnaby_3855douglasrd"
   },
   "cheapest_by_city": {
-    "West Vancouver": "west_vancouver_1613marinedr",
-    "Burnaby": "burnaby_3855douglasrd",
-    "Surrey": "surrey_18398fraserhwy",
     "Vancouver": "vancouver_1396e41stave",
-    "North Vancouver": "north_vancouver_333seymourblvd",
+    "White Rock": "white_rock_1595nicholrd",
     "Delta": "delta_6389120st",
-    "White Rock": "white_rock_1595nicholrd"
+    "North Vancouver": "north_vancouver_333seymourblvd",
+    "West Vancouver": "west_vancouver_1613marinedr",
+    "Surrey": "surrey_18398fraserhwy",
+    "Burnaby": "burnaby_3855douglasrd"
   },
   "stations": [
     {
@@ -139,23 +164,20 @@
       "price_formatted": "167.9¢",
       "price_per_litre": "$1.679",
       "prices": {
-        "regular": 167.9,
-        "midgrade_89": 181.9,
-        "premium_91": 191.9,
-        "ultra_93": 201.9
+        "regular": 167.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "3855 Douglas Rd",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 7:20 PM",
+      "reported_at_utc": "2026-11-16T02:20:00+00:00",
+      "report_age_minutes": 351,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -163,6 +185,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2582,
       "longitude": -123.0005,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Centex%2C%203855%20Douglas%20Rd%2C%20Burnaby%2C%20BC",
@@ -186,30 +209,28 @@
       "price_formatted": "169.9¢",
       "price_per_litre": "$1.699",
       "prices": {
-        "regular": 169.9,
-        "midgrade_89": 183.9,
-        "premium_91": 193.9,
-        "ultra_93": 203.9
+        "regular": 169.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "18398 Fraser Hwy",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:32 PM",
+      "reported_at_utc": "2026-11-16T05:32:00+00:00",
+      "report_age_minutes": 159,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1044,
-      "longitude": -122.8011,
+      "latitude": 49.12863,
+      "longitude": -122.71287,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2018398%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
@@ -233,23 +254,20 @@
       "price_formatted": "169.9¢",
       "price_per_litre": "$1.699",
       "prices": {
-        "regular": 169.9,
-        "midgrade_89": 183.9,
-        "premium_91": 193.9,
-        "ultra_93": 203.9
+        "regular": 169.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "5720 Hastings St",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:49 PM",
+      "reported_at_utc": "2026-11-16T05:49:00+00:00",
+      "report_age_minutes": 142,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -257,6 +275,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2815,
       "longitude": -122.9772,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%205720%20Hastings%20St%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%205720%20Hastings%20St%2C%20Burnaby%2C%20BC",
@@ -280,23 +299,20 @@
       "price_formatted": "170.9¢",
       "price_per_litre": "$1.709",
       "prices": {
-        "regular": 170.9,
-        "midgrade_89": 184.9,
-        "premium_91": 194.9,
-        "ultra_93": 204.9
+        "regular": 170.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1396 E 41st Ave",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:36 PM",
+      "reported_at_utc": "2026-11-16T06:36:00+00:00",
+      "report_age_minutes": 95,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -304,6 +320,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.234,
       "longitude": -123.0765,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201396%20E%2041st%20Ave%2C%20Vancouver%2C%20BC",
@@ -327,23 +344,20 @@
       "price_formatted": "171.9¢",
       "price_per_litre": "$1.719",
       "prices": {
-        "regular": 171.9,
-        "midgrade_89": 185.9,
-        "premium_91": 195.9,
-        "ultra_93": 205.9
+        "regular": 171.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "6191 King George Blvd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:46 PM",
+      "reported_at_utc": "2026-11-16T05:46:00+00:00",
+      "report_age_minutes": 145,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -351,6 +365,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.1152,
       "longitude": -122.8448,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Wesco%2C%206191%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
@@ -374,23 +389,20 @@
       "price_formatted": "172.9¢",
       "price_per_litre": "$1.729",
       "prices": {
-        "regular": 172.9,
-        "midgrade_89": 186.9,
-        "premium_91": 196.9,
-        "ultra_93": 206.9
+        "regular": 172.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "6422 120 St",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:25 PM",
+      "reported_at_utc": "2026-11-16T06:25:00+00:00",
+      "report_age_minutes": 106,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -398,6 +410,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.1197,
       "longitude": -122.8898,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206422%20120%20St%2C%20Surrey%2C%20BC",
@@ -416,35 +429,33 @@
       "brand_color": "#e31837",
       "region": "surrey_area",
       "sub_area": "Surrey",
-      "neighborhood": "Whalley / City Centre",
+      "neighborhood": "Newton",
       "price": 172.9,
       "price_formatted": "172.9¢",
       "price_per_litre": "$1.729",
       "prices": {
-        "regular": 172.9,
-        "midgrade_89": 186.9,
-        "premium_91": 196.9,
-        "ultra_93": 206.9
+        "regular": 172.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "8038 King George Blvd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:18 PM",
+      "reported_at_utc": "2026-11-16T03:18:00+00:00",
+      "report_age_minutes": 293,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1044,
-      "longitude": -122.8011,
+      "latitude": 49.14853,
+      "longitude": -122.8453,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208038%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
@@ -468,23 +479,20 @@
       "price_formatted": "172.9¢",
       "price_per_litre": "$1.729",
       "prices": {
-        "regular": 172.9,
-        "midgrade_89": 186.9,
-        "premium_91": 196.9,
-        "ultra_93": 206.9
+        "regular": 172.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "13916 Grosvenor Rd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 7:50 PM",
+      "reported_at_utc": "2026-11-16T02:50:00+00:00",
+      "report_age_minutes": 321,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -492,6 +500,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.2037,
       "longitude": -122.8364,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2013916%20Grosvenor%20Rd%2C%20Surrey%2C%20BC",
@@ -515,23 +524,20 @@
       "price_formatted": "172.9¢",
       "price_per_litre": "$1.729",
       "prices": {
-        "regular": 172.9,
-        "midgrade_89": 186.9,
-        "premium_91": 196.9,
-        "ultra_93": 206.9
+        "regular": 172.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "6389 120 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:24 PM",
+      "reported_at_utc": "2026-11-16T06:24:00+00:00",
+      "report_age_minutes": 107,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -539,6 +545,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1191,
       "longitude": -122.8908,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%206389%20120%20St%2C%20Delta%2C%20BC",
@@ -562,23 +569,20 @@
       "price_formatted": "173.9¢",
       "price_per_litre": "$1.739",
       "prices": {
-        "regular": 173.9,
-        "midgrade_89": 187.9,
-        "premium_91": 197.9,
-        "ultra_93": 207.9
+        "regular": 173.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "8781 120 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 7:13 PM",
+      "reported_at_utc": "2026-11-16T02:13:00+00:00",
+      "report_age_minutes": 358,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -586,6 +590,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1545,
       "longitude": -122.8904,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%208781%20120%20St%2C%20Delta%2C%20BC",
@@ -604,35 +609,33 @@
       "brand_color": "#00205b",
       "region": "surrey_area",
       "sub_area": "Surrey",
-      "neighborhood": "Newton / Scott Rd",
+      "neighborhood": "Newton",
       "price": 174.9,
       "price_formatted": "174.9¢",
       "price_per_litre": "$1.749",
       "prices": {
-        "regular": 174.9,
-        "midgrade_89": 188.9,
-        "premium_91": 198.9,
-        "ultra_93": 208.9
+        "regular": 174.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "7390 120 St",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:26 PM",
+      "reported_at_utc": "2026-11-16T06:26:00+00:00",
+      "report_age_minutes": 105,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Surrey)",
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1044,
-      "longitude": -122.8011,
+      "latitude": 49.13739,
+      "longitude": -122.88975,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%207390%20120%20St%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%207390%20120%20St%2C%20Surrey%2C%20BC",
@@ -656,23 +659,20 @@
       "price_formatted": "174.9¢",
       "price_per_litre": "$1.749",
       "prices": {
-        "regular": 174.9,
-        "midgrade_89": 188.9,
-        "premium_91": 198.9,
-        "ultra_93": 208.9
+        "regular": 174.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "13562 64 Ave",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:44 PM",
+      "reported_at_utc": "2026-11-16T05:44:00+00:00",
+      "report_age_minutes": 147,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -680,6 +680,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.1196,
       "longitude": -122.8462,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%2013562%2064%20Ave%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%2013562%2064%20Ave%2C%20Surrey%2C%20BC",
@@ -703,23 +704,20 @@
       "price_formatted": "174.9¢",
       "price_per_litre": "$1.749",
       "prices": {
-        "regular": 174.9,
-        "midgrade_89": 188.9,
-        "premium_91": 198.9,
-        "ultra_93": 208.9
+        "regular": 174.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "6221 King George Blvd",
       "city": "Surrey",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:53 PM",
+      "reported_at_utc": "2026-11-16T03:53:00+00:00",
+      "report_age_minutes": 258,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -727,6 +725,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
       "latitude": 49.1158,
       "longitude": -122.8445,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%206221%20King%20George%20Blvd%2C%20Surrey%2C%20BC",
@@ -745,35 +744,33 @@
       "brand_color": "#ffd500",
       "region": "vancouver",
       "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
+      "neighborhood": "West Side",
       "price": 174.9,
       "price_formatted": "174.9¢",
       "price_per_litre": "$1.749",
       "prices": {
-        "regular": 174.9,
-        "midgrade_89": 188.9,
-        "premium_91": 198.9,
-        "ultra_93": 208.9
+        "regular": 174.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1503 W 41st Ave",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:41 PM",
+      "reported_at_utc": "2026-11-16T05:41:00+00:00",
+      "report_age_minutes": 150,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Vancouver)",
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.26,
-      "longitude": -123.08,
+      "latitude": 49.23467,
+      "longitude": -123.13996,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201503%20W%2041st%20Ave%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201503%20W%2041st%20Ave%2C%20Vancouver%2C%20BC",
@@ -797,23 +794,20 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "10240 River Rd",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 3:13 PM",
+      "reported_at_utc": "2026-11-15T22:13:00+00:00",
+      "report_age_minutes": 598,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -821,6 +815,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1572,
       "longitude": -122.9394,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%2010240%20River%20Rd%2C%20Delta%2C%20BC",
@@ -844,30 +839,28 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1955 Powell St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 9:45 PM",
+      "reported_at_utc": "2026-11-16T04:45:00+00:00",
+      "report_age_minutes": 206,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Vancouver)",
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.26,
-      "longitude": -123.08,
+      "latitude": 49.28525,
+      "longitude": -123.06411,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201955%20Powell%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201955%20Powell%20St%2C%20Vancouver%2C%20BC",
@@ -891,23 +884,20 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1785 Main St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 6:36 PM",
+      "reported_at_utc": "2026-11-16T01:36:00+00:00",
+      "report_age_minutes": 395,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -915,6 +905,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.269,
       "longitude": -123.1008,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201785%20Main%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201785%20Main%20St%2C%20Vancouver%2C%20BC",
@@ -938,30 +929,28 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1212 E Hastings St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 6:30 PM",
+      "reported_at_utc": "2026-11-16T01:30:00+00:00",
+      "report_age_minutes": 401,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
       "feed_origin": "GasBuddy (Vancouver)",
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.26,
-      "longitude": -123.08,
+      "latitude": 49.28097,
+      "longitude": -123.07871,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201212%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201212%20E%20Hastings%20St%2C%20Vancouver%2C%20BC",
@@ -985,23 +974,20 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "6751 Lougheed Hwy",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:13 PM",
+      "reported_at_utc": "2026-11-16T06:13:00+00:00",
+      "report_age_minutes": 118,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1009,6 +995,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2488,
       "longitude": -122.9805,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%206751%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%206751%20Lougheed%20Hwy%2C%20Burnaby%2C%20BC",
@@ -1032,23 +1019,20 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "3826 Canada Way",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:37 PM",
+      "reported_at_utc": "2026-11-16T05:37:00+00:00",
+      "report_age_minutes": 154,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1056,6 +1040,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2488,
       "longitude": -122.9805,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%203826%20Canada%20Way%2C%20Burnaby%2C%20BC",
@@ -1079,23 +1064,20 @@
       "price_formatted": "175.9¢",
       "price_per_litre": "$1.759",
       "prices": {
-        "regular": 175.9,
-        "midgrade_89": 189.9,
-        "premium_91": 199.9,
-        "ultra_93": 209.9
+        "regular": 175.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "4507 E Hastings St",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:40 PM",
+      "reported_at_utc": "2026-11-16T03:40:00+00:00",
+      "report_age_minutes": 271,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1103,6 +1085,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2488,
       "longitude": -122.9805,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%204507%20E%20Hastings%20St%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%204507%20E%20Hastings%20St%2C%20Burnaby%2C%20BC",
@@ -1126,23 +1109,20 @@
       "price_formatted": "176.9¢",
       "price_per_litre": "$1.769",
       "prices": {
-        "regular": 176.9,
-        "midgrade_89": 190.9,
-        "premium_91": 200.9,
-        "ultra_93": 210.9
+        "regular": 176.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "5702 Granville St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:41 PM",
+      "reported_at_utc": "2026-11-16T05:41:00+00:00",
+      "report_age_minutes": 150,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1150,6 +1130,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.26,
       "longitude": -123.08,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%205702%20Granville%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%205702%20Granville%20St%2C%20Vancouver%2C%20BC",
@@ -1173,23 +1154,20 @@
       "price_formatted": "176.9¢",
       "price_per_litre": "$1.769",
       "prices": {
-        "regular": 176.9,
-        "midgrade_89": 190.9,
-        "premium_91": 200.9,
-        "ultra_93": 210.9
+        "regular": 176.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "2748 Main St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 9:18 PM",
+      "reported_at_utc": "2026-11-16T04:18:00+00:00",
+      "report_age_minutes": 233,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1197,6 +1175,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.2605,
       "longitude": -123.1012,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%202748%20Main%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%202748%20Main%20St%2C%20Vancouver%2C%20BC",
@@ -1220,23 +1199,20 @@
       "price_formatted": "176.9¢",
       "price_per_litre": "$1.769",
       "prices": {
-        "regular": 176.9,
-        "midgrade_89": 190.9,
-        "premium_91": 200.9,
-        "ultra_93": 210.9
+        "regular": 176.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1010 W King Edward Ave",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 9:08 PM",
+      "reported_at_utc": "2026-11-16T04:08:00+00:00",
+      "report_age_minutes": 243,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1244,6 +1220,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.26,
       "longitude": -123.08,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%201010%20W%20King%20Edward%20Ave%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%201010%20W%20King%20Edward%20Ave%2C%20Vancouver%2C%20BC",
@@ -1267,23 +1244,20 @@
       "price_formatted": "176.9¢",
       "price_per_litre": "$1.769",
       "prices": {
-        "regular": 176.9,
-        "midgrade_89": 190.9,
-        "premium_91": 200.9,
-        "ultra_93": 210.9
+        "regular": 176.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "4110 Oak St",
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:11 PM",
+      "reported_at_utc": "2026-11-16T03:11:00+00:00",
+      "report_age_minutes": 300,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1291,6 +1265,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
       "latitude": 49.26,
       "longitude": -123.08,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%204110%20Oak%20St%2C%20Vancouver%2C%20BC",
@@ -1314,23 +1289,20 @@
       "price_formatted": "176.9¢",
       "price_per_litre": "$1.769",
       "prices": {
-        "regular": 176.9,
-        "midgrade_89": 190.9,
-        "premium_91": 200.9,
-        "ultra_93": 210.9
+        "regular": 176.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "4177 Kingsway",
       "city": "Burnaby",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:56 PM",
+      "reported_at_utc": "2026-11-16T05:56:00+00:00",
+      "report_age_minutes": 135,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1338,6 +1310,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/burnaby.html",
       "latitude": 49.2488,
       "longitude": -122.9805,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%204177%20Kingsway%2C%20Burnaby%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%204177%20Kingsway%2C%20Burnaby%2C%20BC",
@@ -1361,23 +1334,20 @@
       "price_formatted": "177.9¢",
       "price_per_litre": "$1.779",
       "prices": {
-        "regular": 177.9,
-        "midgrade_89": 191.9,
-        "premium_91": 201.9,
-        "ultra_93": 211.9
+        "regular": 177.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "8111 120 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 3:37 PM",
+      "reported_at_utc": "2026-11-15T22:37:00+00:00",
+      "report_age_minutes": 574,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1385,6 +1355,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1545,
       "longitude": -122.8904,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Domo%2C%208111%20120%20St%2C%20Delta%2C%20BC",
@@ -1408,23 +1379,20 @@
       "price_formatted": "178.9¢",
       "price_per_litre": "$1.789",
       "prices": {
-        "regular": 178.9,
-        "midgrade_89": 192.9,
-        "premium_91": 202.9,
-        "ultra_93": 212.9
+        "regular": 178.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "7389 River Rd",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:28 AM",
+      "reported_at_utc": "2026-11-15T18:28:00+00:00",
+      "report_age_minutes": 823,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1432,6 +1400,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1409,
       "longitude": -123.0138,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Canco%2C%207389%20River%20Rd%2C%20Delta%2C%20BC",
@@ -1455,23 +1424,20 @@
       "price_formatted": "178.9¢",
       "price_per_litre": "$1.789",
       "prices": {
-        "regular": 178.9,
-        "midgrade_89": 192.9,
-        "premium_91": 202.9,
-        "ultra_93": 212.9
+        "regular": 178.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "333 Seymour Blvd",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 7:14 PM",
+      "reported_at_utc": "2026-11-16T02:14:00+00:00",
+      "report_age_minutes": 357,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1479,6 +1445,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3082,
       "longitude": -123.0245,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Mobil%2C%20333%20Seymour%20Blvd%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Mobil%2C%20333%20Seymour%20Blvd%2C%20North%20Vancouver%2C%20BC",
@@ -1502,23 +1469,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "7165 120 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:26 PM",
+      "reported_at_utc": "2026-11-16T06:26:00+00:00",
+      "report_age_minutes": 105,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1526,6 +1490,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.133,
       "longitude": -122.8906,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%207165%20120%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%207165%20120%20St%2C%20Delta%2C%20BC",
@@ -1549,23 +1514,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "10108 Nordel Ct",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:29 PM",
+      "reported_at_utc": "2026-11-16T03:29:00+00:00",
+      "report_age_minutes": 282,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1573,6 +1535,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.088,
       "longitude": -123.083,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%2010108%20Nordel%20Ct%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%2010108%20Nordel%20Ct%2C%20Delta%2C%20BC",
@@ -1596,23 +1559,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "8985 120 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 4:51 PM",
+      "reported_at_utc": "2026-11-15T23:51:00+00:00",
+      "report_age_minutes": 500,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1620,6 +1580,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.1664,
       "longitude": -122.8908,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%208985%20120%20St%2C%20Delta%2C%20BC",
@@ -1643,23 +1604,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "5277 48 Ave",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 4:33 PM",
+      "reported_at_utc": "2026-11-15T23:33:00+00:00",
+      "report_age_minutes": 518,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1667,6 +1625,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.0901,
       "longitude": -123.0847,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%205277%2048%20Ave%2C%20Delta%2C%20BC",
@@ -1690,23 +1649,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "9628 Ladner Trunk Rd",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 3:13 PM",
+      "reported_at_utc": "2026-11-15T22:13:00+00:00",
+      "report_age_minutes": 598,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1714,6 +1670,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/delta.html",
       "latitude": 49.088,
       "longitude": -123.083,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%209628%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%209628%20Ladner%20Trunk%20Rd%2C%20Delta%2C%20BC",
@@ -1737,23 +1694,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "5610 12 Ave",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 5:39 PM",
+      "reported_at_utc": "2026-11-16T00:39:00+00:00",
+      "report_age_minutes": 452,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1761,6 +1715,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
       "latitude": 49.0245,
       "longitude": -123.0683,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%205610%2012%20Ave%2C%20Delta%2C%20BC",
@@ -1784,23 +1739,20 @@
       "price_formatted": "179.9¢",
       "price_per_litre": "$1.799",
       "prices": {
-        "regular": 179.9,
-        "midgrade_89": 193.9,
-        "premium_91": 203.9,
-        "ultra_93": 213.9
+        "regular": 179.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1204 56 St",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 5:39 PM",
+      "reported_at_utc": "2026-11-16T00:39:00+00:00",
+      "report_age_minutes": 452,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1808,6 +1760,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
       "latitude": 49.0249,
       "longitude": -123.0682,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201204%2056%20St%2C%20Delta%2C%20BC",
@@ -1831,23 +1784,20 @@
       "price_formatted": "180.9¢",
       "price_per_litre": "$1.809",
       "prices": {
-        "regular": 180.9,
-        "midgrade_89": 194.9,
-        "premium_91": 204.9,
-        "ultra_93": 214.9
+        "regular": 180.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1490 Main St",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 6:19 PM",
+      "reported_at_utc": "2026-11-16T01:19:00+00:00",
+      "report_age_minutes": 412,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1855,6 +1805,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.32,
       "longitude": -123.07,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201490%20Main%20St%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201490%20Main%20St%2C%20North%20Vancouver%2C%20BC",
@@ -1878,23 +1829,20 @@
       "price_formatted": "180.9¢",
       "price_per_litre": "$1.809",
       "prices": {
-        "regular": 180.9,
-        "midgrade_89": 194.9,
-        "premium_91": 204.9,
-        "ultra_93": 214.9
+        "regular": 180.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "2620 Mount Seymour Pkwy",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 6:16 PM",
+      "reported_at_utc": "2026-11-16T01:16:00+00:00",
+      "report_age_minutes": 415,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1902,6 +1850,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3175,
       "longitude": -123.0008,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%202620%20Mount%20Seymour%20Pkwy%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%202620%20Mount%20Seymour%20Pkwy%2C%20North%20Vancouver%2C%20BC",
@@ -1925,23 +1874,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "2698 Capilano Rd",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 11:02 PM",
+      "reported_at_utc": "2026-11-16T06:02:00+00:00",
+      "report_age_minutes": 129,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1949,6 +1895,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3352,
       "longitude": -123.1115,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%202698%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%202698%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
@@ -1972,23 +1919,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "660 3rd St W",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:33 PM",
+      "reported_at_utc": "2026-11-16T05:33:00+00:00",
+      "report_age_minutes": 158,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -1996,6 +1940,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.32,
       "longitude": -123.07,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%20660%203rd%20St%20W%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%20660%203rd%20St%20W%2C%20North%20Vancouver%2C%20BC",
@@ -2019,23 +1964,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "2979 Mountain Hwy",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:21 PM",
+      "reported_at_utc": "2026-11-16T05:21:00+00:00",
+      "report_age_minutes": 170,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2043,6 +1985,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.32,
       "longitude": -123.07,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%202979%20Mountain%20Hwy%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%202979%20Mountain%20Hwy%2C%20North%20Vancouver%2C%20BC",
@@ -2066,23 +2009,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "2747 Mountain Hwy",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:21 PM",
+      "reported_at_utc": "2026-11-16T05:21:00+00:00",
+      "report_age_minutes": 170,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2090,6 +2030,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.32,
       "longitude": -123.07,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%202747%20Mountain%20Hwy%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%202747%20Mountain%20Hwy%2C%20North%20Vancouver%2C%20BC",
@@ -2113,23 +2054,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1270 Lynn Valley Rd",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:13 PM",
+      "reported_at_utc": "2026-11-16T05:13:00+00:00",
+      "report_age_minutes": 178,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2137,6 +2075,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3308,
       "longitude": -123.0392,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201270%20Lynn%20Valley%20Rd%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201270%20Lynn%20Valley%20Rd%2C%20North%20Vancouver%2C%20BC",
@@ -2160,23 +2099,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1731 Capilano Rd",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:26 PM",
+      "reported_at_utc": "2026-11-16T03:26:00+00:00",
+      "report_age_minutes": 285,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2184,6 +2120,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3275,
       "longitude": -123.1118,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%201731%20Capilano%20Rd%2C%20North%20Vancouver%2C%20BC",
@@ -2207,23 +2144,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1980 Marine Dr",
       "city": "North Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:24 PM",
+      "reported_at_utc": "2026-11-16T03:24:00+00:00",
+      "report_age_minutes": 287,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2231,6 +2165,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/north-vancouver.html",
       "latitude": 49.3242,
       "longitude": -123.1098,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201980%20Marine%20Dr%2C%20North%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201980%20Marine%20Dr%2C%20North%20Vancouver%2C%20BC",
@@ -2254,23 +2189,20 @@
       "price_formatted": "182.9¢",
       "price_per_litre": "$1.829",
       "prices": {
-        "regular": 182.9,
-        "midgrade_89": 196.9,
-        "premium_91": 206.9,
-        "ultra_93": 216.9
+        "regular": 182.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1613 Marine Dr",
       "city": "West Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 2:49 PM",
+      "reported_at_utc": "2026-11-15T21:49:00+00:00",
+      "report_age_minutes": 622,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2278,6 +2210,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/west-vancouver.html",
       "latitude": 49.3275,
       "longitude": -123.161,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Chevron%2C%201613%20Marine%20Dr%2C%20West%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Chevron%2C%201613%20Marine%20Dr%2C%20West%20Vancouver%2C%20BC",
@@ -2301,23 +2234,20 @@
       "price_formatted": "184.9¢",
       "price_per_litre": "$1.849",
       "prices": {
-        "regular": 184.9,
-        "midgrade_89": 198.9,
-        "premium_91": 208.9,
-        "ultra_93": 218.9
+        "regular": 184.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1595 Nichol Rd",
       "city": "White Rock",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 8:29 PM",
+      "reported_at_utc": "2026-11-16T03:29:00+00:00",
+      "report_age_minutes": 282,
+      "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2325,6 +2255,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/white-rock.html",
       "latitude": 49.0309,
       "longitude": -122.8348,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
@@ -2332,53 +2263,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
         "android_geo": "geo:0,0?q=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Esso%2C%201595%20Nichol%20Rd%2C%20White%20Rock%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "white_rock_1392johnstonrd",
-      "station_name": "Petro-Canada",
-      "brand": "Petro-Canada",
-      "brand_official_url": "https://www.petro-canada.ca",
-      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
-      "brand_color": "#e31837",
-      "region": "surrey_area",
-      "sub_area": "White Rock",
-      "neighborhood": "White Rock",
-      "price": 185.9,
-      "price_formatted": "185.9¢",
-      "price_per_litre": "$1.859",
-      "prices": {
-        "regular": 185.9,
-        "midgrade_89": 199.9,
-        "premium_91": 209.9,
-        "ultra_93": 219.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
-      ],
-      "address": "1392 Johnston Rd",
-      "city": "White Rock",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Nov 13, 2:43 PM",
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (White Rock)",
-      "source_url": "https://www.gvrd.com/gas-prices/white-rock.html",
-      "latitude": 49.0302,
-      "longitude": -122.8022,
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%201392%20Johnston%20Rd%2C%20White%20Rock%2C%20BC&dirflg=d"
       }
     },
     {
@@ -2395,23 +2279,20 @@
       "price_formatted": "185.9¢",
       "price_per_litre": "$1.859",
       "prices": {
-        "regular": 185.9,
-        "midgrade_89": 199.9,
-        "premium_91": 209.9,
-        "ultra_93": 219.9
+        "regular": 185.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1406 Tsawwassen Rd S",
       "city": "Delta",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 5:52 PM",
+      "reported_at_utc": "2026-11-16T00:52:00+00:00",
+      "report_age_minutes": 439,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2419,6 +2300,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/tsawwassen.html",
       "latitude": 49.088,
       "longitude": -123.083,
+      "coordinates_source": "city_fallback",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%201406%20Tsawwassen%20Rd%20S%2C%20Delta%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%201406%20Tsawwassen%20Rd%20S%2C%20Delta%2C%20BC",
@@ -2442,23 +2324,20 @@
       "price_formatted": "186.9¢",
       "price_per_litre": "$1.869",
       "prices": {
-        "regular": 186.9,
-        "midgrade_89": 200.9,
-        "premium_91": 210.9,
-        "ultra_93": 220.9
+        "regular": 186.9
       },
       "fuel_type": "regular",
       "supported_fuel_types": [
-        "regular",
-        "midgrade_89",
-        "premium_91",
-        "ultra_93"
+        "regular"
       ],
       "address": "1503 Marine Dr",
       "city": "West Vancouver",
       "province": "BC",
       "country": "Canada",
       "last_updated": "Nov 15, 10:27 AM",
+      "reported_at_utc": "2026-11-15T17:27:00+00:00",
+      "report_age_minutes": 884,
+      "is_fresh": false,
       "is_live": true,
       "source": "Via Live Report",
       "source_name": "Via Live Report",
@@ -2466,6 +2345,7 @@
       "source_url": "https://www.gvrd.com/gas-prices/west-vancouver.html",
       "latitude": 49.3272,
       "longitude": -123.1585,
+      "coordinates_source": "catalog",
       "map_urls": {
         "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%201503%20Marine%20Dr%2C%20West%20Vancouver%2C%20BC",
         "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%201503%20Marine%20Dr%2C%20West%20Vancouver%2C%20BC",
