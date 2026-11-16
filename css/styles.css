@@ -560,6 +560,13 @@ body {
   text-transform: uppercase;
 }
 
+.pref-note {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
 .pref-select-wrapper {
   position: relative;
   width: 100%;
