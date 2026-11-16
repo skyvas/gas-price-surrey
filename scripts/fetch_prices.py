@@ -14,6 +14,22 @@ Feeds monitored:
 - GasBuddy North Vancouver Feed (df.gasbuddy.com via GVRD)
 - GasBuddy West Vancouver Feed (df.gasbuddy.com via GVRD)
 
+Solid-data rules (added 2026-11-16):
+- Regular gasoline ONLY. The GasBuddy syndicated feed reports regular prices;
+  midgrade/premium/diesel are not reported by this feed, so they are not
+  invented from fixed offsets and are not shown as live prices.
+- Freshness is enforced: each report carries the time GasBuddy shows for it,
+  parsed as America/Vancouver time. Reports older than 24h are dropped;
+  reports older than 6h are flagged stale. Deduplication keeps the FRESHEST
+  report per station, not the lowest price.
+- A run that returns too few stations never overwrites good data: the previous
+  data/gas_prices.json is kept and the run is marked degraded.
+- NRCan's weekly Vancouver regular average (official RSS feed) is fetched
+  best-effort as a sanity anchor. It is not station-level and not live, so it
+  never overrides a station price; it only flags implausible medians.
+- Every run appends one summary line to data/history.jsonl (kept to the last
+  2000 runs) so the real update cadence and cheapest prices are auditable.
+
 Outputs structured, validated JSON to data/gas_prices.json.
 Only stations with verified live reports are included.
 """
@@ -21,11 +37,14 @@ Only stations with verified live reports are included.
 import json
 import os
 import re
+import statistics
 import sys
 import time
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 # Target geographic bounds and region mappings
 REGIONS = {
@@ -85,6 +104,29 @@ CITY_NORMALIZATION = {
     "burnaby": "Burnaby",
     "vancouver": "Vancouver",
 }
+
+# --- Solid-data policy (2026-11-16) ---------------------------------------
+PACIFIC = ZoneInfo("America/Vancouver")
+# GasBuddy report times look like "Nov 15, 10:32 PM" (Pacific, no year).
+REPORT_TIME_FORMAT = "%b %d, %I:%M %p"
+MAX_REPORT_AGE_HOURS = 24   # drop reports older than this
+STALE_AFTER_HOURS = 6       # flag reports older than this as stale
+PRICE_MIN_CENTS = 100.0     # plausible BC regular range, cents/litre
+PRICE_MAX_CENTS = 300.0
+MIN_STATIONS_OK = 20        # a run with fewer stations is degraded
+MIN_FEEDS_OK = 5            # ... and needs at least this many feeds working
+HISTORY_MAX_LINES = 2000
+# NRCan weekly average, regular gasoline, Vancouver (official, RSS).
+# Product 1 = regular, location 2 = Vancouver. Weekly, not live, station data
+# does not exist there — this is only a sanity anchor.
+NRCAN_RSS_URL = (
+    "https://www2.nrcan.gc.ca/eneene/sources/pripri/webfeed_e.cfm"
+    "?priceYear={year}&productID=1&locationID=2"
+)
+NRCAN_PAGE_URL = (
+    "https://www2.nrcan.gc.ca/eneene/sources/pripri/"
+    "prices_bycity_e.cfm?priceYear={year}&productID=1&locationID=2"
+)
 
 # Brand details and brand portal URLs
 BRAND_METADATA = {
@@ -319,6 +361,18 @@ KNOWN_STATIONS = [
     ("Chevron", "1613 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.3275, -123.1610),
     ("Esso", "1503 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.3272, -123.1585),
     ("Chevron", "3690 Westmount Rd", "West Vancouver", "Westmount", 49.3498, -123.2085),
+
+    # Added 2026-11-16: cheapest live-feed stations that had no catalog entry
+    # (they were falling back to city-centre coordinates). Geocoded
+    # FULL_ADDRESS matches, 2026-11-16.
+    ("Canco", "18398 Fraser Hwy", "Surrey", "Cloverdale", 49.12863, -122.71287),
+    ("Shell", "1896 E Hastings St", "Vancouver", "East Vancouver", 49.28087, -123.06601),
+    ("Petro-Canada", "19229 28 Ave", "Surrey", "South Surrey", 49.05302, -122.69065),
+    ("Petro-Canada", "8038 King George Blvd", "Surrey", "Newton", 49.14853, -122.8453),
+    ("Chevron", "7390 120 St", "Surrey", "Newton", 49.13739, -122.88975),
+    ("Shell", "1503 W 41st Ave", "Vancouver", "West Side", 49.23467, -123.13996),
+    ("Chevron", "1955 Powell St", "Vancouver", "East Vancouver", 49.28525, -123.06411),
+    ("Chevron", "1212 E Hastings St", "Vancouver", "East Vancouver", 49.28097, -123.07871),
 ]
 
 # Syndicated live feeds from GasBuddy (df.gasbuddy.com)
@@ -558,20 +612,36 @@ def infer_neighborhood(address: str, city: str) -> str:
     return "Local District"
 
 
+def _street_part(address: str) -> str:
+    """Street name without the leading number or a trailing unit ('#1')."""
+    text = re.sub(r"^\d+\s*-?\s*", "", address or "")
+    text = re.sub(r"\s*#.*$", "", text).strip().lower()
+    return re.sub(r"\s+", " ", text)
+
+
 def find_known_station(brand: str, address: str, city: str):
-    """Match a live report to KNOWN_STATIONS catalog to retrieve accurate coords and neighborhood."""
+    """Match a live report to KNOWN_STATIONS catalog to retrieve accurate coords and neighborhood.
+
+    Matches on street number AND street name, so two stations sharing a
+    street number in the same city cannot steal each other's coordinates.
+    Returns (neighborhood, lat, lon, coordinates_source) where the source is
+    'catalog' for a real match and 'city_fallback' for the city-centre point
+    (map links still use the exact address text, so navigation is unaffected).
+    """
     num_m = re.search(r"^\d+", address)
     num_str = num_m.group(0) if num_m else ""
+    street = _street_part(address)
 
     for k_brand, k_addr, k_city, k_neigh, k_lat, k_lon in KNOWN_STATIONS:
         if k_city.lower() != city.lower():
             continue
         k_num_m = re.search(r"^\d+", k_addr)
         k_num_str = k_num_m.group(0) if k_num_m else ""
+        k_street = _street_part(k_addr)
 
-        # Match by street number and partial street name or brand
         if num_str and k_num_str and num_str == k_num_str:
-            return k_neigh, k_lat, k_lon
+            if not street or not k_street or street == k_street or street in k_street or k_street in street:
+                return k_neigh, k_lat, k_lon, "catalog"
 
     # Fallback to defaults
     default_coords = {
@@ -585,7 +655,58 @@ def find_known_station(brand: str, address: str, city: str):
     }
     coords = default_coords.get(city, (49.1044, -122.8011))
     neighborhood = infer_neighborhood(address, city)
-    return neighborhood, coords[0], coords[1]
+    return neighborhood, coords[0], coords[1], "city_fallback"
+
+
+def parse_report_time(raw: str, now_utc: datetime):
+    """Parse a GasBuddy report time like 'Nov 15, 10:32 PM' (Pacific, no year).
+
+    Returns an aware UTC datetime, or None when the text is not a date
+    (e.g. 'Recently reported'). Assumes the current year, rolling back a year
+    if that would put the report more than an hour in the future.
+    """
+    text = (raw or "").strip()
+    if not text:
+        return None
+    try:
+        naive = datetime.strptime(text, REPORT_TIME_FORMAT)
+    except ValueError:
+        return None
+    now_pacific = now_utc.astimezone(PACIFIC)
+    candidate = naive.replace(year=now_pacific.year, tzinfo=PACIFIC)
+    if candidate > now_pacific + timedelta(hours=1):
+        candidate = candidate.replace(year=now_pacific.year - 1)
+    return candidate.astimezone(timezone.utc)
+
+
+def fetch_nrcan_anchor(now_utc: datetime):
+    """Best-effort NRCan weekly Vancouver regular average (official RSS).
+
+    Returns {'vancouver_regular_weekly_cents': float, 'as_of': str,
+    'source_url': str} or None on any failure. Never raises: this is a sanity
+    anchor only, and a failure must not fail the run.
+    """
+    year = now_utc.year
+    url = NRCAN_RSS_URL.format(year=year)
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "gas-price-surrey/1.0"})
+        with urllib.request.urlopen(req, timeout=10) as response:
+            xml_text = response.read().decode("utf-8", errors="replace")
+        root = ET.fromstring(xml_text)
+        item = root.find("./channel/item")
+        if item is None:
+            return None
+        desc = (item.findtext("description") or "").strip().replace("$", "")
+        pub = (item.findtext("pubDate") or "").strip()
+        dollars = float(desc)
+        return {
+            "vancouver_regular_weekly_cents": round(dollars * 100, 1),
+            "as_of": pub,
+            "source_url": NRCAN_PAGE_URL.format(year=year),
+        }
+    except Exception as e:
+        print(f"  -> NRCan anchor unavailable: {e}")
+        return None
 
 
 def fetch_syndicated_feed(source_info: dict) -> list:
@@ -598,8 +719,19 @@ def fetch_syndicated_feed(source_info: dict) -> list:
     }
 
     req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, timeout=12) as response:
-        js_content = response.read().decode("utf-8", errors="replace")
+    js_content = None
+    last_error = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=15) as response:
+                js_content = response.read().decode("utf-8", errors="replace")
+            break
+        except Exception as e:
+            last_error = e
+            if attempt < 2:
+                time.sleep(1 * (attempt + 1))
+    if js_content is None:
+        raise RuntimeError(f"feed unreachable after 3 attempts: {last_error}")
 
     stations_data = {}
     lines = js_content.split(";")
@@ -635,7 +767,9 @@ def fetch_syndicated_feed(source_info: dict) -> list:
             idx = time_m.group(1)
             stations_data.setdefault(idx, {})["time_raw"] = val
 
+    now_utc = datetime.now(timezone.utc)
     results = []
+    dropped_stale = 0
     for idx, item in stations_data.items():
         price_str = clean_html(item.get("price_raw", ""))
         price_num_match = re.search(r"(\d+(\.\d+)?)", price_str)
@@ -645,6 +779,8 @@ def fetch_syndicated_feed(source_info: dict) -> list:
         price_val = float(price_num_match.group(1))
         if price_val < 10.0:
             price_val = round(price_val * 100, 1)
+        if not (PRICE_MIN_CENTS <= price_val <= PRICE_MAX_CENTS):
+            continue
 
         station_name = normalize_station_name(item.get("station_raw", ""))
         address = normalize_address(item.get("address_raw", ""))
@@ -656,6 +792,14 @@ def fetch_syndicated_feed(source_info: dict) -> list:
             continue
 
         time_str = clean_html(item.get("time_raw", "")).strip() or "Recently reported"
+        reported_at = parse_report_time(time_str, now_utc)
+        if reported_at is not None:
+            age_minutes = (now_utc - reported_at).total_seconds() / 60.0
+            if age_minutes > MAX_REPORT_AGE_HOURS * 60:
+                dropped_stale += 1
+                continue
+        else:
+            age_minutes = None
 
         results.append({
             "station_name": station_name,
@@ -663,11 +807,13 @@ def fetch_syndicated_feed(source_info: dict) -> list:
             "address": address,
             "city": city,
             "last_updated": time_str,
+            "reported_at_utc": reported_at.isoformat() if reported_at else None,
+            "report_age_minutes": round(age_minutes) if age_minutes is not None else None,
             "source_name": source_info["name"],
             "source_url": source_info["page_url"],
         })
 
-    return results
+    return results, dropped_stale
 
 
 def get_station_region(city: str) -> str:
@@ -697,7 +843,7 @@ def build_live_station_record(item: dict) -> dict:
         "logo_color": "#2563eb",
     })
 
-    neighborhood, lat, lon = find_known_station(brand, address, city)
+    neighborhood, lat, lon, coords_source = find_known_station(brand, address, city)
     map_urls = generate_map_urls(brand, address, city, lat, lon)
     station_id = f"{city.lower().replace(' ', '_')}_{re.sub(r'[^a-zA-Z0-9]', '', address).lower()}"
     region = get_station_region(city)
@@ -719,13 +865,10 @@ def build_live_station_record(item: dict) -> dict:
         sub_area = city
 
     base_price = round(price_val, 1)
-    # Gas grades in BC: Midgrade (89) is +14¢/L, Premium (91) is +24¢/L, Ultra (93) is +34¢/L
-    prices_by_octane = {
-        "regular": base_price,
-        "midgrade_89": round(base_price + 14.0, 1),
-        "premium_91": round(base_price + 24.0, 1),
-        "ultra_93": round(base_price + 34.0, 1),
-    }
+    # Regular ONLY. The GasBuddy feed reports regular prices; midgrade,
+    # premium and diesel are not reported here, so they are not estimated
+    # from fixed offsets and are not presented as live prices.
+    prices_by_octane = {"regular": base_price}
 
     return {
         "id": station_id,
@@ -742,12 +885,18 @@ def build_live_station_record(item: dict) -> dict:
         "price_per_litre": f"${base_price / 100:.3f}",
         "prices": prices_by_octane,
         "fuel_type": "regular",
-        "supported_fuel_types": ["regular", "midgrade_89", "premium_91", "ultra_93"],
+        "supported_fuel_types": ["regular"],
         "address": address,
         "city": city,
         "province": "BC",
         "country": "Canada",
         "last_updated": time_str,
+        "reported_at_utc": item.get("reported_at_utc"),
+        "report_age_minutes": item.get("report_age_minutes"),
+        "is_fresh": (
+            item.get("report_age_minutes") is None
+            or item["report_age_minutes"] <= STALE_AFTER_HOURS * 60
+        ),
         "is_live": True,
         "source": "Via Live Report",
         "source_name": "Via Live Report",
@@ -755,33 +904,71 @@ def build_live_station_record(item: dict) -> dict:
         "source_url": source_url,
         "latitude": lat,
         "longitude": lon,
+        "coordinates_source": coords_source,
         "map_urls": map_urls,
     }
 
 
+def _load_previous_payload(output_path: str):
+    try:
+        with open(output_path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _append_history(history_path: str, entry: dict) -> None:
+    os.makedirs(os.path.dirname(history_path), exist_ok=True)
+    lines = []
+    if os.path.exists(history_path):
+        with open(history_path, encoding="utf-8") as f:
+            lines = [line.strip() for line in f if line.strip()]
+    lines.append(json.dumps(entry, ensure_ascii=False))
+    lines = lines[-HISTORY_MAX_LINES:]
+    with open(history_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+
+
 def fetch_all_prices():
     """Main execution: exclusively fetches live reports from GasBuddy feeds and saves to JSON."""
-    print(f"[{datetime.now(timezone.utc).isoformat()}] Fetching live gas prices from GasBuddy feeds...")
+    started_utc = datetime.now(timezone.utc)
+    print(f"[{started_utc.isoformat()}] Fetching live gas prices from GasBuddy feeds...")
+
+    base_dir = os.path.join(os.path.dirname(__file__), "..")
+    output_path = os.path.join(base_dir, "data", "gas_prices.json")
+    history_path = os.path.join(base_dir, "data", "history.jsonl")
+    previous = _load_previous_payload(output_path)
+    prev_count = 0
+    if previous:
+        prev_count = len(previous.get("stations", []))
 
     all_sources_summary = []
     live_reports_by_key = {}
+    total_dropped_stale = 0
+    fetch_errors = []
+    feeds_ok = 0
 
     for src in SYNDICATED_SOURCES:
         print(f"Fetching from {src['name']}...")
         try:
-            items = fetch_syndicated_feed(src)
-            print(f"  -> Extracted {len(items)} live reported stations from {src['name']}")
+            items, dropped_stale = fetch_syndicated_feed(src)
+            total_dropped_stale += dropped_stale
+            feeds_ok += 1
+            print(f"  -> Extracted {len(items)} live reported stations from {src['name']}"
+                  + (f" ({dropped_stale} dropped as >{MAX_REPORT_AGE_HOURS}h old)" if dropped_stale else ""))
             for item in items:
-                # Key on city + street number (or clean address) for deduplication
-                num_m = re.search(r"^\d+", item["address"])
-                addr_key = num_m.group(0) if num_m else re.sub(r"[^a-zA-Z0-9]", "", item["address"]).lower()
+                # Key on city + normalized address for deduplication.
+                addr_key = re.sub(r"[^a-zA-Z0-9]", "", item["address"]).lower()
                 key = f"{item['city'].lower().replace(' ', '_')}_{addr_key}"
 
                 if key not in live_reports_by_key:
                     live_reports_by_key[key] = item
                 else:
-                    # If already present, keep the lower price
-                    if item["price"] < live_reports_by_key[key]["price"]:
+                    # Keep the FRESHEST report; break ties with the lower price.
+                    existing = live_reports_by_key[key]
+                    new_time = item.get("reported_at_utc") or ""
+                    old_time = existing.get("reported_at_utc") or ""
+                    if (new_time, -item["price"]) > (old_time, -existing["price"]):
                         live_reports_by_key[key] = item
 
             all_sources_summary.append({
@@ -790,15 +977,18 @@ def fetch_all_prices():
                 "type": "GasBuddy Real-Time Live Feed",
                 "status": "active (verified)",
                 "stations_reported": len(items),
+                "dropped_stale": dropped_stale,
             })
         except Exception as e:
             print(f"  -> Error fetching {src['name']}: {e}")
+            fetch_errors.append(f"{src['name']}: {e}")
             all_sources_summary.append({
                 "name": src["name"],
                 "url": src["page_url"],
                 "type": "GasBuddy Real-Time Live Feed",
                 "status": f"error: {str(e)}",
                 "stations_reported": 0,
+                "dropped_stale": 0,
             })
 
     # Build compiled stations list solely from live reports
@@ -809,6 +999,59 @@ def fetch_all_prices():
 
     # Sort strictly by price ascending (cheapest first)
     compiled_stations.sort(key=lambda s: s["price"])
+
+    # Freshness stats over reports that carried a parseable time
+    ages = [s["report_age_minutes"] for s in compiled_stations
+            if s.get("report_age_minutes") is not None]
+    stale_count = sum(1 for a in ages if a > STALE_AFTER_HOURS * 60)
+    freshness = {
+        "reports_with_time": len(ages),
+        "median_age_minutes": round(statistics.median(ages)) if ages else None,
+        "max_age_minutes": max(ages) if ages else None,
+        "stale_count": stale_count,
+        "dropped_stale_count": total_dropped_stale,
+    }
+
+    # NRCan weekly Vancouver regular average as a sanity anchor (best-effort)
+    nrcan_anchor = fetch_nrcan_anchor(started_utc)
+    price_sanity = "ok"
+    sanity_note = ""
+    if compiled_stations and nrcan_anchor:
+        median_price = statistics.median(s["price"] for s in compiled_stations)
+        anchor = nrcan_anchor["vancouver_regular_weekly_cents"]
+        if abs(median_price - anchor) > 25:
+            price_sanity = "check"
+            sanity_note = (
+                f"Median station price {median_price:.1f}c differs from the NRCan "
+                f"Vancouver weekly average {anchor:.1f}c by more than 25c."
+            )
+
+    # Guardrail: a thin or failed run must never overwrite good data.
+    degraded = False
+    degrade_reason = ""
+    if len(compiled_stations) < MIN_STATIONS_OK or feeds_ok < MIN_FEEDS_OK:
+        degraded = True
+        degrade_reason = (
+            f"only {len(compiled_stations)} stations from {feeds_ok} feeds "
+            f"(need >= {MIN_STATIONS_OK} stations, >= {MIN_FEEDS_OK} feeds)"
+        )
+    elif prev_count and len(compiled_stations) < 0.5 * prev_count:
+        degraded = True
+        degrade_reason = (
+            f"only {len(compiled_stations)} stations vs {prev_count} previously"
+        )
+
+    now_utc = datetime.now(timezone.utc)
+    if degraded and previous and previous.get("stations"):
+        print(f"DEGRADED run ({degrade_reason}) — keeping previous "
+              f"{len(previous['stations'])} stations.")
+        compiled_stations = previous["stations"]
+        compiled_stations.sort(key=lambda s: s["price"])
+        last_good_utc = previous.get("metadata", {}).get("last_updated_utc")
+        last_good_fmt = previous.get("metadata", {}).get("last_updated_formatted")
+    else:
+        last_good_utc = now_utc.isoformat()
+        last_good_fmt = now_utc.strftime("%B %d, %Y at %I:%M %p UTC")
 
     cheapest_overall = compiled_stations[0] if compiled_stations else None
 
@@ -826,32 +1069,63 @@ def fetch_all_prices():
         if city_stations:
             cheapest_by_city[c] = city_stations[0]["id"]
 
-    now_utc = datetime.now(timezone.utc)
+    surrey_stations = [s for s in compiled_stations if s["city"] == "Surrey"]
     output_payload = {
         "metadata": {
             "title": "Metro Vancouver Gas Prices",
             "default_region": "surrey_area",
             "regions": REGIONS,
-            "last_updated_utc": now_utc.isoformat(),
-            "last_updated_formatted": now_utc.strftime("%B %d, %Y at %I:%M %p UTC"),
+            "last_updated_utc": last_good_utc,
+            "last_updated_formatted": last_good_fmt,
+            "fetch_attempted_at_utc": now_utc.isoformat(),
+            "fetch_status": "degraded" if degraded else "ok",
+            "fetch_errors": fetch_errors + ([degrade_reason] if degraded else []),
             "target_regions": "Surrey Area, Vancouver, Burnaby",
             "fuel_type_default": "regular",
-            "supported_fuel_types": ["regular", "diesel", "premium"],
+            "supported_fuel_types": ["regular"],
             "total_stations": len(compiled_stations),
-            "data_source_description": "100% Real-Time GasBuddy Live Driver Reports",
+            "data_source_description": (
+                "100% Real-Time GasBuddy Live Driver Reports (regular gasoline only). "
+                "Midgrade, premium and diesel are not reported by this feed and are "
+                "not estimated."
+            ),
             "sources": all_sources_summary,
             "cheapest_overall_id": cheapest_overall["id"] if cheapest_overall else None,
+            "report_freshness": freshness,
+            "nrcan_anchor": nrcan_anchor,
+            "price_sanity": price_sanity,
+            "price_sanity_note": sanity_note,
+            "data_notes": (
+                "Regular gasoline only. Each price is a GasBuddy community report "
+                "with its own report time; reports older than 24h are dropped. "
+                "NRCan weekly Vancouver average is a sanity anchor, not a station price."
+            ),
         },
         "cheapest_by_region": cheapest_by_region,
         "cheapest_by_city": cheapest_by_city,
         "stations": compiled_stations,
     }
 
-    output_path = os.path.join(os.path.dirname(__file__), "..", "data", "gas_prices.json")
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output_payload, f, indent=2, ensure_ascii=False)
+
+    history_entry = {
+        "fetched_at_utc": now_utc.isoformat(),
+        "status": "degraded" if degraded else "ok",
+        "stations": len(compiled_stations),
+        "feeds_ok": feeds_ok,
+        "dropped_stale": total_dropped_stale,
+        "cheapest_overall_cents": cheapest_overall["price"] if cheapest_overall else None,
+        "cheapest_surrey_cents": surrey_stations[0]["price"] if surrey_stations else None,
+        "median_cents": round(statistics.median(s["price"] for s in compiled_stations), 1) if compiled_stations else None,
+        "nrcan_vancouver_weekly_cents": (
+            nrcan_anchor["vancouver_regular_weekly_cents"] if nrcan_anchor else None
+        ),
+        "errors": fetch_errors + ([degrade_reason] if degraded else []),
+    }
+    _append_history(history_path, history_entry)
 
     print(f"Successfully compiled and saved {len(compiled_stations)} live stations to {os.path.abspath(output_path)}.")
     for r_id, r_info in REGIONS.items():
