@@ -65,35 +65,35 @@
     }
   };
 
-  // Fuel Octane Configurations
+  // Fuel Octane Configurations.
+  // Only Regular is reported live by the GasBuddy feed (see data notes).
+  // The other grades stay listed so they can be enabled when a real
+  // multi-grade source exists — but they must NEVER be estimated from
+  // fixed offsets. getStationPrice returns null for unreported grades.
   const FUEL_CONFIGS = {
     regular: {
       id: 'regular',
       name: 'Regular',
       octane: 'Regular 87',
-      badge: 'Regular Gas (87)',
-      offset: 0
+      badge: 'Regular Gas (87)'
     },
     midgrade_89: {
       id: 'midgrade_89',
       name: 'Midgrade',
       octane: 'Midgrade 89',
-      badge: 'Midgrade (89)',
-      offset: 14.0
+      badge: 'Midgrade (89)'
     },
     premium_91: {
       id: 'premium_91',
       name: 'Premium',
       octane: 'Premium 91',
-      badge: 'Premium (91)',
-      offset: 24.0
+      badge: 'Premium (91)'
     },
     ultra_93: {
       id: 'ultra_93',
       name: 'Ultra / 94',
       octane: 'Ultra 93+',
-      badge: 'Ultra (93+)',
-      offset: 34.0
+      badge: 'Ultra (93+)'
     }
   };
 
@@ -247,16 +247,16 @@
   }
 
   /**
-   * Get price for station based on the active fuel type (octane)
+   * Get price for station based on the active fuel type (octane).
+   * Returns the live reported price, or null when that grade is not
+   * reported for the station. Never estimates a grade from an offset.
    */
   function getStationPrice(station, fuelType = currentFilter.fuelType) {
-    if (!station) return 0;
+    if (!station) return null;
     if (station.prices && station.prices[fuelType] !== undefined) {
       return Number(station.prices[fuelType]);
     }
-    const offset = (FUEL_CONFIGS[fuelType] && FUEL_CONFIGS[fuelType].offset) || 0;
-    const base = Number(station.price) || 0;
-    return Number((base + offset).toFixed(1));
+    return null;
   }
 
   /**
@@ -462,8 +462,13 @@
    * Process loaded data and refresh UI
    */
   function onDataLoaded() {
+    applySupportedFuels();
     if (appData.metadata && updateTimeText) {
-      updateTimeText.textContent = formatRelativeTime(appData.metadata.last_updated_utc);
+      let text = formatRelativeTime(appData.metadata.last_updated_utc);
+      if (appData.metadata.fetch_status === 'degraded') {
+        text += ' — showing last good fetch, latest attempt had errors';
+      }
+      updateTimeText.textContent = text;
     }
 
     updateHeaderSubtitle();
@@ -471,6 +476,30 @@
     renderFilterTabs();
     renderSources();
     render();
+  }
+
+  /**
+   * Only offer fuel grades the data actually reports live
+   * (metadata.supported_fuel_types). Anything else is disabled in the
+   * picker and a saved preference for it falls back to Regular, so the
+   * page can never show an estimated grade as a live price.
+   */
+  function applySupportedFuels() {
+    const supported = (appData.metadata && appData.metadata.supported_fuel_types) || ['regular'];
+    if (fuelTypeSelect) {
+      Array.from(fuelTypeSelect.options).forEach((opt) => {
+        const isSupported = supported.includes(opt.value);
+        opt.disabled = !isSupported;
+        if (!isSupported && !opt.textContent.includes('not reported live')) {
+          opt.textContent += ' — not reported live';
+        }
+      });
+    }
+    if (!supported.includes(currentFilter.fuelType)) {
+      currentFilter.fuelType = 'regular';
+      if (fuelTypeSelect) fuelTypeSelect.value = 'regular';
+      try { localStorage.removeItem(STORAGE_KEYS.FUEL); } catch (e) { /* ignore */ }
+    }
   }
 
   /**
@@ -521,6 +550,18 @@
       chip.textContent = label;
       sourcesList.appendChild(chip);
     });
+
+    // NRCan weekly Vancouver average: official sanity anchor, not a station price.
+    const anchor = appData.metadata.nrcan_anchor;
+    if (anchor && anchor.vancouver_regular_weekly_cents) {
+      const anchorChip = document.createElement('a');
+      anchorChip.className = 'source-chip';
+      anchorChip.href = anchor.source_url;
+      anchorChip.target = '_blank';
+      anchorChip.rel = 'noopener noreferrer';
+      anchorChip.textContent = `NRCan Vancouver weekly avg ${anchor.vancouver_regular_weekly_cents}¢ (anchor)`;
+      sourcesList.appendChild(anchorChip);
+    }
   }
 
   /**
@@ -664,8 +705,13 @@
       );
     }
 
-    // Always sort by active gasoline octane price ascending (cheapest first)
-    list.sort((a, b) => getStationPrice(a) - getStationPrice(b));
+    // Always sort by active gasoline octane price ascending (cheapest first).
+    // Stations without a live price for the active grade sort last.
+    list.sort((a, b) => {
+      const pa = getStationPrice(a);
+      const pb = getStationPrice(b);
+      return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+    });
 
     return list;
   }
@@ -703,7 +749,9 @@
     const topPrice = getStationPrice(topStation);
     const maxStation = filteredList[filteredList.length - 1];
     const maxPrice = getStationPrice(maxStation);
-    const priceDiff = Math.max(0, maxPrice - topPrice).toFixed(1);
+    const priceDiff = (topPrice === null || maxPrice === null)
+      ? 0
+      : Math.max(0, maxPrice - topPrice).toFixed(1);
 
     // Dynamic Pill Text based on active area, brand, and gasoline type
     let pillText = `Lowest ${activeFuel.octane} in Region`;
@@ -737,9 +785,11 @@
     heroReportedText.textContent = topStation.last_updated || 'Recent';
     heroSource.textContent = '⚡ Via Live Report';
 
-    // Price for selected gasoline type
-    heroPrice.textContent = topPrice.toFixed(1);
-    heroPricePerLitre.textContent = `$${(topPrice / 100).toFixed(3)} / Litre`;
+    // Price for selected gasoline type ('--.-' when not reported live)
+    heroPrice.textContent = topPrice === null ? '--.-' : topPrice.toFixed(1);
+    heroPricePerLitre.textContent = topPrice === null
+      ? 'Not reported live'
+      : `$${(topPrice / 100).toFixed(3)} / Litre`;
 
     // Map CTA Links for Google Maps & Apple Maps
     if (heroGoogleMapBtn) heroGoogleMapBtn.href = getGoogleMapsUrl(topStation);
@@ -768,8 +818,8 @@
 
     filteredList.forEach((station) => {
       const stPrice = getStationPrice(station);
-      const isCheapest = (stPrice === minPrice);
-      const diff = (stPrice - minPrice).toFixed(1);
+      const isCheapest = stPrice !== null && (stPrice === minPrice);
+      const diff = (stPrice === null || minPrice === null) ? null : (stPrice - minPrice).toFixed(1);
       const brandName = station.brand || station.station_name;
       const brandSlug = getBrandSlug(brandName);
       const googleMapUrl = getGoogleMapsUrl(station);
@@ -795,11 +845,11 @@
 
           <div class="station-price-box">
             <div class="price-main">
-              <span class="price-digits">${stPrice.toFixed(1)}</span>
+              <span class="price-digits">${stPrice === null ? '—' : stPrice.toFixed(1)}</span>
               <span class="price-symbol">¢</span>
             </div>
             <span class="price-diff-tag ${isCheapest ? 'cheapest' : ''}">
-              ${isCheapest ? '★ Lowest price' : `+${diff}¢ / L`}
+              ${stPrice === null ? 'Not reported live' : (isCheapest ? '★ Lowest price' : `+${diff}¢ / L`)}
             </span>
           </div>
         </div>
