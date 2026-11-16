@@ -14,7 +14,7 @@
       name: 'Surrey Area',
       subtitle: 'Surrey • Delta • White Rock, BC',
       heroPillPrefix: 'Lowest in Surrey Area',
-      heading: 'Gas Stations in Surrey, Delta & White Rock',
+      heading: 'Surrey Area',
       tabs: [
         { id: 'all', label: 'All Surrey Area', shortLabel: 'All' },
         { id: 'Surrey', label: 'Surrey' },
@@ -27,7 +27,7 @@
       name: 'Vancouver',
       subtitle: 'Vancouver • North Van • West Van, BC',
       heroPillPrefix: 'Lowest in Vancouver Area',
-      heading: 'Gas Stations in Vancouver, North Van & West Van',
+      heading: 'Vancouver',
       tabs: [
         { id: 'all', label: 'All Vancouver', shortLabel: 'All' },
         { id: 'East Vancouver', label: 'East Vancouver' },
@@ -41,7 +41,7 @@
       name: 'Burnaby',
       subtitle: 'Burnaby, BC',
       heroPillPrefix: 'Lowest in Burnaby',
-      heading: 'Gas Stations in Burnaby',
+      heading: 'Burnaby',
       tabs: [
         { id: 'all', label: 'All Burnaby', shortLabel: 'All' },
         { id: 'North Burnaby', label: 'North Burnaby' },
@@ -55,7 +55,7 @@
       name: 'All Metro Vancouver',
       subtitle: 'Metro Vancouver, BC',
       heroPillPrefix: 'Lowest in Metro Vancouver',
-      heading: 'All Metro Vancouver Gas Stations',
+      heading: 'Metro Vancouver',
       tabs: [
         { id: 'all', label: 'All Metro', shortLabel: 'All' },
         { id: 'surrey_area', label: 'Surrey Area' },
@@ -852,6 +852,10 @@
               ${stPrice === null ? 'Not reported live' : (isCheapest ? '★ Lowest price' : `+${diff}¢ / L`)}
             </span>
           </div>
+
+          <span class="card-chevron" aria-hidden="true">
+            <svg width="11" height="18" viewBox="0 0 11 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 9 9 1 17"></polyline></svg>
+          </span>
         </div>
 
         <div class="card-bottom-row">
@@ -1024,6 +1028,17 @@
     setInterval(() => {
       loadGasPrices(false);
     }, 5 * 60 * 1000);
+
+    // iOS large-title shrink: collapse the header title once the user scrolls.
+    // Presentational only — no data, filtering or sorting logic is touched.
+    const appHeader = document.querySelector('.app-header');
+    if (appHeader) {
+      const onScroll = () => {
+        appHeader.classList.toggle('scrolled', window.scrollY > 24);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
   }
 
   // Initialize: load saved defaults first, setup listeners, then load fresh data
