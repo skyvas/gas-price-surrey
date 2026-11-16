@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="BC Gas Finder">
-  <meta name="theme-color" content="#0b0f19">
+  <meta name="theme-color" content="#F2F2F7">
 
   <!-- SVG Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2310b981'><path d='M3 22h12M4 9h10M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334C759'><path d='M3 22h12M4 9h10M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5'/></svg>">
 
   <title>Cheapest Gas Prices | Metro Vancouver, Surrey & Burnaby BC</title>
   <meta name="description" content="Find the cheapest regular gas prices in Surrey Area (Surrey, Delta, White Rock), Vancouver (Downtown, East Van, North/West Van), and Burnaby, BC. Real-time GasBuddy reports with one-tap Maps navigation.">
@@ -21,16 +21,13 @@
   <meta property="og:description" content="Real-time fuel prices updated live from community pump reports. Navigate directly to the cheapest pump in one tap.">
   <meta property="og:type" content="website">
 
-  <!-- Modern Typography from Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- System font stack only (SF Pro / -apple-system) — no web fonts -->
 
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <link rel="stylesheet" href="css/styles.css?v=4.2">
+  <link rel="stylesheet" href="css/styles.css?v=5.0">
 </head>
 <body>
   <div class="app-container">
@@ -46,10 +43,7 @@
               <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"></path>
             </svg>
           </div>
-          <div class="brand-text-col">
-            <h1 class="header-h1">Gas Price Finder</h1>
-            <p class="header-subtitle" id="headerSubtitle">Surrey • Delta • White Rock, BC</p>
-          </div>
+          <span class="header-eyebrow">BC Gas Finder</span>
         </div>
 
         <div class="header-actions">
@@ -70,6 +64,12 @@
         </div>
       </div>
 
+      <!-- iOS large title, full-width on its own row -->
+      <div class="header-title-block">
+        <h1 class="header-h1">Gas Prices</h1>
+        <p class="header-subtitle" id="headerSubtitle">Surrey • Delta • White Rock, BC</p>
+      </div>
+
       <!-- Live Sync Status Banner (Clickable to open settings) -->
       <div class="status-strip">
         <div class="status-indicator">
@@ -88,6 +88,7 @@
     <div id="configDrawer" class="config-drawer" style="display: none;" aria-hidden="true">
       <div class="config-backdrop" id="configBackdrop"></div>
       <div class="config-modal-card">
+        <div class="sheet-grabber" aria-hidden="true"></div>
         <div class="drawer-header">
           <div class="drawer-title-group">
             <span class="pref-modal-icon">
@@ -431,6 +432,6 @@
     </footer>
   </div>
 
-  <script src="js/app.js?v=4.2"></script>
+  <script src="js/app.js?v=5.0"></script>
 </body>
 </html>
