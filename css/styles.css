@@ -817,3 +817,31 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ==========================================================================
+   Sort by price / distance + location status (v5.1)
+   ========================================================================== */
+.sort-row { display: flex; flex-direction: column; gap: 6px; }
+.sort-segmented {
+  display: inline-flex; gap: 2px; align-self: flex-start;
+  background: var(--fill); border-radius: 12px; padding: 2px;
+}
+.sort-option {
+  background: transparent; border: none; color: var(--text);
+  border-radius: 10px; padding: 8px 14px; min-height: 36px;
+  font-size: 15px; font-weight: 500; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  transition: background var(--transition-fast), box-shadow var(--transition-fast);
+}
+.sort-option.active {
+  background: var(--card); color: var(--text);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16), 0 1px 1px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+.location-status { font-size: 13px; color: var(--text-secondary); margin: 0; }
+.location-status:empty { display: none; }
+.distance-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-full);
+  white-space: nowrap; background: var(--blue-tint); color: var(--accent-blue);
+}
