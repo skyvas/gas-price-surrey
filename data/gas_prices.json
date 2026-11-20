@@ -32,9 +32,9 @@
         ]
       }
     },
-    "last_updated_utc": "2026-11-20T22:12:57.850688+00:00",
-    "last_updated_formatted": "November 20, 2026 at 10:12 PM UTC",
-    "fetch_attempted_at_utc": "2026-11-20T22:12:57.850688+00:00",
+    "last_updated_utc": "2026-11-20T22:13:14.559237+00:00",
+    "last_updated_formatted": "November 20, 2026 at 10:13 PM UTC",
+    "fetch_attempted_at_utc": "2026-11-20T22:13:14.559237+00:00",
     "fetch_status": "ok",
     "fetch_errors": [],
     "target_regions": "Surrey Area, Vancouver, Burnaby",
@@ -121,7 +121,7 @@
     "cheapest_overall_id": "vancouver_1675rupertst",
     "report_freshness": {
       "reports_with_time": 54,
-      "median_age_minutes": 103,
+      "median_age_minutes": 108,
       "max_age_minutes": 588,
       "stale_count": 5,
       "dropped_stale_count": 0
@@ -141,13 +141,13 @@
     "burnaby": "burnaby_5720hastingsst"
   },
   "cheapest_by_city": {
-    "Burnaby": "burnaby_5720hastingsst",
-    "West Vancouver": "west_vancouver_1503marinedr",
     "North Vancouver": "north_vancouver_1980marinedr",
-    "White Rock": "white_rock_1595nicholrd",
-    "Delta": "delta_10108nordelct",
+    "West Vancouver": "west_vancouver_1503marinedr",
+    "Vancouver": "vancouver_1675rupertst",
     "Surrey": "surrey_14313crescentroad",
-    "Vancouver": "vancouver_1675rupertst"
+    "Burnaby": "burnaby_5720hastingsst",
+    "Delta": "delta_10108nordelct",
+    "White Rock": "white_rock_1595nicholrd"
   },
   "stations": [
     {
@@ -871,51 +871,6 @@
       }
     },
     {
-      "id": "surrey_1838364ave",
-      "station_name": "Petro-Canada",
-      "brand": "Petro-Canada",
-      "brand_official_url": "https://www.petro-canada.ca",
-      "brand_rewards": "Petro-Points & RBC Card Link (Save 3¢/L)",
-      "brand_color": "#e31837",
-      "region": "surrey_area",
-      "sub_area": "Surrey",
-      "neighborhood": "Cloverdale",
-      "price": 173.9,
-      "price_formatted": "173.9¢",
-      "price_per_litre": "$1.739",
-      "prices": {
-        "regular": 173.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular"
-      ],
-      "address": "18383 64 Ave",
-      "city": "Surrey",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Nov 20, 2:10 PM",
-      "reported_at_utc": "2026-11-20T21:10:00+00:00",
-      "report_age_minutes": 63,
-      "is_fresh": true,
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Surrey)",
-      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
-      "latitude": 49.1192,
-      "longitude": -122.713,
-      "coordinates_source": "catalog",
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "android_geo": "geo:0,0?q=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%2018383%2064%20Ave%2C%20Surrey%2C%20BC&dirflg=d"
-      }
-    },
-    {
       "id": "surrey_13916grosvenorrd",
       "station_name": "Canco",
       "brand": "Canco",
@@ -1273,6 +1228,51 @@
         "apple_maps_search": "https://maps.apple.com/?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
         "android_geo": "geo:0,0?q=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Canco%2C%2015775%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "surrey_15551fraserhwy",
+      "station_name": "Shell",
+      "brand": "Shell",
+      "brand_official_url": "https://www.shell.ca",
+      "brand_rewards": "Shell App & BCAA / CAA (Save 3¢/L)",
+      "brand_color": "#ffd500",
+      "region": "surrey_area",
+      "sub_area": "Surrey",
+      "neighborhood": "Cloverdale",
+      "price": 174.9,
+      "price_formatted": "174.9¢",
+      "price_per_litre": "$1.749",
+      "prices": {
+        "regular": 174.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular"
+      ],
+      "address": "15551 Fraser Hwy",
+      "city": "Surrey",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Nov 20, 11:39 AM",
+      "reported_at_utc": "2026-11-20T18:39:00+00:00",
+      "report_age_minutes": 214,
+      "is_fresh": true,
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Surrey)",
+      "source_url": "https://www.gvrd.com/gas-prices/surrey.html",
+      "latitude": 49.1044,
+      "longitude": -122.8011,
+      "coordinates_source": "city_fallback",
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "android_geo": "geo:0,0?q=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Shell%2C%2015551%20Fraser%20Hwy%2C%20Surrey%2C%20BC&dirflg=d"
       }
     },
     {
