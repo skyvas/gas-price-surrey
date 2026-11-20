@@ -399,6 +399,9 @@ KNOWN_STATIONS = [
     ("Chevron", "2979 Mountain Hwy", "North Vancouver", "North Vancouver", 49.30509, -123.03205),
     ("Esso", "2747 Mountain Hwy", "North Vancouver", "North Vancouver", 49.30509, -123.03205),
     ("Shell", "1305 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.32791, -123.15217),
+    # Added later the same day: one more station that appeared in the next
+    # live run still falling back (Esso 5702 Granville St, Vancouver).
+    ("Esso", "5702 Granville St", "Vancouver", "West Side", 49.23392, -123.13923),
 ]
 
 # Syndicated live feeds from GasBuddy (df.gasbuddy.com)
