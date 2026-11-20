@@ -142,6 +142,7 @@
   const sortPriceBtn = document.getElementById('sortPriceBtn');
   const sortNearestBtn = document.getElementById('sortNearestBtn');
   const locationStatusText = document.getElementById('locationStatusText');
+  const refreshLocationBtn = document.getElementById('refreshLocationBtn');
   const stationsList = document.getElementById('stationsList');
   const emptyState = document.getElementById('emptyState');
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
@@ -295,13 +296,45 @@
     return km < 1 ? `${approx}${(km * 1000).toFixed(0)} m` : `${approx}${km.toFixed(1)} km`;
   }
 
+  let locationWatchId = null;
+  let locationWatchTimer = null;
+  let locationBestAccuracy = Infinity;
+
+  function updateRefreshButton() {
+    if (!refreshLocationBtn) return;
+    const locating = locationState === 'locating';
+    refreshLocationBtn.disabled = locating;
+    refreshLocationBtn.classList.toggle('locating', locating);
+    const label = refreshLocationBtn.querySelector('.refresh-location-label');
+    if (label) label.textContent = locating ? 'Locating…' : 'Update location';
+  }
+
+  function stopLocationWatch() {
+    if (locationWatchId !== null && 'geolocation' in navigator) {
+      navigator.geolocation.clearWatch(locationWatchId);
+    }
+    locationWatchId = null;
+    if (locationWatchTimer !== null) {
+      clearTimeout(locationWatchTimer);
+      locationWatchTimer = null;
+    }
+    updateRefreshButton();
+  }
+
   function updateLocationStatus() {
     if (!locationStatusText) return;
-    if (locationState === 'locating') locationStatusText.textContent = 'Finding your location…';
-    else if (locationState === 'ready') locationStatusText.textContent = 'Distances are from your current location';
-    else if (locationState === 'denied') locationStatusText.textContent = 'Location blocked — tap Nearest to try again';
+    if (locationState === 'locating') {
+      locationStatusText.textContent = userLocation
+        ? 'Refining your location…'
+        : 'Finding your location…';
+    } else if (locationState === 'ready') {
+      const acc = userLocation && userLocation.accuracy;
+      const accText = (typeof acc === 'number' && isFinite(acc)) ? ` · ±${Math.round(acc)} m` : '';
+      locationStatusText.textContent = `Distances are straight-line from your current location${accText}`;
+    } else if (locationState === 'denied') locationStatusText.textContent = 'Location blocked — tap Update location to try again';
     else if (locationState === 'unavailable') locationStatusText.textContent = 'Location is not available in this browser';
     else locationStatusText.textContent = '';
+    updateRefreshButton();
   }
 
   function updateSortUI() {
@@ -325,6 +358,13 @@
     render();
   }
 
+  /**
+   * Fetch your live location and keep refining it. The first fix from
+   * the phone is often coarse (cell/Wi-Fi, hundreds of metres off), so
+   * we watch for a better GPS fix and re-sort as it improves, then stop
+   * watching after 20 seconds or once the fix is within 50 m. A fresh
+   * fix is always requested (maximumAge 0) — never a stale cached one.
+   */
   function requestLocation() {
     if (!('geolocation' in navigator)) {
       locationState = 'unavailable';
@@ -334,28 +374,46 @@
       render();
       return;
     }
+    stopLocationWatch();
+    locationBestAccuracy = Infinity;
     locationState = 'locating';
     updateLocationStatus();
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        locationState = 'ready';
-        // First successful fix: switch to nearest unless you already
-        // picked Lowest price yourself.
-        if (!sortChosenByUser) currentFilter.sort = 'nearest';
-        updateLocationStatus();
-        updateSortUI();
-        if (appData.stations && appData.stations.length) render();
-      },
-      (err) => {
-        locationState = (err && err.code === 1) ? 'denied' : 'unavailable';
-        if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
-        updateLocationStatus();
-        updateSortUI();
-        if (appData.stations && appData.stations.length) render();
-      },
-      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
-    );
+
+    const onFix = (pos) => {
+      const acc = pos.coords.accuracy;
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      // Keep only the best fix so far; ignore noisier later fixes.
+      if (typeof acc === 'number' && acc > locationBestAccuracy) return;
+      // Same quality but barely moved — skip the re-render churn.
+      if (userLocation && typeof acc === 'number' && acc === locationBestAccuracy) {
+        if (haversineKm(userLocation.lat, userLocation.lng, lat, lng) < 0.05) return;
+      }
+      if (typeof acc === 'number') locationBestAccuracy = acc;
+      userLocation = { lat, lng, accuracy: acc };
+      locationState = 'ready';
+      // First successful fix: switch to nearest unless you already
+      // picked Lowest price yourself.
+      if (!sortChosenByUser) currentFilter.sort = 'nearest';
+      updateLocationStatus();
+      updateSortUI();
+      if (appData.stations && appData.stations.length) render();
+      if (typeof acc === 'number' && acc <= 50) stopLocationWatch();
+    };
+    const onErr = (err) => {
+      stopLocationWatch();
+      // A later failure must not throw away a good fix we already have.
+      if (userLocation) { locationState = 'ready'; updateLocationStatus(); return; }
+      locationState = (err && err.code === 1) ? 'denied' : 'unavailable';
+      if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
+      updateLocationStatus();
+      updateSortUI();
+      if (appData.stations && appData.stations.length) render();
+    };
+    const opts = { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 };
+    navigator.geolocation.getCurrentPosition(onFix, onErr, opts);
+    locationWatchId = navigator.geolocation.watchPosition(onFix, onErr, opts);
+    locationWatchTimer = setTimeout(stopLocationWatch, 20000);
   }
 
   /**
@@ -1166,8 +1224,12 @@
     if (sortNearestBtn) {
       sortNearestBtn.addEventListener('click', () => {
         setSortMode('nearest', { fromUser: true });
-        if (locationState !== 'ready') requestLocation();
+        requestLocation(); // re-acquire a fresh fix every time you tap it
       });
+    }
+    // Update location: fetch your current position again and re-sort.
+    if (refreshLocationBtn) {
+      refreshLocationBtn.addEventListener('click', () => requestLocation());
     }
 
     // Manual Refresh Button: cleans and reloads from server, strictly preserving region & fuelType
