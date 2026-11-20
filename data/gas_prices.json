@@ -32,9 +32,9 @@
         ]
       }
     },
-    "last_updated_utc": "2026-11-20T22:24:58.290431+00:00",
-    "last_updated_formatted": "November 20, 2026 at 10:24 PM UTC",
-    "fetch_attempted_at_utc": "2026-11-20T22:24:58.290431+00:00",
+    "last_updated_utc": "2026-11-20T22:25:10.023352+00:00",
+    "last_updated_formatted": "November 20, 2026 at 10:25 PM UTC",
+    "fetch_attempted_at_utc": "2026-11-20T22:25:10.023352+00:00",
     "fetch_status": "ok",
     "fetch_errors": [],
     "target_regions": "Surrey Area, Vancouver, Burnaby",
@@ -141,13 +141,13 @@
     "burnaby": "burnaby_5720hastingsst"
   },
   "cheapest_by_city": {
-    "Delta": "delta_10108nordelct",
-    "Vancouver": "vancouver_1675rupertst",
-    "White Rock": "white_rock_1595nicholrd",
-    "North Vancouver": "north_vancouver_1980marinedr",
-    "Burnaby": "burnaby_5720hastingsst",
     "Surrey": "surrey_14313crescentroad",
-    "West Vancouver": "west_vancouver_1503marinedr"
+    "North Vancouver": "north_vancouver_1980marinedr",
+    "Vancouver": "vancouver_1675rupertst",
+    "Burnaby": "burnaby_5720hastingsst",
+    "West Vancouver": "west_vancouver_1503marinedr",
+    "Delta": "delta_10108nordelct",
+    "White Rock": "white_rock_1595nicholrd"
   },
   "stations": [
     {
