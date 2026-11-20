@@ -373,6 +373,32 @@ KNOWN_STATIONS = [
     ("Shell", "1503 W 41st Ave", "Vancouver", "West Side", 49.23467, -123.13996),
     ("Chevron", "1955 Powell St", "Vancouver", "East Vancouver", 49.28525, -123.06411),
     ("Chevron", "1212 E Hastings St", "Vancouver", "East Vancouver", 49.28097, -123.07871),
+
+    # Added 2026-11-20: 21 more live-feed stations that were falling back
+    # to city-centre coordinates (39% of live stations), which made the
+    # nearest-sort and the shown distances wrong. Geocoded via Nominatim
+    # (OpenStreetMap), 2026-11-20; all inside the Metro Vancouver box.
+    ("Petro-Canada", "1675 Rupert St", "Vancouver", "East Vancouver", 49.26977, -123.03414),
+    ("Shell", "4110 Oak St", "Vancouver", "East Vancouver", 49.24888, -123.12717),
+    ("Esso", "1010 W King Edward Ave", "Vancouver", "East Vancouver", 49.24893, -123.12799),
+    ("Chevron", "8320 Oak St", "Vancouver", "East Vancouver", 49.21041, -123.12977),
+    ("Esso", "6525 Oak St", "Vancouver", "East Vancouver", 49.22628, -123.12875),
+    ("Petro-Canada", "5680 Oak St", "Vancouver", "East Vancouver", 49.23424, -123.12762),
+    ("Esso", "10108 Nordel Ct", "Delta", "Delta Central", 49.14883, -122.94280),
+    ("Chevron", "2120 Grandview Hwy S", "Vancouver", "East Vancouver", 49.25921, -123.06173),
+    ("Shell", "6511 Hastings St", "Burnaby", "North Burnaby / Hastings", 49.28060, -122.96951),
+    ("Esso", "10376 152 St", "Surrey", "Guildford", 49.19114, -122.80039),
+    ("Petro-Canada", "15211 Fraser Hwy", "Surrey", "Cloverdale", 49.17280, -122.81910),
+    ("Shell", "15551 Fraser Hwy", "Surrey", "Cloverdale", 49.16256, -122.79094),
+    ("Chevron", "9628 Ladner Trunk Rd", "Delta", "Ladner", 49.09137, -122.95661),
+    ("Chevron", "5206 Ladner Trunk Rd", "Delta", "Ladner", 49.09004, -123.07890),
+    ("Petro-Canada", "6568 E Hastings St", "Burnaby", "North Burnaby / Hastings", 49.27992, -122.96821),
+    ("Petro-Canada", "185 Mountain Hwy", "North Vancouver", "North Vancouver", 49.30251, -123.03217),
+    ("Chevron", "1490 Main St", "North Vancouver", "North Vancouver", 49.30676, -123.03844),
+    ("Petro-Canada", "1490 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.32799, -123.15642),
+    ("Chevron", "2979 Mountain Hwy", "North Vancouver", "North Vancouver", 49.30509, -123.03205),
+    ("Esso", "2747 Mountain Hwy", "North Vancouver", "North Vancouver", 49.30509, -123.03205),
+    ("Shell", "1305 Marine Dr", "West Vancouver", "Ambleside / Marine Dr", 49.32791, -123.15217),
 ]
 
 # Syndicated live feeds from GasBuddy (df.gasbuddy.com)
