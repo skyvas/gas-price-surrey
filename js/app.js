@@ -100,7 +100,8 @@
   // Storage Keys for Defaults
   const STORAGE_KEYS = {
     REGION: 'bc_gas_pref_region',
-    FUEL: 'bc_gas_pref_fuel'
+    FUEL: 'bc_gas_pref_fuel',
+    SORT: 'bc_gas_pref_sort'
   };
 
   // Application State
@@ -116,7 +117,8 @@
     fuelType: 'regular',   // Default: Regular (87)
     city: 'all',
     brand: 'all',
-    search: ''
+    search: '',
+    sort: 'nearest'        // Default: nearest to you, once location is known
   };
 
   // DOM Elements
@@ -137,6 +139,9 @@
   const clearSearchBtn = document.getElementById('clearSearchBtn');
   const stationListHeading = document.getElementById('stationListHeading');
   const showingCountText = document.getElementById('showingCountText');
+  const sortPriceBtn = document.getElementById('sortPriceBtn');
+  const sortNearestBtn = document.getElementById('sortNearestBtn');
+  const locationStatusText = document.getElementById('locationStatusText');
   const stationsList = document.getElementById('stationsList');
   const emptyState = document.getElementById('emptyState');
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
@@ -207,6 +212,11 @@
         currentFilter.fuelType = savedFuel;
         if (fuelTypeSelect) fuelTypeSelect.value = savedFuel;
       }
+      const savedSort = localStorage.getItem(STORAGE_KEYS.SORT);
+      if (savedSort === 'price' || savedSort === 'nearest') {
+        currentFilter.sort = savedSort;
+        sortChosenByUser = true;
+      }
     } catch (e) {
       console.warn('Storage not accessible:', e);
     }
@@ -244,6 +254,108 @@
     } catch (e) {
       console.warn('Unable to save preferences to localStorage:', e);
     }
+  }
+
+  /**
+   * Your location — used only in this page, in memory, to sort stations
+   * by distance. It is never stored, never sent anywhere, and the app
+   * keeps working (sorted by lowest price) if you decline or it fails.
+   * Geolocation needs a secure (https) page; GitHub Pages is https.
+   */
+  let userLocation = null; // { lat, lng } once known
+  let locationState = 'unknown'; // unknown | locating | ready | denied | unavailable
+  let sortChosenByUser = false;
+
+  function haversineKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    return 2 * R * Math.asin(Math.sqrt(a));
+  }
+
+  /**
+   * Distance from you to a station in km, or null when it can't be
+   * computed (no location yet, or the station has no coordinates).
+   */
+  function getStationDistanceKm(station) {
+    if (!userLocation || !station) return null;
+    if (typeof station.latitude !== 'number' || typeof station.longitude !== 'number') return null;
+    return haversineKm(userLocation.lat, userLocation.lng, station.latitude, station.longitude);
+  }
+
+  function formatDistanceKm(station) {
+    const km = getStationDistanceKm(station);
+    if (km === null) return null;
+    // Stations pinned only to their city centre (coordinates_source
+    // 'city_fallback') get an approximate '~' — the distance is rough.
+    const approx = station.coordinates_source === 'city_fallback' ? '~' : '';
+    return km < 1 ? `${approx}${(km * 1000).toFixed(0)} m` : `${approx}${km.toFixed(1)} km`;
+  }
+
+  function updateLocationStatus() {
+    if (!locationStatusText) return;
+    if (locationState === 'locating') locationStatusText.textContent = 'Finding your location…';
+    else if (locationState === 'ready') locationStatusText.textContent = 'Distances are from your current location';
+    else if (locationState === 'denied') locationStatusText.textContent = 'Location blocked — tap Nearest to try again';
+    else if (locationState === 'unavailable') locationStatusText.textContent = 'Location is not available in this browser';
+    else locationStatusText.textContent = '';
+  }
+
+  function updateSortUI() {
+    const isNearest = currentFilter.sort === 'nearest';
+    if (sortPriceBtn) {
+      sortPriceBtn.classList.toggle('active', !isNearest);
+      sortPriceBtn.setAttribute('aria-selected', !isNearest ? 'true' : 'false');
+    }
+    if (sortNearestBtn) {
+      sortNearestBtn.classList.toggle('active', isNearest);
+      sortNearestBtn.setAttribute('aria-selected', isNearest ? 'true' : 'false');
+    }
+  }
+
+  function setSortMode(mode, { fromUser = false } = {}) {
+    if (mode !== 'price' && mode !== 'nearest') return;
+    if (fromUser) sortChosenByUser = true;
+    currentFilter.sort = mode;
+    try { localStorage.setItem(STORAGE_KEYS.SORT, mode); } catch (e) { /* ignore */ }
+    updateSortUI();
+    render();
+  }
+
+  function requestLocation() {
+    if (!('geolocation' in navigator)) {
+      locationState = 'unavailable';
+      if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
+      updateLocationStatus();
+      updateSortUI();
+      render();
+      return;
+    }
+    locationState = 'locating';
+    updateLocationStatus();
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        locationState = 'ready';
+        // First successful fix: switch to nearest unless you already
+        // picked Lowest price yourself.
+        if (!sortChosenByUser) currentFilter.sort = 'nearest';
+        updateLocationStatus();
+        updateSortUI();
+        if (appData.stations && appData.stations.length) render();
+      },
+      (err) => {
+        locationState = (err && err.code === 1) ? 'denied' : 'unavailable';
+        if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
+        updateLocationStatus();
+        updateSortUI();
+        if (appData.stations && appData.stations.length) render();
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+    );
   }
 
   /**
@@ -667,8 +779,8 @@
   }
 
   /**
-   * Filter stations according to active region, city, brand, and multi-field search
-   * Sort strictly by price for the currently active gasoline type.
+   * Filter stations according to active region, city, brand, and multi-field search,
+   * then sort by the active sort mode: lowest price, or nearest to you.
    */
   function getFilteredStations() {
     let list = getRegionStations();
@@ -705,13 +817,29 @@
       );
     }
 
-    // Always sort by active gasoline octane price ascending (cheapest first).
-    // Stations without a live price for the active grade sort last.
-    list.sort((a, b) => {
-      const pa = getStationPrice(a);
-      const pb = getStationPrice(b);
-      return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
-    });
+    // Lowest price: cheapest first; stations without a live price sort last.
+    // Nearest: closest first (price breaks ties); stations with no usable
+    // coordinates sort last. Without a location yet, nearest falls back
+    // to lowest price so the list is never unsorted.
+    if (currentFilter.sort === 'nearest' && userLocation) {
+      list.sort((a, b) => {
+        const da = getStationDistanceKm(a);
+        const db = getStationDistanceKm(b);
+        if (da === null && db === null) return 0;
+        if (da === null) return 1;
+        if (db === null) return -1;
+        if (da !== db) return da - db;
+        const pa = getStationPrice(a);
+        const pb = getStationPrice(b);
+        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+      });
+    } else {
+      list.sort((a, b) => {
+        const pa = getStationPrice(a);
+        const pb = getStationPrice(b);
+        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+      });
+    }
 
     return list;
   }
@@ -745,10 +873,14 @@
     if (heroGoogleMapBtn) heroGoogleMapBtn.style.pointerEvents = 'auto';
     if (heroAppleMapBtn) heroAppleMapBtn.style.pointerEvents = 'auto';
 
-    const topStation = filteredList[0];
+    // The hero always shows the cheapest station in the current filter,
+    // whatever the list is sorted by (price or distance).
+    const priced = filteredList.filter(s => getStationPrice(s) !== null);
+    const topStation = priced.length
+      ? priced.reduce((a, b) => (getStationPrice(a) <= getStationPrice(b) ? a : b))
+      : filteredList[0];
     const topPrice = getStationPrice(topStation);
-    const maxStation = filteredList[filteredList.length - 1];
-    const maxPrice = getStationPrice(maxStation);
+    const maxPrice = priced.length ? Math.max(...priced.map(s => getStationPrice(s))) : null;
     const priceDiff = (topPrice === null || maxPrice === null)
       ? 0
       : Math.max(0, maxPrice - topPrice).toFixed(1);
@@ -780,7 +912,8 @@
     heroBrandIcon.innerHTML = getBrandLogoSvg(brandName, brandSlug);
     heroBrandIcon.className = `brand-avatar ${brandSlug}`;
     heroStationName.textContent = brandName;
-    heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
+    const heroDistance = formatDistanceKm(topStation);
+    heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC${heroDistance ? ` • ${heroDistance} away` : ''}`;
     heroStationAddress.textContent = topStation.address;
     heroReportedText.textContent = topStation.last_updated || 'Recent';
     heroSource.textContent = '⚡ Via Live Report';
@@ -812,11 +945,15 @@
     }
 
     emptyState.style.display = 'none';
-    showingCountText.textContent = `Showing ${filteredList.length} of ${regionTotal} stations (${activeFuel.octane})`;
+    const sortLabel = currentFilter.sort === 'nearest' && userLocation ? 'nearest first' : 'lowest price first';
+    showingCountText.textContent = `Showing ${filteredList.length} of ${regionTotal} stations (${activeFuel.octane}) · ${sortLabel}`;
 
-    const minPrice = getStationPrice(filteredList[0]);
+    // Cheapest price across the filtered list — computed from the prices,
+    // not from list order, so it stays right when sorted by distance.
+    const pricedList = filteredList.filter(s => getStationPrice(s) !== null);
+    const minPrice = pricedList.length ? Math.min(...pricedList.map(s => getStationPrice(s))) : null;
 
-    filteredList.forEach((station) => {
+    filteredList.forEach((station, index) => {
       const stPrice = getStationPrice(station);
       const isCheapest = stPrice !== null && (stPrice === minPrice);
       const diff = (stPrice === null || minPrice === null) ? null : (stPrice - minPrice).toFixed(1);
@@ -824,6 +961,8 @@
       const brandSlug = getBrandSlug(brandName);
       const googleMapUrl = getGoogleMapsUrl(station);
       const appleMapUrl = getAppleMapsUrl(station);
+      const distanceText = formatDistanceKm(station);
+      const isNearest = currentFilter.sort === 'nearest' && userLocation && index === 0 && distanceText !== null;
 
       const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ Live Report</span>`;
 
@@ -861,6 +1000,7 @@
         <div class="card-bottom-row">
           <div class="card-meta-left">
             ${liveBadgeHtml}
+            ${distanceText ? `<span class="distance-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>${isNearest ? 'Nearest • ' : ''}${escapeHTML(distanceText)}</span>` : ''}
             <span class="meta-time">${escapeHTML(station.last_updated)}</span>
           </div>
 
@@ -1017,6 +1157,19 @@
       });
     }
 
+    // Sort: Lowest price / Nearest to me. Tapping Nearest without a
+    // location yet asks the browser for one (and falls back to price
+    // if you decline). Your pick is remembered.
+    if (sortPriceBtn) {
+      sortPriceBtn.addEventListener('click', () => setSortMode('price', { fromUser: true }));
+    }
+    if (sortNearestBtn) {
+      sortNearestBtn.addEventListener('click', () => {
+        setSortMode('nearest', { fromUser: true });
+        if (locationState !== 'ready') requestLocation();
+      });
+    }
+
     // Manual Refresh Button: cleans and reloads from server, strictly preserving region & fuelType
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
@@ -1044,5 +1197,8 @@
   // Initialize: load saved defaults first, setup listeners, then load fresh data
   loadSavedPreferences();
   setupEvents();
+  updateSortUI();
+  updateLocationStatus();
+  requestLocation();
   loadGasPrices(false);
 })();
