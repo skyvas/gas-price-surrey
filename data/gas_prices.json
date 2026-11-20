@@ -32,9 +32,9 @@
         ]
       }
     },
-    "last_updated_utc": "2026-11-20T22:25:10.023352+00:00",
+    "last_updated_utc": "2026-11-20T22:25:25.982742+00:00",
     "last_updated_formatted": "November 20, 2026 at 10:25 PM UTC",
-    "fetch_attempted_at_utc": "2026-11-20T22:25:10.023352+00:00",
+    "fetch_attempted_at_utc": "2026-11-20T22:25:25.982742+00:00",
     "fetch_status": "ok",
     "fetch_errors": [],
     "target_regions": "Surrey Area, Vancouver, Burnaby",
@@ -143,10 +143,10 @@
   "cheapest_by_city": {
     "Surrey": "surrey_14313crescentroad",
     "North Vancouver": "north_vancouver_1980marinedr",
-    "Vancouver": "vancouver_1675rupertst",
     "Burnaby": "burnaby_5720hastingsst",
-    "West Vancouver": "west_vancouver_1503marinedr",
     "Delta": "delta_10108nordelct",
+    "Vancouver": "vancouver_1675rupertst",
+    "West Vancouver": "west_vancouver_1503marinedr",
     "White Rock": "white_rock_1595nicholrd"
   },
   "stations": [
@@ -174,9 +174,9 @@
       "city": "Vancouver",
       "province": "BC",
       "country": "Canada",
-      "last_updated": "Nov 20, 2:24 PM",
-      "reported_at_utc": "2026-11-20T21:24:00+00:00",
-      "report_age_minutes": 61,
+      "last_updated": "Nov 20, 2:09 PM",
+      "reported_at_utc": "2026-11-20T21:09:00+00:00",
+      "report_age_minutes": 76,
       "is_fresh": true,
       "is_live": true,
       "source": "Via Live Report",
@@ -193,51 +193,6 @@
         "apple_maps_search": "https://maps.apple.com/?q=Petro-Canada%2C%201675%20Rupert%20St%2C%20Vancouver%2C%20BC",
         "android_geo": "geo:0,0?q=Petro-Canada%2C%201675%20Rupert%20St%2C%20Vancouver%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Petro-Canada%2C%201675%20Rupert%20St%2C%20Vancouver%2C%20BC&dirflg=d"
-      }
-    },
-    {
-      "id": "vancouver_6525oakst",
-      "station_name": "Esso",
-      "brand": "Esso",
-      "brand_official_url": "https://www.esso.ca",
-      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
-      "brand_color": "#eb1c24",
-      "region": "vancouver",
-      "sub_area": "East Vancouver",
-      "neighborhood": "East Vancouver",
-      "price": 168.9,
-      "price_formatted": "168.9¢",
-      "price_per_litre": "$1.689",
-      "prices": {
-        "regular": 168.9
-      },
-      "fuel_type": "regular",
-      "supported_fuel_types": [
-        "regular"
-      ],
-      "address": "6525 Oak St",
-      "city": "Vancouver",
-      "province": "BC",
-      "country": "Canada",
-      "last_updated": "Nov 20, 2:23 PM",
-      "reported_at_utc": "2026-11-20T21:23:00+00:00",
-      "report_age_minutes": 62,
-      "is_fresh": true,
-      "is_live": true,
-      "source": "Via Live Report",
-      "source_name": "Via Live Report",
-      "feed_origin": "GasBuddy (Vancouver)",
-      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
-      "latitude": 49.22628,
-      "longitude": -123.12875,
-      "coordinates_source": "catalog",
-      "map_urls": {
-        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
-        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
-        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d",
-        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
-        "android_geo": "geo:0,0?q=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
-        "ios_maps_scheme": "maps://?daddr=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d"
       }
     },
     {
@@ -508,6 +463,51 @@
         "apple_maps_search": "https://maps.apple.com/?q=Chevron%2C%208320%20Oak%20St%2C%20Vancouver%2C%20BC",
         "android_geo": "geo:0,0?q=Chevron%2C%208320%20Oak%20St%2C%20Vancouver%2C%20BC",
         "ios_maps_scheme": "maps://?daddr=Chevron%2C%208320%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d"
+      }
+    },
+    {
+      "id": "vancouver_6525oakst",
+      "station_name": "Esso",
+      "brand": "Esso",
+      "brand_official_url": "https://www.esso.ca",
+      "brand_rewards": "PC Optimum & Esso Extra (Earn 10 pts/L)",
+      "brand_color": "#eb1c24",
+      "region": "vancouver",
+      "sub_area": "East Vancouver",
+      "neighborhood": "East Vancouver",
+      "price": 168.9,
+      "price_formatted": "168.9¢",
+      "price_per_litre": "$1.689",
+      "prices": {
+        "regular": 168.9
+      },
+      "fuel_type": "regular",
+      "supported_fuel_types": [
+        "regular"
+      ],
+      "address": "6525 Oak St",
+      "city": "Vancouver",
+      "province": "BC",
+      "country": "Canada",
+      "last_updated": "Nov 20, 2:04 PM",
+      "reported_at_utc": "2026-11-20T21:04:00+00:00",
+      "report_age_minutes": 81,
+      "is_fresh": true,
+      "is_live": true,
+      "source": "Via Live Report",
+      "source_name": "Via Live Report",
+      "feed_origin": "GasBuddy (Vancouver)",
+      "source_url": "https://www.gvrd.com/gas-prices/vancouver.html",
+      "latitude": 49.22628,
+      "longitude": -123.12875,
+      "coordinates_source": "catalog",
+      "map_urls": {
+        "google_maps": "https://www.google.com/maps/dir/?api=1&destination=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "google_maps_search": "https://www.google.com/maps/search/?api=1&query=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "apple_maps": "https://maps.apple.com/?daddr=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d",
+        "apple_maps_search": "https://maps.apple.com/?q=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "android_geo": "geo:0,0?q=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC",
+        "ios_maps_scheme": "maps://?daddr=Esso%2C%206525%20Oak%20St%2C%20Vancouver%2C%20BC&dirflg=d"
       }
     },
     {
