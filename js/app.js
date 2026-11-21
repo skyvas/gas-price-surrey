@@ -7,52 +7,13 @@
 (function () {
   'use strict';
 
-  // Region Configurations
+  // Metro Vancouver configuration (v5.3: no area setting any more — the
+  // app always shows the whole of Metro Vancouver). The tabs below are
+  // just city filters on that one list, not an area you set up.
   const REGION_CONFIGS = {
-    surrey_area: {
-      id: 'surrey_area',
-      name: 'Surrey Area',
-      subtitle: 'Surrey • Delta • White Rock, BC',
-      heroPillPrefix: 'Lowest in Surrey Area',
-      heading: 'Surrey Area',
-      tabs: [
-        { id: 'all', label: 'All Surrey Area', shortLabel: 'All' },
-        { id: 'Surrey', label: 'Surrey' },
-        { id: 'Delta', label: 'Delta' },
-        { id: 'White Rock', label: 'White Rock' }
-      ]
-    },
-    vancouver: {
-      id: 'vancouver',
-      name: 'Vancouver',
-      subtitle: 'Vancouver • North Van • West Van, BC',
-      heroPillPrefix: 'Lowest in Vancouver Area',
-      heading: 'Vancouver',
-      tabs: [
-        { id: 'all', label: 'All Vancouver', shortLabel: 'All' },
-        { id: 'East Vancouver', label: 'East Vancouver' },
-        { id: 'Downtown Vancouver', label: 'Downtown' },
-        { id: 'North Vancouver', label: 'North Vancouver' },
-        { id: 'West Vancouver', label: 'West Vancouver' }
-      ]
-    },
-    burnaby: {
-      id: 'burnaby',
-      name: 'Burnaby',
-      subtitle: 'Burnaby, BC',
-      heroPillPrefix: 'Lowest in Burnaby',
-      heading: 'Burnaby',
-      tabs: [
-        { id: 'all', label: 'All Burnaby', shortLabel: 'All' },
-        { id: 'North Burnaby', label: 'North Burnaby' },
-        { id: 'Central Burnaby', label: 'Central / Canada Way' },
-        { id: 'Metrotown', label: 'Metrotown / Kingsway' },
-        { id: 'Brentwood', label: 'Brentwood / Willingdon' }
-      ]
-    },
     all_metro: {
       id: 'all_metro',
-      name: 'All Metro Vancouver',
+      name: 'Metro Vancouver',
       subtitle: 'Metro Vancouver, BC',
       heroPillPrefix: 'Lowest in Metro Vancouver',
       heading: 'Metro Vancouver',
@@ -112,8 +73,10 @@
     stations: []
   };
 
+  // No area setting any more (v5.3): the app always shows the whole of
+  // Metro Vancouver, nearest to your location. Region is fixed.
   let currentFilter = {
-    region: 'surrey_area', // Default: Surrey Area
+    region: 'all_metro', // Fixed: whole Metro Vancouver
     fuelType: 'regular',   // Default: Regular (87)
     city: 'all',
     brand: 'all',
@@ -122,7 +85,6 @@
   };
 
   // DOM Elements
-  const regionSelect = document.getElementById('regionSelect');
   const fuelTypeSelect = document.getElementById('fuelTypeSelect');
   const saveDefaultBtn = document.getElementById('saveDefaultBtn');
   const saveBtnText = document.getElementById('saveBtnText');
@@ -176,7 +138,6 @@
    */
   function openConfigDrawer() {
     if (!configDrawer) return;
-    if (regionSelect) regionSelect.value = currentFilter.region;
     if (fuelTypeSelect) fuelTypeSelect.value = currentFilter.fuelType;
     configDrawer.style.display = 'flex';
     configDrawer.setAttribute('aria-hidden', 'false');
@@ -202,13 +163,11 @@
    */
   function loadSavedPreferences() {
     try {
-      const savedRegion = localStorage.getItem(STORAGE_KEYS.REGION);
+      // The area setting was removed in v5.3 — the app always shows the
+      // whole of Metro Vancouver now. Drop any saved area from before.
+      try { localStorage.removeItem(STORAGE_KEYS.REGION); } catch (e) { /* ignore */ }
       const savedFuel = localStorage.getItem(STORAGE_KEYS.FUEL);
 
-      if (savedRegion && REGION_CONFIGS[savedRegion]) {
-        currentFilter.region = savedRegion;
-        if (regionSelect) regionSelect.value = savedRegion;
-      }
       if (savedFuel && FUEL_CONFIGS[savedFuel]) {
         currentFilter.fuelType = savedFuel;
         if (fuelTypeSelect) fuelTypeSelect.value = savedFuel;
@@ -224,11 +183,10 @@
   }
 
   /**
-   * Save the currently selected area and fuel type to localStorage
+   * Save the currently selected fuel type to localStorage
    */
   function saveCurrentAsDefault() {
     try {
-      localStorage.setItem(STORAGE_KEYS.REGION, currentFilter.region);
       localStorage.setItem(STORAGE_KEYS.FUEL, currentFilter.fuelType);
 
       if (saveDefaultBtn) {
@@ -237,10 +195,9 @@
       }
 
       if (saveToast) {
-        const regName = REGION_CONFIGS[currentFilter.region] ? REGION_CONFIGS[currentFilter.region].name : 'Area';
         const fuelName = FUEL_CONFIGS[currentFilter.fuelType] ? FUEL_CONFIGS[currentFilter.fuelType].octane : 'Fuel';
         if (saveToastText) {
-          saveToastText.textContent = `Default saved: ${regName} • ${fuelName}`;
+          saveToastText.textContent = `Default saved: ${fuelName}`;
         }
         saveToast.style.display = 'flex';
         clearTimeout(saveToast._timeout);
@@ -595,7 +552,7 @@
 
   /**
    * Fetch latest price data from data/gas_prices.json
-   * Crucial: refresh preserves currentFilter.region and currentFilter.fuelType exactly.
+   * Crucial: refresh preserves currentFilter.fuelType and sort exactly.
    */
   async function loadGasPrices(showSpin = false) {
     if (showSpin && refreshBtn) {
@@ -686,7 +643,7 @@
    * Update header subtitle according to selected region
    */
   function updateHeaderSubtitle() {
-    const regConfig = REGION_CONFIGS[currentFilter.region] || REGION_CONFIGS.surrey_area;
+    const regConfig = REGION_CONFIGS.all_metro;
     if (headerSubtitle) {
       headerSubtitle.textContent = regConfig.subtitle;
     }
@@ -735,59 +692,18 @@
   }
 
   /**
-   * Check if a station matches a specific tab identifier
-   */
-  function stationMatchesCityTab(station, tabId) {
-    if (tabId === 'all') return true;
-
-    // Direct matches
-    if (station.city === tabId) return true;
-    if (station.sub_area === tabId) return true;
-
-    const tabLower = tabId.toLowerCase();
-    const neighLower = (station.neighborhood || '').toLowerCase();
-    const cityLower = (station.city || '').toLowerCase();
-
-    if (tabLower === 'east vancouver') {
-      return neighLower.includes('east vancouver') || 
-             (cityLower === 'vancouver' && !neighLower.includes('downtown') && !neighLower.includes('west side'));
-    }
-    if (tabLower === 'downtown vancouver') {
-      return neighLower.includes('downtown') || neighLower.includes('burrard');
-    }
-    if (tabLower === 'north burnaby') {
-      return neighLower.includes('hastings') || neighLower.includes('north burnaby');
-    }
-    if (tabLower === 'central burnaby') {
-      return neighLower.includes('canada way') || neighLower.includes('central burnaby') || neighLower.includes('douglas');
-    }
-    if (tabLower === 'metrotown') {
-      return neighLower.includes('metrotown') || neighLower.includes('kingsway') || neighLower.includes('edmonds') || neighLower.includes('6th st');
-    }
-    if (tabLower === 'brentwood') {
-      return neighLower.includes('brentwood') || neighLower.includes('willingdon');
-    }
-
-    return neighLower.includes(tabLower) || cityLower.includes(tabLower);
-  }
-
-  /**
-   * Get all stations belonging to the active region
+   * Get all stations — the whole of Metro Vancouver, no area scoping.
    */
   function getRegionStations() {
-    const list = appData.stations || [];
-    if (currentFilter.region === 'all_metro') {
-      return list;
-    }
-    return list.filter(s => s.region === currentFilter.region);
+    return appData.stations || [];
   }
 
   /**
-   * Dynamically render filter tabs for the selected region
+   * Dynamically render filter tabs (city filters across Metro Vancouver)
    */
   function renderFilterTabs() {
     if (!filterTabsContainer) return;
-    const regConfig = REGION_CONFIGS[currentFilter.region] || REGION_CONFIGS.surrey_area;
+    const regConfig = REGION_CONFIGS.all_metro;
     filterTabsContainer.innerHTML = '';
 
     const regionStations = getRegionStations();
@@ -804,10 +720,8 @@
       let count = 0;
       if (tab.id === 'all') {
         count = regionStations.length;
-      } else if (currentFilter.region === 'all_metro') {
-        count = appData.stations.filter(s => s.region === tab.id).length;
       } else {
-        count = regionStations.filter(s => stationMatchesCityTab(s, tab.id)).length;
+        count = appData.stations.filter(s => s.region === tab.id).length;
       }
 
       const fullLabel = tab.label;
@@ -837,19 +751,16 @@
   }
 
   /**
-   * Filter stations according to active region, city, brand, and multi-field search,
-   * then sort by the active sort mode: lowest price, or nearest to you.
+   * Filter stations across the whole of Metro Vancouver by city tab,
+   * brand, and multi-field search, then sort by the active sort mode:
+   * lowest price, or nearest to you.
    */
   function getFilteredStations() {
     let list = getRegionStations();
 
-    // Filter by city / district tab
+    // Filter by city tab (All Metro shows every station)
     if (currentFilter.city !== 'all') {
-      if (currentFilter.region === 'all_metro') {
-        list = list.filter(s => s.region === currentFilter.city);
-      } else {
-        list = list.filter(s => stationMatchesCityTab(s, currentFilter.city));
-      }
+      list = list.filter(s => s.region === currentFilter.city);
     }
 
     // Filter by brand
@@ -906,7 +817,7 @@
    * Render Hero "Cheapest Gas" card for the selected area and octane rating
    */
   function renderHeroCard(filteredList) {
-    const regConfig = REGION_CONFIGS[currentFilter.region] || REGION_CONFIGS.surrey_area;
+    const regConfig = REGION_CONFIGS.all_metro;
     const activeFuel = FUEL_CONFIGS[currentFilter.fuelType] || FUEL_CONFIGS.regular;
 
     if (!filteredList || filteredList.length === 0) {
@@ -1135,17 +1046,6 @@
       }
     });
 
-    // City Area / Region Dropdown
-    if (regionSelect) {
-      regionSelect.addEventListener('change', (e) => {
-        currentFilter.region = e.target.value;
-        currentFilter.city = 'all'; // Reset to All for this region
-        updateHeaderSubtitle();
-        renderFilterTabs();
-        render();
-      });
-    }
-
     // Gasoline Type (Octane) Dropdown
     if (fuelTypeSelect) {
       fuelTypeSelect.addEventListener('change', (e) => {
@@ -1239,10 +1139,12 @@
       });
     }
 
-    // Auto periodic refresh in browser every 5 minutes (preserves region & fuelType)
+    // Auto periodic refresh in browser every 30 minutes (preserves fuelType
+    // and sort). New prices arrive whenever the GitHub updater runs — the
+    // page picks them up on the next refresh.
     setInterval(() => {
       loadGasPrices(false);
-    }, 5 * 60 * 1000);
+    }, 30 * 60 * 1000);
 
     // iOS large-title shrink: collapse the header title once the user scrolls.
     // Presentational only — no data, filtering or sorting logic is touched.
