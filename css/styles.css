@@ -648,6 +648,31 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   overflow: hidden;
 }
 
+/* ==========================================================================
+   Nearest to you — top 5 closest stations
+   Shown under the hero when the main list is sorted by lowest price, so
+   the 5 nearest are always visible at the top. The cards are the same
+   iOS inset-grouped cards as the main list.
+   ========================================================================== */
+.nearest-section { width: 100%; }
+.nearest-heading-row { display: flex; align-items: baseline; gap: 8px; margin: 0 4px 10px; }
+.nearest-accuracy { font-size: 13px; color: var(--text-secondary); white-space: nowrap; }
+.nearest-list {
+  display: flex; flex-direction: column; gap: 0;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.nearest-empty {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  text-align: center;
+}
+.nearest-empty-text { font-size: 14px; color: var(--text-secondary); margin: 0 0 12px; }
+
 .station-card {
   background: transparent;
   border: none;

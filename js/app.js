@@ -107,6 +107,12 @@
   const refreshLocationBtn = document.getElementById('refreshLocationBtn');
   const stationsList = document.getElementById('stationsList');
   const emptyState = document.getElementById('emptyState');
+  const nearestSection = document.getElementById('nearestSection');
+  const nearestList = document.getElementById('nearestList');
+  const nearestEmpty = document.getElementById('nearestEmpty');
+  const nearestEmptyText = document.getElementById('nearestEmptyText');
+  const nearestLocateBtn = document.getElementById('nearestLocateBtn');
+  const nearestAccuracyText = document.getElementById('nearestAccuracyText');
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
   const sourcesList = document.getElementById('sourcesList');
 
@@ -1012,12 +1018,81 @@
   }
 
   /**
+   * "Nearest to you" — the 5 closest stations from the current filter.
+   * Shown under the hero only when the main list is sorted by lowest
+   * price, because in nearest mode the list's own top 5 already are the
+   * nearest 5. The hero still shows the cheapest in Metro Vancouver.
+   * Cards are cloned from the rendered list so the markup stays single
+   * source; duplicate ids are stripped from the clones.
+   */
+  function renderNearestSection(filteredList) {
+    if (!nearestSection) return;
+    const showSection = currentFilter.sort === 'price' && filteredList.length > 0;
+    nearestSection.hidden = !showSection;
+    if (!showSection) return;
+
+    if (nearestAccuracyText) {
+      const acc = userLocation && userLocation.accuracy;
+      nearestAccuracyText.textContent = (userLocation && typeof acc === 'number' && isFinite(acc)) ? '±' + Math.round(acc) + ' m' : '';
+    }
+
+    if (!userLocation) {
+      if (nearestList) nearestList.innerHTML = '';
+      if (nearestEmpty) nearestEmpty.hidden = false;
+      if (nearestEmptyText) {
+        nearestEmptyText.textContent = locationState === 'locating'
+          ? 'Finding your location…'
+          : (locationState === 'denied'
+            ? 'Location is blocked — allow location for this site, or tap below to try again.'
+            : 'Location is not available in this browser.');
+      }
+      if (nearestLocateBtn) nearestLocateBtn.style.display = (locationState === 'denied' || locationState === 'unavailable') ? '' : 'none';
+      return;
+    }
+
+    if (nearestEmpty) nearestEmpty.hidden = true;
+    const withDistance = filteredList
+      .map(function (s) { return { s: s, d: getStationDistanceKm(s) }; })
+      .filter(function (x) { return x.d !== null; });
+    withDistance.sort(function (a, b) {
+      if (a.d !== b.d) return a.d - b.d;
+      const pa = getStationPrice(a.s);
+      const pb = getStationPrice(b.s);
+      return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+    });
+    const top5 = withDistance.slice(0, 5);
+
+    if (nearestList) nearestList.innerHTML = '';
+    if (top5.length === 0) {
+      if (nearestEmpty) nearestEmpty.hidden = false;
+      if (nearestEmptyText) nearestEmptyText.textContent = 'No stations with coordinates in this filter.';
+      if (nearestLocateBtn) nearestLocateBtn.style.display = 'none';
+      return;
+    }
+    top5.forEach(function (entry, index) {
+      const original = document.getElementById('station-' + entry.s.id);
+      if (!original || !nearestList) return;
+      const clone = original.cloneNode(true);
+      clone.removeAttribute('id');
+      if (index === 0) {
+        const chip = clone.querySelector('.distance-chip');
+        if (chip) {
+          const txt = chip.childNodes[chip.childNodes.length - 1];
+          if (txt && txt.nodeType === 3) txt.textContent = 'Nearest • ' + txt.textContent.trim();
+        }
+      }
+      nearestList.appendChild(clone);
+    });
+  }
+
+  /**
    * Main render dispatch
    */
   function render() {
     const filtered = getFilteredStations();
     renderHeroCard(filtered);
     renderStationList(filtered);
+    renderNearestSection(filtered);
   }
 
   /**
@@ -1131,8 +1206,11 @@
     if (refreshLocationBtn) {
       refreshLocationBtn.addEventListener('click', () => requestLocation());
     }
+    if (nearestLocateBtn) {
+      nearestLocateBtn.addEventListener('click', () => requestLocation());
+    }
 
-    // Manual Refresh Button: cleans and reloads from server, strictly preserving region & fuelType
+    // Manual Refresh Button: cleans and reloads from server, strictly preserving fuelType and sort
     if (refreshBtn) {
       refreshBtn.addEventListener('click', () => {
         loadGasPrices(true);
