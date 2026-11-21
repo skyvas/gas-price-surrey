@@ -1,0 +1,75 @@
+name: Watchdog — re-trigger price updates when stale
+
+on:
+  schedule:
+    # Independent schedule from the updater (update-prices.yml, every 5 min).
+    # GitHub gives no timing SLA on scheduled runs — either workflow can sit
+    # queued for hours — but a workflow_dispatch event starts promptly, so
+    # when this check does fire and finds stale data, the re-trigger fixes
+    # the gap instead of waiting for the next queued cron run.
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # manual freshness check from the Actions tab
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: "watchdog-prices"
+  cancel-in-progress: false
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout data from gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 1
+
+      - name: Check how stale the prices are
+        id: freshness
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          d = json.load(open("data/gas_prices.json"))
+          m = d["metadata"]
+          last = datetime.fromisoformat(m["last_updated_utc"].replace("Z", "+00:00"))
+          age_min = (datetime.now(timezone.utc) - last).total_seconds() / 60
+          stale = age_min > 30
+          print(f"Last successful fetch (UTC): {m['last_updated_utc']}")
+          print(f"Age: {age_min:.1f} min — stale (>30 min): {stale}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"stale={'true' if stale else 'false'}\n")
+              f.write(f"age_min={age_min:.1f}\n")
+          PY
+
+      - name: Re-trigger the updater if stale and idle
+        if: steps.freshness.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Never stack a second updater run on top of one already going:
+          # the updater's own concurrency group would queue it anyway, but
+          # a queued duplicate is still a wasted run.
+          in_flight=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/update-prices.yml/runs?per_page=5" \
+            --jq '[.workflow_runs[] | select(.status == "in_progress" or .status == "queued" or .status == "waiting")] | length')
+          if [ "$in_flight" -gt 0 ]; then
+            echo "Updater already running ($in_flight in flight) — not dispatching."
+            exit 0
+          fi
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/actions/workflows/update-prices.yml/dispatches" \
+            -f ref=gh-pages
+          echo "Dispatched update-prices.yml (ref gh-pages) — data was ${{ steps.freshness.outputs.age_min }} min old."
+
+      - name: Summarize
+        if: always()
+        run: |
+          {
+            echo "## Price-data watchdog"
+            echo "- Data age: ${{ steps.freshness.outputs.age_min }} min"
+            echo "- Stale (>30 min): ${{ steps.freshness.outputs.stale }}"
+          } >> "$GITHUB_STEP_SUMMARY"
