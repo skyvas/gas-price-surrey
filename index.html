@@ -27,7 +27,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <link rel="stylesheet" href="css/styles.css?v=5.3">
+  <link rel="stylesheet" href="css/styles.css?v=5.4">
 </head>
 <body>
   <div class="app-container">
@@ -218,6 +218,19 @@
               <span>Apple Maps</span>
             </a>
           </div>
+        </div>
+      </section>
+
+      <!-- Nearest to you: the 5 closest stations, shown when the main list is sorted by lowest price -->
+      <section id="nearestSection" class="nearest-section" aria-label="Nearest gas stations to you" hidden>
+        <div class="nearest-heading-row">
+          <h2 class="list-heading">Nearest to you</h2>
+          <span id="nearestAccuracyText" class="nearest-accuracy"></span>
+        </div>
+        <div id="nearestList" class="nearest-list"></div>
+        <div id="nearestEmpty" class="nearest-empty" hidden>
+          <p id="nearestEmptyText" class="nearest-empty-text">Finding your location…</p>
+          <button id="nearestLocateBtn" class="location-refresh-btn nearest-locate-btn" type="button">Update location</button>
         </div>
       </section>
 
@@ -426,6 +439,6 @@
     </footer>
   </div>
 
-  <script src="js/app.js?v=5.3"></script>
+  <script src="js/app.js?v=5.4"></script>
 </body>
 </html>
