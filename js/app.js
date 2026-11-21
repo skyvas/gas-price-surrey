@@ -1,7 +1,9 @@
 /**
- * Gas Price Finder - Client Application
- * Surrey Area, Vancouver & Burnaby, British Columbia
- * Multi-Brand Search, Multi-Octane Gasoline & User Configuration Persistence
+ * Gas Price Finder - Client Application (v6.0)
+ * Metro Vancouver, British Columbia
+ * Closest stations first by default; cheapest one tap away.
+ * One list, one order. The view is session-only — every fresh open
+ * is Closest. Only the fuel type is remembered.
  */
 
 (function () {
@@ -14,9 +16,6 @@
     all_metro: {
       id: 'all_metro',
       name: 'Metro Vancouver',
-      subtitle: 'Metro Vancouver, BC',
-      heroPillPrefix: 'Lowest in Metro Vancouver',
-      heading: 'Metro Vancouver',
       tabs: [
         { id: 'all', label: 'All Metro', shortLabel: 'All' },
         { id: 'surrey_area', label: 'Surrey Area' },
@@ -62,82 +61,83 @@
   const STORAGE_KEYS = {
     REGION: 'bc_gas_pref_region',
     FUEL: 'bc_gas_pref_fuel',
-    SORT: 'bc_gas_pref_sort'
+    SORT: 'bc_gas_pref_sort' // v6.0: the view is session-only now; the key is only removed, never read
   };
 
   // Application State
   let appData = {
     metadata: null,
-    cheapest_by_region: {},
-    cheapest_by_city: {},
     stations: []
   };
 
   // No area setting any more (v5.3): the app always shows the whole of
   // Metro Vancouver, nearest to your location. Region is fixed.
   let currentFilter = {
-    region: 'all_metro', // Fixed: whole Metro Vancouver
     fuelType: 'regular',   // Default: Regular (87)
     city: 'all',
     brand: 'all',
     search: '',
-    sort: 'nearest'        // Default: nearest to you, once location is known
+    view: 'closest'        // Closest | Cheapest. Session-only, always starts Closest.
   };
+
+  // True when the price file failed to load and there is no data at all
+  // (first load). The page then shows an explicit error + retry instead
+  // of looking like it is still loading forever.
+  let dataLoadFailed = false;
 
   // DOM Elements
   const fuelTypeSelect = document.getElementById('fuelTypeSelect');
-  const saveDefaultBtn = document.getElementById('saveDefaultBtn');
-  const saveBtnText = document.getElementById('saveBtnText');
-  const saveToast = document.getElementById('saveToast');
-  const saveToastText = document.getElementById('saveToastText');
-  const headerSubtitle = document.getElementById('headerSubtitle');
-  const updateTimeText = document.getElementById('updateTimeText');
   const fuelBadgeText = document.getElementById('fuelBadgeText');
-  const refreshBtn = document.getElementById('refreshBtn');
-  const refreshIcon = document.getElementById('refreshIcon');
+  const fuelPillBtn = document.getElementById('fuelPillBtn');
+  const headerStatusText = document.getElementById('headerStatusText');
+  const refreshPricesBtn = document.getElementById('refreshPricesBtn');
   const filterTabsContainer = document.getElementById('filterTabsContainer');
+  const filterBtn = document.getElementById('filterBtn');
+  const filterActiveText = document.getElementById('filterActiveText');
+  const filterSheet = document.getElementById('filterSheet');
+  const filterBackdrop = document.getElementById('filterBackdrop');
+  const closeFilterSheetBtn = document.getElementById('closeFilterSheetBtn');
+  const applyFilterBtn = document.getElementById('applyFilterBtn');
+  const clearFilterBtn = document.getElementById('clearFilterBtn');
   const brandPills = document.querySelectorAll('.brand-pill');
   const stationSearchInput = document.getElementById('stationSearchInput');
   const clearSearchBtn = document.getElementById('clearSearchBtn');
   const stationListHeading = document.getElementById('stationListHeading');
+  const listAccuracyText = document.getElementById('listAccuracyText');
+  const updateLocationBtn = document.getElementById('updateLocationBtn');
+  const viewClosestBtn = document.getElementById('viewClosestBtn');
+  const viewCheapestBtn = document.getElementById('viewCheapestBtn');
   const showingCountText = document.getElementById('showingCountText');
-  const sortPriceBtn = document.getElementById('sortPriceBtn');
-  const sortNearestBtn = document.getElementById('sortNearestBtn');
-  const locationStatusText = document.getElementById('locationStatusText');
-  const refreshLocationBtn = document.getElementById('refreshLocationBtn');
+  const listSkeleton = document.getElementById('listSkeleton');
   const stationsList = document.getElementById('stationsList');
   const emptyState = document.getElementById('emptyState');
-  const nearestSection = document.getElementById('nearestSection');
-  const nearestList = document.getElementById('nearestList');
-  const nearestEmpty = document.getElementById('nearestEmpty');
-  const nearestEmptyText = document.getElementById('nearestEmptyText');
-  const nearestLocateBtn = document.getElementById('nearestLocateBtn');
-  const nearestAccuracyText = document.getElementById('nearestAccuracyText');
+  const emptyStateTitle = document.getElementById('emptyStateTitle');
+  const emptyStateText = document.getElementById('emptyStateText');
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
-  const sourcesList = document.getElementById('sourcesList');
 
-  // Preferences Drawer Modal Elements
+  // Fuel sheet elements
   const configDrawer = document.getElementById('configDrawer');
-  const configToggleBtn = document.getElementById('configToggleBtn');
   const closeConfigDrawerBtn = document.getElementById('closeConfigDrawerBtn');
   const configBackdrop = document.getElementById('configBackdrop');
   const applyPreferencesBtn = document.getElementById('applyPreferencesBtn');
-  const statusFuelBadgeBtn = document.getElementById('statusFuelBadgeBtn');
 
-  // Hero Card Elements
+  // Hero elements (nearest station)
   const cheapestCard = document.getElementById('cheapestCard');
   const cheapestPillText = document.getElementById('cheapestPillText');
-  const cheapestSavingsBadge = document.getElementById('cheapestSavingsBadge');
   const heroBrandIcon = document.getElementById('heroBrandIcon');
   const heroStationName = document.getElementById('heroStationName');
   const heroStationCity = document.getElementById('heroStationCity');
   const heroStationAddress = document.getElementById('heroStationAddress');
-  const heroReportedText = document.getElementById('heroReportedText');
-  const heroSource = document.getElementById('heroSource');
+  const heroDistanceText = document.getElementById('heroDistanceText');
   const heroPrice = document.getElementById('heroPrice');
   const heroPricePerLitre = document.getElementById('heroPricePerLitre');
-  const heroGoogleMapBtn = document.getElementById('heroGoogleMapBtn');
-  const heroAppleMapBtn = document.getElementById('heroAppleMapBtn');
+  const heroNavigateBtn = document.getElementById('heroNavigateBtn');
+  const heroNavigateText = document.getElementById('heroNavigateText');
+  const locationOffCard = document.getElementById('locationOffCard');
+  const locationOffText = document.getElementById('locationOffText');
+  const turnOnLocationBtn = document.getElementById('turnOnLocationBtn');
+  const cheapestLine = document.getElementById('cheapestLine');
+  const cheapestLineText = document.getElementById('cheapestLineText');
 
   /**
    * Preferences Drawer Modal visibility controllers
@@ -155,6 +155,35 @@
     configDrawer.style.display = 'none';
     configDrawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+  }
+
+  /**
+   * Filter sheet visibility controllers (same sheet pattern as fuel)
+   */
+  function openFilterSheet() {
+    if (!filterSheet) return;
+    filterSheet.style.display = 'flex';
+    filterSheet.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFilterSheet() {
+    if (!filterSheet) return;
+    filterSheet.style.display = 'none';
+    filterSheet.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  /**
+   * The Filter button shows what is active, so the collapsed filters
+   * are still visible at a glance ("Filter • Chevron").
+   */
+  function updateFilterButton() {
+    if (!filterActiveText) return;
+    const parts = [];
+    if (currentFilter.brand !== 'all') parts.push(currentFilter.brand);
+    if (currentFilter.search) parts.push('“' + currentFilter.search + '”');
+    filterActiveText.textContent = parts.length ? ' • ' + parts.join(' • ') : '';
   }
 
   /**
@@ -178,45 +207,24 @@
         currentFilter.fuelType = savedFuel;
         if (fuelTypeSelect) fuelTypeSelect.value = savedFuel;
       }
-      const savedSort = localStorage.getItem(STORAGE_KEYS.SORT);
-      if (savedSort === 'price' || savedSort === 'nearest') {
-        currentFilter.sort = savedSort;
-        sortChosenByUser = true;
-      }
+      // The view used to be persisted (v5.x). v6.0: every fresh open is
+      // Closest — drop any saved sort so one old "Lowest price" tap can
+      // no longer silently change the default for a returning user.
+      try { localStorage.removeItem(STORAGE_KEYS.SORT); } catch (e) { /* ignore */ }
     } catch (e) {
       console.warn('Storage not accessible:', e);
     }
   }
 
   /**
-   * Save the currently selected fuel type to localStorage
+   * Fuel is the one preference that is remembered. It is saved the
+   * moment you change it — there is no save button any more.
    */
-  function saveCurrentAsDefault() {
+  function saveFuelPreference() {
     try {
       localStorage.setItem(STORAGE_KEYS.FUEL, currentFilter.fuelType);
-
-      if (saveDefaultBtn) {
-        saveDefaultBtn.classList.add('saved');
-        if (saveBtnText) saveBtnText.textContent = 'Saved as Default ✓';
-      }
-
-      if (saveToast) {
-        const fuelName = FUEL_CONFIGS[currentFilter.fuelType] ? FUEL_CONFIGS[currentFilter.fuelType].octane : 'Fuel';
-        if (saveToastText) {
-          saveToastText.textContent = `Default saved: ${fuelName}`;
-        }
-        saveToast.style.display = 'flex';
-        clearTimeout(saveToast._timeout);
-        saveToast._timeout = setTimeout(() => {
-          saveToast.style.display = 'none';
-          if (saveDefaultBtn) {
-            saveDefaultBtn.classList.remove('saved');
-            if (saveBtnText) saveBtnText.textContent = 'Save as Default';
-          }
-        }, 2800);
-      }
     } catch (e) {
-      console.warn('Unable to save preferences to localStorage:', e);
+      console.warn('Unable to save fuel preference:', e);
     }
   }
 
@@ -226,9 +234,18 @@
    * keeps working (sorted by lowest price) if you decline or it fails.
    * Geolocation needs a secure (https) page; GitHub Pages is https.
    */
-  let userLocation = null; // { lat, lng } once known
+  let userLocation = null; // { lat, lng, accuracy, timestamp } once known
   let locationState = 'unknown'; // unknown | locating | ready | denied | unavailable
-  let sortChosenByUser = false;
+  let userPickedCheapest = false; // the user tapped Cheapest themselves this session
+  // True when the fix we are showing came from an earlier, successful
+  // request and a later request failed (e.g. location revoked) or the
+  // fix is older than 15 minutes (e.g. driving). The heading then says
+  // so instead of presenting stale distances as fresh.
+  let locationStale = false;
+  // Generation counter for location requests: callbacks from an older
+  // request (getCurrentPosition is not cancellable) must never kill a
+  // newer request's watch or flip its view.
+  let locationRequestId = 0;
 
   function haversineKm(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -263,13 +280,13 @@
   let locationWatchTimer = null;
   let locationBestAccuracy = Infinity;
 
-  function updateRefreshButton() {
-    if (!refreshLocationBtn) return;
+  // The one location action lives in the list header. While a fix is
+  // being acquired it is disabled so a second tap can't stack requests.
+  function updateLocationButton() {
+    if (!updateLocationBtn) return;
     const locating = locationState === 'locating';
-    refreshLocationBtn.disabled = locating;
-    refreshLocationBtn.classList.toggle('locating', locating);
-    const label = refreshLocationBtn.querySelector('.refresh-location-label');
-    if (label) label.textContent = locating ? 'Locating…' : 'Update location';
+    updateLocationBtn.disabled = locating;
+    updateLocationBtn.textContent = locating ? 'Locating…' : 'Update location';
   }
 
   function stopLocationWatch() {
@@ -281,43 +298,28 @@
       clearTimeout(locationWatchTimer);
       locationWatchTimer = null;
     }
-    updateRefreshButton();
+    updateLocationButton();
   }
 
-  function updateLocationStatus() {
-    if (!locationStatusText) return;
-    if (locationState === 'locating') {
-      locationStatusText.textContent = userLocation
-        ? 'Refining your location…'
-        : 'Finding your location…';
-    } else if (locationState === 'ready') {
-      const acc = userLocation && userLocation.accuracy;
-      const accText = (typeof acc === 'number' && isFinite(acc)) ? ` · ±${Math.round(acc)} m` : '';
-      locationStatusText.textContent = `Distances are straight-line from your current location${accText}`;
-    } else if (locationState === 'denied') locationStatusText.textContent = 'Location blocked — tap Update location to try again';
-    else if (locationState === 'unavailable') locationStatusText.textContent = 'Location is not available in this browser';
-    else locationStatusText.textContent = '';
-    updateRefreshButton();
-  }
-
-  function updateSortUI() {
-    const isNearest = currentFilter.sort === 'nearest';
-    if (sortPriceBtn) {
-      sortPriceBtn.classList.toggle('active', !isNearest);
-      sortPriceBtn.setAttribute('aria-selected', !isNearest ? 'true' : 'false');
+  // The view switch is session-only and never persisted: every fresh
+  // open is Closest. Only the fuel type is remembered.
+  function updateViewUI() {
+    const isClosest = currentFilter.view === 'closest';
+    if (viewClosestBtn) {
+      viewClosestBtn.classList.toggle('active', isClosest);
+      viewClosestBtn.setAttribute('aria-selected', isClosest ? 'true' : 'false');
     }
-    if (sortNearestBtn) {
-      sortNearestBtn.classList.toggle('active', isNearest);
-      sortNearestBtn.setAttribute('aria-selected', isNearest ? 'true' : 'false');
+    if (viewCheapestBtn) {
+      viewCheapestBtn.classList.toggle('active', !isClosest);
+      viewCheapestBtn.setAttribute('aria-selected', !isClosest ? 'true' : 'false');
     }
   }
 
-  function setSortMode(mode, { fromUser = false } = {}) {
-    if (mode !== 'price' && mode !== 'nearest') return;
-    if (fromUser) sortChosenByUser = true;
-    currentFilter.sort = mode;
-    try { localStorage.setItem(STORAGE_KEYS.SORT, mode); } catch (e) { /* ignore */ }
-    updateSortUI();
+  function setViewMode(mode, { fromUser = false } = {}) {
+    if (mode !== 'cheapest' && mode !== 'closest') return;
+    if (fromUser) userPickedCheapest = (mode === 'cheapest');
+    currentFilter.view = mode;
+    updateViewUI();
     render();
   }
 
@@ -330,17 +332,24 @@
    */
   function requestLocation() {
     if (!('geolocation' in navigator)) {
+      // Explicit, labelled fallback: the list becomes cheapest-first and
+      // the heading + switch both say so. Nothing flips silently.
       locationState = 'unavailable';
-      if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
-      updateLocationStatus();
-      updateSortUI();
-      render();
+      currentFilter.view = 'cheapest';
+      updateLocationButton();
+      if (appData.stations && appData.stations.length) render();
       return;
     }
     stopLocationWatch();
-    locationBestAccuracy = Infinity;
+    // Keep the best fix we already have as the bar: a coarse first fix
+    // from a new request must not overwrite a good GPS fix from before.
+    locationBestAccuracy = (userLocation && typeof userLocation.accuracy === 'number')
+      ? userLocation.accuracy : Infinity;
     locationState = 'locating';
-    updateLocationStatus();
+    updateLocationButton();
+    if (appData.stations && appData.stations.length) render();
+
+    const reqId = ++locationRequestId;
 
     const onFix = (pos) => {
       const acc = pos.coords.accuracy;
@@ -353,30 +362,51 @@
         if (haversineKm(userLocation.lat, userLocation.lng, lat, lng) < 0.05) return;
       }
       if (typeof acc === 'number') locationBestAccuracy = acc;
-      userLocation = { lat, lng, accuracy: acc };
+      userLocation = { lat, lng, accuracy: acc, timestamp: Date.now() };
+      locationStale = false;
       locationState = 'ready';
-      // First successful fix: switch to nearest unless you already
-      // picked Lowest price yourself.
-      if (!sortChosenByUser) currentFilter.sort = 'nearest';
-      updateLocationStatus();
-      updateSortUI();
+      // A fix means the default applies again — Closest — unless you
+      // explicitly picked Cheapest yourself this session.
+      if (!userPickedCheapest) currentFilter.view = 'closest';
       if (appData.stations && appData.stations.length) render();
       if (typeof acc === 'number' && acc <= 50) stopLocationWatch();
     };
     const onErr = (err) => {
       stopLocationWatch();
-      // A later failure must not throw away a good fix we already have.
-      if (userLocation) { locationState = 'ready'; updateLocationStatus(); return; }
+      // A later failure must not throw away a good fix we already have —
+      // but it must not be silent either: the fix is now last-known, and
+      // the heading says so, so a tap that appears to do nothing is
+      // explained instead of looking broken.
+      if (userLocation) { locationState = 'ready'; locationStale = true; render(); return; }
       locationState = (err && err.code === 1) ? 'denied' : 'unavailable';
-      if (currentFilter.sort === 'nearest') currentFilter.sort = 'price';
-      updateLocationStatus();
-      updateSortUI();
+      // Explicit, labelled fallback: the list becomes cheapest-first and
+      // the heading + switch both say so. Nothing flips silently.
+      currentFilter.view = 'cheapest';
       if (appData.stations && appData.stations.length) render();
     };
     const opts = { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 };
-    navigator.geolocation.getCurrentPosition(onFix, onErr, opts);
-    locationWatchId = navigator.geolocation.watchPosition(onFix, onErr, opts);
-    locationWatchTimer = setTimeout(stopLocationWatch, 20000);
+    // Generation-guarded callbacks: getCurrentPosition cannot be
+    // cancelled, so a stale callback from an earlier request must not
+    // stop this request's watch or flip its view.
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { if (reqId === locationRequestId) onFix(pos); },
+      (err) => { if (reqId === locationRequestId) onErr(err); },
+      opts);
+    locationWatchId = navigator.geolocation.watchPosition(
+      (pos) => { if (reqId === locationRequestId) onFix(pos); },
+      (err) => { if (reqId === locationRequestId) onErr(err); },
+      opts);
+    // If no callback ever arrives (neither fix nor error), resolve the
+    // state after 20 s instead of leaving the page on skeletons forever.
+    locationWatchTimer = setTimeout(() => {
+      if (reqId !== locationRequestId) return;
+      stopLocationWatch();
+      if (locationState === 'locating' && !userLocation) {
+        locationState = 'unavailable';
+        currentFilter.view = 'cheapest';
+        render();
+      }
+    }, 20000);
   }
 
   /**
@@ -558,11 +588,12 @@
 
   /**
    * Fetch latest price data from data/gas_prices.json
-   * Crucial: refresh preserves currentFilter.fuelType and sort exactly.
+   * Crucial: refresh preserves currentFilter.fuelType and view exactly.
    */
   async function loadGasPrices(showSpin = false) {
-    if (showSpin && refreshBtn) {
-      refreshBtn.classList.add('spinning');
+    if (showSpin && refreshPricesBtn) {
+      refreshPricesBtn.disabled = true;
+      refreshPricesBtn.textContent = 'Refreshing…';
     }
 
     try {
@@ -575,17 +606,26 @@
       }
 
       appData = await response.json();
+      dataLoadFailed = false;
       onDataLoaded();
     } catch (error) {
       console.error('Error fetching gas prices:', error);
-      if (updateTimeText) updateTimeText.textContent = 'Using cached directory';
       if (appData.stations && appData.stations.length > 0) {
+        // We still have the last good data: keep showing it, and say so.
+        if (headerStatusText) headerStatusText.textContent = 'Using cached directory';
+        render();
+      } else {
+        // No data at all: show an explicit error + retry instead of
+        // leaving the page looking like it is still loading forever.
+        dataLoadFailed = true;
+        if (headerStatusText) headerStatusText.textContent = "Couldn't load prices";
         render();
       }
     } finally {
-      if (showSpin && refreshBtn) {
+      if (showSpin && refreshPricesBtn) {
         setTimeout(() => {
-          refreshBtn.classList.remove('spinning');
+          refreshPricesBtn.disabled = false;
+          refreshPricesBtn.textContent = 'Refresh prices';
         }, 500);
       }
     }
@@ -596,19 +636,29 @@
    */
   function onDataLoaded() {
     applySupportedFuels();
-    if (appData.metadata && updateTimeText) {
-      let text = formatRelativeTime(appData.metadata.last_updated_utc);
+    updateHeaderStatus();
+    updateFuelBadge();
+    renderFilterTabs();
+    render();
+  }
+
+  /**
+   * One status line under the header: how fresh the prices are, how
+   * many stations, and that the reports are live.
+   */
+  function updateHeaderStatus() {
+    if (!headerStatusText) return;
+    let text = 'Updating prices…';
+    if (appData.metadata) {
+      text = formatRelativeTime(appData.metadata.last_updated_utc);
       if (appData.metadata.fetch_status === 'degraded') {
         text += ' — showing last good fetch, latest attempt had errors';
       }
-      updateTimeText.textContent = text;
     }
-
-    updateHeaderSubtitle();
-    updateFuelBadge();
-    renderFilterTabs();
-    renderSources();
-    render();
+    const count = (appData.stations && appData.stations.length) || 0;
+    // Kept short on purpose: the full line has to fit on a phone next
+    // to the Refresh button without truncating.
+    headerStatusText.textContent = count ? `${text} · ${count} stations` : text;
   }
 
   /**
@@ -636,65 +686,82 @@
   }
 
   /**
-   * Update fuel badge in status strip
+   * Update the fuel pill in the header ("Regular 87").
    */
   function updateFuelBadge() {
     const activeFuel = FUEL_CONFIGS[currentFilter.fuelType] || FUEL_CONFIGS.regular;
     if (fuelBadgeText) {
-      fuelBadgeText.textContent = activeFuel.badge;
+      fuelBadgeText.textContent = activeFuel.octane;
     }
   }
 
   /**
-   * Update header subtitle according to selected region
+   * The scope name for headings and the cheapest line: "Metro Vancouver"
+   * for the whole list, or the city tab's name when one is active.
    */
-  function updateHeaderSubtitle() {
-    const regConfig = REGION_CONFIGS.all_metro;
-    if (headerSubtitle) {
-      headerSubtitle.textContent = regConfig.subtitle;
+  function scopeName() {
+    if (currentFilter.city === 'all') return 'Metro Vancouver';
+    const tab = REGION_CONFIGS.all_metro.tabs.find(t => t.id === currentFilter.city);
+    return tab ? tab.label : 'Metro Vancouver';
+  }
+
+  /**
+   * The cheapest label must name what the number actually is. The line
+   * and the heading are computed from the fully filtered list (city +
+   * brand + search), so when a brand or search filter is active the
+   * label says so — "Cheapest Shell", not "Cheapest in Metro Vancouver"
+   * for the cheapest Shell.
+   */
+  function cheapestScopeLabel() {
+    if (currentFilter.brand !== 'all') {
+      return currentFilter.city === 'all'
+        ? `Cheapest ${currentFilter.brand}`
+        : `Cheapest ${currentFilter.brand} in ${scopeName()}`;
     }
-    if (stationListHeading) {
-      stationListHeading.textContent = regConfig.heading;
+    if (currentFilter.search) {
+      return currentFilter.city === 'all'
+        ? `Cheapest matching “${currentFilter.search}”`
+        : `Cheapest matching “${currentFilter.search}” in ${scopeName()}`;
+    }
+    return `Cheapest in ${scopeName()}`;
+  }
+
+  /**
+   * The list heading says what the list actually is. "Near you" only
+   * when the list really is nearest-first; otherwise it honestly says
+   * "Cheapest in …". Accuracy appears once, next to the heading — and
+   * never as "±0 m". A fix that is last-known (a later request failed,
+   * or it is older than 15 minutes) is labelled as such.
+   */
+  function updateListHeading() {
+    if (!stationListHeading) return;
+    if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+      stationListHeading.textContent = 'Prices unavailable';
+      if (listAccuracyText) listAccuracyText.textContent = '';
+      return;
+    }
+    const locating = locationState === 'locating' && !userLocation;
+    if (locating) {
+      stationListHeading.textContent = 'Near you';
+    } else if (currentFilter.view === 'cheapest' || !userLocation) {
+      stationListHeading.textContent = cheapestScopeLabel();
+    } else {
+      stationListHeading.textContent = 'Near you';
+    }
+    if (listAccuracyText) {
+      const acc = userLocation && userLocation.accuracy;
+      const stale = locationStale || (userLocation && userLocation.timestamp
+        && (Date.now() - userLocation.timestamp > 15 * 60 * 1000));
+      listAccuracyText.textContent = (userLocation && typeof acc === 'number' && isFinite(acc) && acc > 0)
+        ? `±${Math.round(acc)} m${stale ? ' · last known' : ''}` : '';
     }
   }
 
   /**
-   * Render sources list in bottom transparency card
+   * One Navigate action: Apple Maps on iOS, Google Maps everywhere else.
    */
-  function renderSources() {
-    if (!appData.metadata || !appData.metadata.sources || !sourcesList) return;
-    sourcesList.innerHTML = '';
-
-    appData.metadata.sources.forEach(src => {
-      const chip = document.createElement('a');
-      chip.className = 'source-chip';
-      chip.href = src.url;
-      chip.target = '_blank';
-      chip.rel = 'noopener noreferrer';
-      
-      let label = src.name;
-      if (src.status && src.status.includes('active')) {
-        label += ' • Active';
-      }
-      if (src.stations_reported !== undefined && src.stations_reported > 0) {
-        label += ` (${src.stations_reported} live)`;
-      }
-
-      chip.textContent = label;
-      sourcesList.appendChild(chip);
-    });
-
-    // NRCan weekly Vancouver average: official sanity anchor, not a station price.
-    const anchor = appData.metadata.nrcan_anchor;
-    if (anchor && anchor.vancouver_regular_weekly_cents) {
-      const anchorChip = document.createElement('a');
-      anchorChip.className = 'source-chip';
-      anchorChip.href = anchor.source_url;
-      anchorChip.target = '_blank';
-      anchorChip.rel = 'noopener noreferrer';
-      anchorChip.textContent = `NRCan Vancouver weekly avg ${anchor.vancouver_regular_weekly_cents}¢ (anchor)`;
-      sourcesList.appendChild(anchorChip);
-    }
+  function getNavigateUrl(station) {
+    return isIOS ? getAppleMapsUrl(station) : getGoogleMapsUrl(station);
   }
 
   /**
@@ -758,11 +825,14 @@
 
   /**
    * Filter stations across the whole of Metro Vancouver by city tab,
-   * brand, and multi-field search, then sort by the active sort mode:
-   * lowest price, or nearest to you.
+   * brand, and multi-field search, then order by the active view:
+   * cheapest first, or closest to you.
    */
   function getFilteredStations() {
-    let list = getRegionStations();
+    // Always work on a copy: sorting the master array in place made the
+    // order depend on whatever a previous sort left behind (e.g. which
+    // tied-cheapest station came first changed with location history).
+    let list = (getRegionStations() || []).slice();
 
     // Filter by city tab (All Metro shows every station)
     if (currentFilter.city !== 'all') {
@@ -792,106 +862,191 @@
       );
     }
 
-    // Lowest price: cheapest first; stations without a live price sort last.
-    // Nearest: closest first (price breaks ties); stations with no usable
-    // coordinates sort last. Without a location yet, nearest falls back
-    // to lowest price so the list is never unsorted.
-    if (currentFilter.sort === 'nearest' && userLocation) {
-      list.sort((a, b) => {
-        const da = getStationDistanceKm(a);
-        const db = getStationDistanceKm(b);
-        if (da === null && db === null) return 0;
+    // Cheapest: cheapest first; stations without a live price sort last.
+    // Closest: closest first (price breaks ties); stations with no usable
+    // coordinates sort last. Without a location yet, closest falls back
+    // to cheapest so the list is never unsorted.
+    // Tie-breaks are explicit and location-independent for the primary
+    // key, so the same data always gives the same order: Cheapest ties
+    // break by file order (never by whether a distance sort ran before),
+    // Closest ties break by price, then file order.
+    const indexed = list.map((s, i) => ({ s, i }));
+    if (currentFilter.view === 'closest' && userLocation) {
+      indexed.sort((a, b) => {
+        const da = getStationDistanceKm(a.s);
+        const db = getStationDistanceKm(b.s);
+        if (da === null && db === null) return a.i - b.i;
         if (da === null) return 1;
         if (db === null) return -1;
         if (da !== db) return da - db;
-        const pa = getStationPrice(a);
-        const pb = getStationPrice(b);
-        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
       });
     } else {
-      list.sort((a, b) => {
-        const pa = getStationPrice(a);
-        const pb = getStationPrice(b);
-        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+      indexed.sort((a, b) => {
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
       });
     }
 
-    return list;
+    return indexed.map(x => x.s);
   }
 
   /**
-   * Render Hero "Cheapest Gas" card for the selected area and octane rating
+   * Render the hero: the CLOSEST station in the current filter — the
+   * first row of the nearest list, visually elevated. The hero never
+   * changes with the view switch; it is always the closest station,
+   * one hero, one meaning. The cheapest fact lives in the quiet line
+   * underneath it. While the location is still being found, the hero
+   * waits: no numbers until there's a fix. When location is off, the
+   * hero becomes one plain card with one action.
    */
   function renderHeroCard(filteredList) {
-    const regConfig = REGION_CONFIGS.all_metro;
-    const activeFuel = FUEL_CONFIGS[currentFilter.fuelType] || FUEL_CONFIGS.regular;
+    const locating = locationState === 'locating' && !userLocation;
+    const locationOff = !userLocation && (locationState === 'denied' || locationState === 'unavailable');
+    const noData = dataLoadFailed && !(appData.stations && appData.stations.length);
+
+    // Location off: one plain card, one action. The hero card hides.
+    if (locationOffCard) locationOffCard.hidden = !locationOff;
+    if (cheapestCard) cheapestCard.style.display = locationOff ? 'none' : '';
+    if (locationOff && locationOffText) {
+      locationOffText.textContent = locationState === 'denied'
+        ? "We can't show what's near you without your location. Allow location for this site in your browser settings, or tap below to try again."
+        : "Your browser can't share location, so we can't show what's near you.";
+    }
+
+    // Cheapest in scope: one quiet line, always visible in Closest view
+    // (hidden in Cheapest view, where the list itself shows it).
+    renderCheapestLine(filteredList);
+
+    if (locationOff) return;
+
+    // No data at all: an explicit error with a retry, not a hero that
+    // looks like it is still loading.
+    if (noData) {
+      cheapestCard.style.opacity = '1';
+      cheapestPillText.textContent = 'Prices unavailable';
+      heroStationName.textContent = 'Prices unavailable';
+      heroStationCity.textContent = '';
+      heroStationAddress.textContent = "Couldn't load the latest prices. Check your connection and try again.";
+      heroDistanceText.textContent = '';
+      heroPrice.textContent = '--.-';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateText) heroNavigateText.textContent = 'Try again';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'auto';
+      }
+      return;
+    }
+    if (heroNavigateText) heroNavigateText.textContent = 'Navigate';
+
+    // While the location is still being found, the hero waits — before
+    // any filter conclusion. An empty filter must not make the hero say
+    // "No Stations in Filter" while the list area still shows skeletons
+    // and "Finding your location…".
+    if (locating) {
+      cheapestCard.style.opacity = '1';
+      cheapestPillText.textContent = currentFilter.city === 'all'
+        ? 'Closest to you'
+        : `Closest to you in ${scopeName()}`;
+      heroStationName.textContent = 'Finding the closest gas…';
+      heroStationCity.textContent = '';
+      heroStationAddress.textContent = '';
+      heroDistanceText.textContent = '';
+      heroPrice.textContent = '--.-';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'none';
+      }
+      return;
+    }
 
     if (!filteredList || filteredList.length === 0) {
       cheapestCard.style.opacity = '0.4';
       cheapestPillText.textContent = 'No Stations in Filter';
       heroStationName.textContent = 'None Available';
+      heroStationCity.textContent = '';
       heroStationAddress.textContent = 'Please adjust your filter.';
+      heroDistanceText.textContent = '';
       heroPrice.textContent = '--.-';
-      heroPricePerLitre.textContent = '$0.000 / Litre';
-      if (heroGoogleMapBtn) {
-        heroGoogleMapBtn.removeAttribute('href');
-        heroGoogleMapBtn.style.pointerEvents = 'none';
-      }
-      if (heroAppleMapBtn) {
-        heroAppleMapBtn.removeAttribute('href');
-        heroAppleMapBtn.style.pointerEvents = 'none';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'none';
       }
       return;
     }
 
     cheapestCard.style.opacity = '1';
-    if (heroGoogleMapBtn) heroGoogleMapBtn.style.pointerEvents = 'auto';
-    if (heroAppleMapBtn) heroAppleMapBtn.style.pointerEvents = 'auto';
+    if (heroNavigateBtn) heroNavigateBtn.style.pointerEvents = 'auto';
 
-    // The hero always shows the cheapest station in the current filter,
-    // whatever the list is sorted by (price or distance).
-    const priced = filteredList.filter(s => getStationPrice(s) !== null);
-    const topStation = priced.length
-      ? priced.reduce((a, b) => (getStationPrice(a) <= getStationPrice(b) ? a : b))
-      : filteredList[0];
+    // Pill states the scope when a city tab is active, so the hero's
+    // meaning never changes silently.
+    cheapestPillText.textContent = currentFilter.city === 'all'
+      ? 'Closest to you'
+      : `Closest to you in ${scopeName()}`;
+
+    let topStation = null;
+    if (userLocation) {
+      const indexed = filteredList.map((s, i) => ({ s, i }));
+      indexed.sort((a, b) => {
+        const da = getStationDistanceKm(a.s);
+        const db = getStationDistanceKm(b.s);
+        if (da === null && db === null) return a.i - b.i;
+        if (da === null) return 1;
+        if (db === null) return -1;
+        if (da !== db) return da - db;
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
+      });
+      topStation = indexed[0].s;
+    } else {
+      // No location and not locating (should not normally happen — the
+      // off card covers denied/unavailable): fall back to the cheapest.
+      const priced = filteredList.filter(s => getStationPrice(s) !== null);
+      topStation = priced.length
+        ? priced.reduce((a, b) => (getStationPrice(a) <= getStationPrice(b) ? a : b))
+        : filteredList[0];
+    }
+
+    if (!topStation) {
+      heroStationName.textContent = 'Finding the closest gas…';
+      heroStationCity.textContent = '';
+      heroStationAddress.textContent = '';
+      heroDistanceText.textContent = '';
+      heroPrice.textContent = '--.-';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'none';
+      }
+      return;
+    }
+
     const topPrice = getStationPrice(topStation);
-    const maxPrice = priced.length ? Math.max(...priced.map(s => getStationPrice(s))) : null;
-    const priceDiff = (topPrice === null || maxPrice === null)
-      ? 0
-      : Math.max(0, maxPrice - topPrice).toFixed(1);
-
-    // Dynamic Pill Text based on active area, brand, and gasoline type
-    let pillText = `Lowest ${activeFuel.octane} in Region`;
-    if (currentFilter.brand !== 'all' && currentFilter.city !== 'all') {
-      pillText = `Lowest ${currentFilter.brand} (${activeFuel.octane}) in ${currentFilter.city}`;
-    } else if (currentFilter.brand !== 'all') {
-      pillText = `Lowest ${currentFilter.brand} (${activeFuel.octane}) in ${regConfig.name}`;
-    } else if (currentFilter.city !== 'all') {
-      pillText = `Lowest ${activeFuel.octane} in ${currentFilter.city}`;
-    } else {
-      pillText = `Lowest ${activeFuel.octane} in ${regConfig.name}`;
-    }
-    cheapestPillText.textContent = pillText;
-
-    // Savings badge
-    if (parseFloat(priceDiff) > 0) {
-      cheapestSavingsBadge.style.display = 'inline-block';
-      cheapestSavingsBadge.textContent = `Save up to ${priceDiff}¢/L`;
-    } else {
-      cheapestSavingsBadge.style.display = 'none';
-    }
-
-    // Station brand & details with logo
     const brandName = topStation.brand || topStation.station_name;
     const brandSlug = getBrandSlug(brandName);
     heroBrandIcon.innerHTML = getBrandLogoSvg(brandName, brandSlug);
     heroBrandIcon.className = `brand-avatar ${brandSlug}`;
     heroStationName.textContent = brandName;
-    const heroDistance = formatDistanceKm(topStation);
-    heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC${heroDistance ? ` • ${heroDistance} away` : ''}`;
+    heroStationCity.textContent = `${topStation.neighborhood ? topStation.neighborhood + ' • ' : ''}${topStation.city}, BC`;
     heroStationAddress.textContent = topStation.address;
-    heroReportedText.textContent = topStation.last_updated || 'Recent';
-    heroSource.textContent = '⚡ Via Live Report';
+    const heroDistance = formatDistanceKm(topStation);
+    heroDistanceText.textContent = heroDistance ? `${heroDistance} away · straight-line` : '';
 
     // Price for selected gasoline type ('--.-' when not reported live)
     heroPrice.textContent = topPrice === null ? '--.-' : topPrice.toFixed(1);
@@ -899,15 +1054,40 @@
       ? 'Not reported live'
       : `$${(topPrice / 100).toFixed(3)} / Litre`;
 
-    // Map CTA Links for Google Maps & Apple Maps
-    if (heroGoogleMapBtn) heroGoogleMapBtn.href = getGoogleMapsUrl(topStation);
-    if (heroAppleMapBtn) heroAppleMapBtn.href = getAppleMapsUrl(topStation);
+    if (heroNavigateBtn) heroNavigateBtn.href = getNavigateUrl(topStation);
+  }
+
+  /**
+   * The quiet cheapest line under the hero. Tapping it switches the
+   * list to Cheapest view. Hidden in Cheapest view (the list shows it)
+   * and when the filter has no priced station.
+   */
+  function renderCheapestLine(filteredList) {
+    if (!cheapestLine) return;
+    const locating = locationState === 'locating' && !userLocation;
+    const priced = (filteredList || []).filter(s => getStationPrice(s) !== null);
+    // Hidden in Cheapest view (the list shows it), when the filter has
+    // no priced station, and while the location is still being found
+    // (the line names a station without a distance while the hero waits).
+    if (!priced.length || currentFilter.view !== 'closest' || locating) {
+      cheapestLine.hidden = true;
+      return;
+    }
+    const cheapest = priced.reduce((a, b) => (getStationPrice(a) <= getStationPrice(b) ? a : b));
+    const price = getStationPrice(cheapest);
+    const dist = formatDistanceKm(cheapest);
+    const brand = cheapest.brand || cheapest.station_name;
+    cheapestLineText.textContent = `${cheapestScopeLabel()}: ${brand} · ${cheapest.address} — ${price.toFixed(1)}¢${dist ? ` · ${dist} away` : ''}`;
+    cheapestLine.hidden = false;
   }
 
   /**
    * Render station list items reflecting active gasoline type
    */
   function renderStationList(filteredList) {
+    // A keyboard/voiceover user tabbed onto a card loses focus when the
+    // list is rebuilt on every improving fix; restore it by card id.
+    const activeCardId = document.activeElement && document.activeElement.id;
     stationsList.innerHTML = '';
 
     const regionTotal = getRegionStations().length;
@@ -920,30 +1100,40 @@
     }
 
     emptyState.style.display = 'none';
-    const sortLabel = currentFilter.sort === 'nearest' && userLocation ? 'nearest first' : 'lowest price first';
+    const sortLabel = currentFilter.view === 'closest' && userLocation ? 'closest first' : 'cheapest first';
     showingCountText.textContent = `Showing ${filteredList.length} of ${regionTotal} stations (${activeFuel.octane}) · ${sortLabel}`;
 
     // Cheapest price across the filtered list — computed from the prices,
     // not from list order, so it stays right when sorted by distance.
     const pricedList = filteredList.filter(s => getStationPrice(s) !== null);
     const minPrice = pricedList.length ? Math.min(...pricedList.map(s => getStationPrice(s))) : null;
+    // Only the first station at the minimum price gets the ★ tag — the
+    // one the cheapest line names. (Several stations can tie at 159.9¢.)
+    let cheapestTagged = false;
 
     filteredList.forEach((station, index) => {
       const stPrice = getStationPrice(station);
-      const isCheapest = stPrice !== null && (stPrice === minPrice);
+      const isCheapest = stPrice !== null && (stPrice === minPrice) && !cheapestTagged;
+      if (isCheapest) cheapestTagged = true;
       const diff = (stPrice === null || minPrice === null) ? null : (stPrice - minPrice).toFixed(1);
       const brandName = station.brand || station.station_name;
       const brandSlug = getBrandSlug(brandName);
-      const googleMapUrl = getGoogleMapsUrl(station);
-      const appleMapUrl = getAppleMapsUrl(station);
+      const navigateUrl = getNavigateUrl(station);
       const distanceText = formatDistanceKm(station);
-      const isNearest = currentFilter.sort === 'nearest' && userLocation && index === 0 && distanceText !== null;
+      const isNearest = currentFilter.view === 'closest' && userLocation && index === 0 && distanceText !== null;
 
-      const liveBadgeHtml = `<span class="live-badge" title="Reported live via GasBuddy">⚡ Live Report</span>`;
-
+      // One row, one order. The whole row navigates — no chevron, no
+      // dual map buttons, no per-row timestamp or live badge (identical
+      // on all rows = zero information; freshness lives in the header).
+      // Price + distance sit together on the right: the two decision
+      // numbers. The ★ tag keeps the cheapest findable inside the
+      // nearest view.
       const card = document.createElement('article');
       card.className = `station-card ${isCheapest ? 'is-top-pick' : ''}`;
       card.id = `station-${station.id}`;
+      card.setAttribute('role', 'link');
+      card.tabIndex = 0;
+      card.setAttribute('aria-label', `${brandName}, ${station.address}, ${stPrice === null ? 'price not reported live' : stPrice.toFixed(1) + ' cents per litre'}${distanceText ? ', ' + distanceText + ' away' : ''}. Tap to navigate.`);
 
       card.innerHTML = `
         <div class="card-top-row">
@@ -965,43 +1155,26 @@
             <span class="price-diff-tag ${isCheapest ? 'cheapest' : ''}">
               ${stPrice === null ? 'Not reported live' : (isCheapest ? '★ Lowest price' : `+${diff}¢ / L`)}
             </span>
-          </div>
-
-          <span class="card-chevron" aria-hidden="true">
-            <svg width="11" height="18" viewBox="0 0 11 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 1 9 9 1 17"></polyline></svg>
-          </span>
-        </div>
-
-        <div class="card-bottom-row">
-          <div class="card-meta-left">
-            ${liveBadgeHtml}
             ${distanceText ? `<span class="distance-chip"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>${isNearest ? 'Nearest • ' : ''}${escapeHTML(distanceText)}</span>` : ''}
-            <span class="meta-time">${escapeHTML(station.last_updated)}</span>
-          </div>
-
-          <div class="card-directions-actions">
-            <a href="${googleMapUrl}" class="btn-map-action btn-google" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} in Google Maps" title="Open in Google Maps">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
-                <circle cx="12" cy="9" r="2.5"></circle>
-              </svg>
-              <span class="map-label-short">Google</span>
-              <span class="map-label-full">Google Maps</span>
-            </a>
-
-            <a href="${appleMapUrl}" class="btn-map-action btn-apple" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHTML(brandName)} in Apple Maps" title="Open in Apple Maps">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-              </svg>
-              <span class="map-label-short">Apple</span>
-              <span class="map-label-full">Apple Maps</span>
-            </a>
           </div>
         </div>
       `;
 
+      card.addEventListener('click', () => window.open(navigateUrl, '_blank'));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.open(navigateUrl, '_blank');
+        }
+      });
+
       stationsList.appendChild(card);
     });
+
+    if (activeCardId) {
+      const restored = document.getElementById(activeCardId);
+      if (restored) restored.focus({ preventScroll: true });
+    }
   }
 
   /**
@@ -1018,93 +1191,47 @@
   }
 
   /**
-   * "Nearest to you" — the 5 closest stations from the current filter.
-   * Shown under the hero only when the main list is sorted by lowest
-   * price, because in nearest mode the list's own top 5 already are the
-   * nearest 5. The hero still shows the cheapest in Metro Vancouver.
-   * Cards are cloned from the rendered list so the markup stays single
-   * source; duplicate ids are stripped from the clones.
-   */
-  function renderNearestSection(filteredList) {
-    if (!nearestSection) return;
-    const showSection = currentFilter.sort === 'price' && filteredList.length > 0;
-    nearestSection.hidden = !showSection;
-    if (!showSection) return;
-
-    if (nearestAccuracyText) {
-      const acc = userLocation && userLocation.accuracy;
-      nearestAccuracyText.textContent = (userLocation && typeof acc === 'number' && isFinite(acc)) ? '±' + Math.round(acc) + ' m' : '';
-    }
-
-    if (!userLocation) {
-      if (nearestList) nearestList.innerHTML = '';
-      if (nearestEmpty) nearestEmpty.hidden = false;
-      if (nearestEmptyText) {
-        nearestEmptyText.textContent = locationState === 'locating'
-          ? 'Finding your location…'
-          : (locationState === 'denied'
-            ? 'Location is blocked — allow location for this site, or tap below to try again.'
-            : 'Location is not available in this browser.');
-      }
-      if (nearestLocateBtn) nearestLocateBtn.style.display = (locationState === 'denied' || locationState === 'unavailable') ? '' : 'none';
-      return;
-    }
-
-    if (nearestEmpty) nearestEmpty.hidden = true;
-    const withDistance = filteredList
-      .map(function (s) { return { s: s, d: getStationDistanceKm(s) }; })
-      .filter(function (x) { return x.d !== null; });
-    withDistance.sort(function (a, b) {
-      if (a.d !== b.d) return a.d - b.d;
-      const pa = getStationPrice(a.s);
-      const pb = getStationPrice(b.s);
-      return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
-    });
-    const top5 = withDistance.slice(0, 5);
-
-    if (nearestList) nearestList.innerHTML = '';
-    if (top5.length === 0) {
-      if (nearestEmpty) nearestEmpty.hidden = false;
-      if (nearestEmptyText) nearestEmptyText.textContent = 'No stations with coordinates in this filter.';
-      if (nearestLocateBtn) nearestLocateBtn.style.display = 'none';
-      return;
-    }
-    top5.forEach(function (entry, index) {
-      const original = document.getElementById('station-' + entry.s.id);
-      if (!original || !nearestList) return;
-      const clone = original.cloneNode(true);
-      clone.removeAttribute('id');
-      if (index === 0) {
-        const chip = clone.querySelector('.distance-chip');
-        if (chip) {
-          const txt = chip.childNodes[chip.childNodes.length - 1];
-          if (txt && txt.nodeType === 3) txt.textContent = 'Nearest • ' + txt.textContent.trim();
-        }
-      }
-      nearestList.appendChild(clone);
-    });
-  }
-
-  /**
-   * Main render dispatch
+   * Main render dispatch — one list, one order. While the location is
+   * still being found, the list shows skeletons: no numbers until
+   * there's a fix.
    */
   function render() {
     const filtered = getFilteredStations();
+    updateLocationButton();
+    updateViewUI();
+    updateFilterButton();
+    updateListHeading();
     renderHeroCard(filtered);
-    renderStationList(filtered);
-    renderNearestSection(filtered);
+    // No data at all: the empty state becomes the error state (title,
+    // copy, and a Try again button) instead of a filter message.
+    const noData = dataLoadFailed && !(appData.stations && appData.stations.length);
+    if (noData) {
+      if (emptyStateTitle) emptyStateTitle.textContent = 'Prices unavailable';
+      if (emptyStateText) emptyStateText.textContent = "Couldn't load the latest prices. Check your connection and try again.";
+      if (resetFiltersBtn) resetFiltersBtn.textContent = 'Try again';
+    } else {
+      if (emptyStateTitle) emptyStateTitle.textContent = 'No gas stations found';
+      if (emptyStateText) emptyStateText.textContent = 'Try clearing your search or filters.';
+      if (resetFiltersBtn) resetFiltersBtn.textContent = 'Reset Filters';
+    }
+    const locating = locationState === 'locating' && !userLocation && !noData;
+    if (listSkeleton) listSkeleton.hidden = !locating;
+    if (locating) {
+      if (stationsList) stationsList.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'none';
+      if (showingCountText) showingCountText.textContent = 'Finding your location…';
+    } else {
+      renderStationList(filtered);
+    }
   }
 
   /**
    * Event Listeners Setup
    */
   function setupEvents() {
-    // Preferences Drawer Modal Open & Close Triggers
-    if (configToggleBtn) {
-      configToggleBtn.addEventListener('click', openConfigDrawer);
-    }
-    if (statusFuelBadgeBtn) {
-      statusFuelBadgeBtn.addEventListener('click', openConfigDrawer);
+    // Fuel sheet: the header pill opens it, Done closes it.
+    if (fuelPillBtn) {
+      fuelPillBtn.addEventListener('click', openConfigDrawer);
     }
     if (closeConfigDrawerBtn) {
       closeConfigDrawerBtn.addEventListener('click', closeConfigDrawer);
@@ -1115,46 +1242,75 @@
     if (applyPreferencesBtn) {
       applyPreferencesBtn.addEventListener('click', closeConfigDrawer);
     }
+
+    // Filter sheet: brand + search, one place. Done closes it.
+    if (filterBtn) {
+      filterBtn.addEventListener('click', openFilterSheet);
+    }
+    if (closeFilterSheetBtn) {
+      closeFilterSheetBtn.addEventListener('click', closeFilterSheet);
+    }
+    if (filterBackdrop) {
+      filterBackdrop.addEventListener('click', closeFilterSheet);
+    }
+    if (applyFilterBtn) {
+      applyFilterBtn.addEventListener('click', closeFilterSheet);
+    }
+    if (clearFilterBtn) {
+      clearFilterBtn.addEventListener('click', () => {
+        if (stationSearchInput) stationSearchInput.value = '';
+        currentFilter.search = '';
+        currentFilter.brand = 'all';
+        if (clearSearchBtn) clearSearchBtn.style.display = 'none';
+        brandPills.forEach(p => {
+          p.classList.toggle('active', p.getAttribute('data-brand') === 'all');
+        });
+        updateFilterButton();
+        closeFilterSheet();
+        render();
+      });
+    }
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && configDrawer && configDrawer.style.display !== 'none') {
-        closeConfigDrawer();
+      if (e.key === 'Escape') {
+        if (configDrawer && configDrawer.style.display !== 'none') closeConfigDrawer();
+        if (filterSheet && filterSheet.style.display !== 'none') closeFilterSheet();
       }
     });
 
-    // Gasoline Type (Octane) Dropdown
+    // Gasoline Type (Octane) Dropdown — applies immediately and is
+    // saved at once. There is no save step any more.
     if (fuelTypeSelect) {
       fuelTypeSelect.addEventListener('change', (e) => {
         currentFilter.fuelType = e.target.value;
+        saveFuelPreference();
         updateFuelBadge();
         render();
       });
     }
 
-    // Save as Default Configuration Button (saves area and fuelType to localStorage)
-    if (saveDefaultBtn) {
-      saveDefaultBtn.addEventListener('click', () => {
-        saveCurrentAsDefault();
-      });
-    }
-
-    // Brand Filter Pills
+    // Brand Filter Pills (inside the filter sheet): tap applies, and
+    // the sheet closes — one tap, done.
     brandPills.forEach(pill => {
       pill.addEventListener('click', () => {
         brandPills.forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
 
         currentFilter.brand = pill.getAttribute('data-brand');
+        updateFilterButton();
+        closeFilterSheet();
         render();
       });
     });
 
-    // Search Input
+    // Search Input (inside the filter sheet; filters live as you type)
     if (stationSearchInput) {
       stationSearchInput.addEventListener('input', (e) => {
         currentFilter.search = e.target.value.trim();
         if (clearSearchBtn) {
           clearSearchBtn.style.display = currentFilter.search ? 'flex' : 'none';
         }
+        updateFilterButton();
         render();
       });
     }
@@ -1166,14 +1322,19 @@
         currentFilter.search = '';
         clearSearchBtn.style.display = 'none';
         stationSearchInput.focus();
+        updateFilterButton();
         render();
       });
     }
 
-    // Reset Filters Button
+    // Reset Filters Button — or Try again when there is no data at all.
     if (resetFiltersBtn) {
       resetFiltersBtn.addEventListener('click', () => {
-        stationSearchInput.value = '';
+        if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+          loadGasPrices(true);
+          return;
+        }
+        if (stationSearchInput) stationSearchInput.value = '';
         currentFilter.search = '';
         currentFilter.city = 'all';
         currentFilter.brand = 'all';
@@ -1185,62 +1346,73 @@
           p.classList.toggle('active', isAll);
         });
 
+        updateFilterButton();
         renderFilterTabs();
         render();
       });
     }
 
-    // Sort: Lowest price / Nearest to me. Tapping Nearest without a
-    // location yet asks the browser for one (and falls back to price
-    // if you decline). Your pick is remembered.
-    if (sortPriceBtn) {
-      sortPriceBtn.addEventListener('click', () => setSortMode('price', { fromUser: true }));
-    }
-    if (sortNearestBtn) {
-      sortNearestBtn.addEventListener('click', () => {
-        setSortMode('nearest', { fromUser: true });
-        requestLocation(); // re-acquire a fresh fix every time you tap it
+    // View switch: Closest | Cheapest. Session-only — never remembered.
+    // Tapping Closest re-acquires a fresh fix (in case you moved).
+    if (viewClosestBtn) {
+      viewClosestBtn.addEventListener('click', () => {
+        setViewMode('closest', { fromUser: true });
+        requestLocation();
       });
     }
-    // Update location: fetch your current position again and re-sort.
-    if (refreshLocationBtn) {
-      refreshLocationBtn.addEventListener('click', () => requestLocation());
-    }
-    if (nearestLocateBtn) {
-      nearestLocateBtn.addEventListener('click', () => requestLocation());
+    if (viewCheapestBtn) {
+      viewCheapestBtn.addEventListener('click', () => setViewMode('cheapest', { fromUser: true }));
     }
 
-    // Manual Refresh Button: cleans and reloads from server, strictly preserving fuelType and sort
-    if (refreshBtn) {
-      refreshBtn.addEventListener('click', () => {
+    // Update location (list header) and Turn on location (off card):
+    // the one location action, in both places it appears.
+    if (updateLocationBtn) {
+      updateLocationBtn.addEventListener('click', () => requestLocation());
+    }
+    if (turnOnLocationBtn) {
+      turnOnLocationBtn.addEventListener('click', () => requestLocation());
+    }
+
+    // Cheapest line: switch the list to Cheapest and scroll to it.
+    if (cheapestLine) {
+      cheapestLine.addEventListener('click', () => {
+        setViewMode('cheapest', { fromUser: true });
+        const listEl = document.querySelector('.stations-list-section');
+        if (listEl) listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    // Refresh prices (header status line), strictly preserving fuel and view
+    if (refreshPricesBtn) {
+      refreshPricesBtn.addEventListener('click', () => {
         loadGasPrices(true);
       });
     }
 
-    // Auto periodic refresh in browser every 30 minutes (preserves fuelType
-    // and sort). New prices arrive whenever the GitHub updater runs — the
+    // Hero Navigate button: normally an anchor to maps; when the price
+    // file failed to load it is a Try again button instead.
+    if (heroNavigateBtn) {
+      heroNavigateBtn.addEventListener('click', (e) => {
+        if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+          e.preventDefault();
+          loadGasPrices(true);
+        }
+      });
+    }
+
+    // Auto periodic refresh in browser every 30 minutes (preserves fuel
+    // and view). New prices arrive whenever the GitHub updater runs — the
     // page picks them up on the next refresh.
     setInterval(() => {
       loadGasPrices(false);
     }, 30 * 60 * 1000);
-
-    // iOS large-title shrink: collapse the header title once the user scrolls.
-    // Presentational only — no data, filtering or sorting logic is touched.
-    const appHeader = document.querySelector('.app-header');
-    if (appHeader) {
-      const onScroll = () => {
-        appHeader.classList.toggle('scrolled', window.scrollY > 24);
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    }
   }
 
   // Initialize: load saved defaults first, setup listeners, then load fresh data
   loadSavedPreferences();
   setupEvents();
-  updateSortUI();
-  updateLocationStatus();
+  updateViewUI();
+  updateFilterButton();
   requestLocation();
   loadGasPrices(false);
 })();
