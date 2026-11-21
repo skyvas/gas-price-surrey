@@ -402,6 +402,26 @@ KNOWN_STATIONS = [
     # Added later the same day: one more station that appeared in the next
     # live run still falling back (Esso 5702 Granville St, Vancouver).
     ("Esso", "5702 Granville St", "Vancouver", "West Side", 49.23392, -123.13923),
+    # Added 2026-11-21: 12 more stations that surfaced in the 06:15 UTC live
+    # run still falling back to city-centre coordinates. Geocoded via
+    # Nominatim (OpenStreetMap), 2026-11-21; all inside the Metro Vancouver
+    # box. Notes: 6138 Kingsway is the Chevron amenity listed as 6150
+    # Kingsway (same lot); 3150 Edgemont Blvd is street-level (Edgemont
+    # Blvd is short, so the error is small); 1406 Tsawwassen Rd S has no
+    # OSM address match — the point is the Tsawwassen Petro-Canada amenity
+    # on 12 Ave, the only Petro-Canada in Tsawwassen.
+    ("Esso", "4064 Fraser St", "Vancouver", "East Vancouver", 49.24892, -123.08967),
+    ("Esso", "3502 E Hastings St", "Vancouver", "East Vancouver", 49.28078, -123.02787),
+    ("Chevron", "1720 Rupert St", "Vancouver", "East Vancouver", 49.26915, -123.03316),
+    ("Chevron", "3030 Boundary Rd", "Burnaby", "Burnaby Central", 49.25674, -123.02321),
+    ("Chevron", "6138 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.22018, -122.97434),
+    ("Chevron", "5009 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.22643, -122.99256),
+    ("Esso", "4444 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.23020, -123.00584),
+    ("Shell", "4177 Kingsway", "Burnaby", "Metrotown / Kingsway", 49.23268, -123.01173),
+    ("Chevron", "3826 Canada Way", "Burnaby", "Central Burnaby / Canada Way", 49.25451, -123.01936),
+    ("Petro-Canada", "15961 Fraser Hwy", "Surrey", "Cloverdale", 49.15810, -122.77938),
+    ("Chevron", "3150 Edgemont Blvd", "North Vancouver", "North Vancouver", 49.32873, -123.09364),
+    ("Petro-Canada", "1406 Tsawwassen Rd S", "Delta", "Tsawwassen", 49.02442, -123.06836),
 ]
 
 # Syndicated live feeds from GasBuddy (df.gasbuddy.com)
