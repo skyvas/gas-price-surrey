@@ -187,13 +187,6 @@
   }
 
   /**
-   * Device and platform detection for Maps navigation
-   */
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
-                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const isAndroid = /Android/.test(navigator.userAgent);
-
-  /**
    * Load saved user default preferences from localStorage
    */
   function loadSavedPreferences() {
@@ -429,15 +422,6 @@
     if (!station) return '#';
     const dest = `${station.station_name || station.brand}, ${station.address}, ${station.city}, BC`;
     return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}`;
-  }
-
-  /**
-   * Get direct Apple Maps Directions URL anchored to exact address
-   */
-  function getAppleMapsUrl(station) {
-    if (!station) return '#';
-    const dest = `${station.station_name || station.brand}, ${station.address}, ${station.city}, BC`;
-    return `https://maps.apple.com/?daddr=${encodeURIComponent(dest)}&dirflg=d`;
   }
 
   /**
@@ -758,10 +742,11 @@
   }
 
   /**
-   * One Navigate action: Apple Maps on iOS, Google Maps everywhere else.
+   * One Navigate action: always Google Maps. The direct Google Maps
+   * link is the critical one — no platform auto-switch to Apple Maps.
    */
   function getNavigateUrl(station) {
-    return isIOS ? getAppleMapsUrl(station) : getGoogleMapsUrl(station);
+    return getGoogleMapsUrl(station);
   }
 
   /**
