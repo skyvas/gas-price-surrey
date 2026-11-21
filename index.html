@@ -12,13 +12,13 @@
   <!-- SVG Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334C759'><path d='M3 22h12M4 9h10M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5'/></svg>">
 
-  <title>Cheapest Gas Prices | Metro Vancouver, Surrey & Burnaby BC</title>
-  <meta name="description" content="Find the cheapest regular gas prices in Surrey Area (Surrey, Delta, White Rock), Vancouver (Downtown, East Van, North/West Van), and Burnaby, BC. Real-time GasBuddy reports with one-tap Maps navigation.">
-  <meta name="keywords" content="gas prices surrey, cheapest gas delta, white rock gas prices, vancouver gas prices, burnaby gas prices, north vancouver gas, west vancouver gas, regular fuel BC">
+  <title>Gas Near You — Metro Vancouver, BC</title>
+  <meta name="description" content="The closest gas stations to you in Metro Vancouver, with live prices from GasBuddy driver reports. The cheapest in the region is one tap away.">
+  <meta name="keywords" content="gas prices surrey, gas near me, cheapest gas vancouver, burnaby gas prices, delta gas prices, metro vancouver gas">
 
   <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="Cheapest Gas Prices in Surrey, Vancouver & Burnaby BC">
-  <meta property="og:description" content="Real-time fuel prices updated live from community pump reports. Navigate directly to the cheapest pump in one tap.">
+  <meta property="og:title" content="Gas Near You — Metro Vancouver, BC">
+  <meta property="og:description" content="The closest gas stations to you, with live prices from community pump reports.">
   <meta property="og:type" content="website">
 
   <!-- System font stack only (SF Pro / -apple-system) — no web fonts -->
@@ -27,11 +27,11 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
 
-  <link rel="stylesheet" href="css/styles.css?v=5.4">
+  <link rel="stylesheet" href="css/styles.css?v=6.0">
 </head>
 <body>
   <div class="app-container">
-    <!-- Header -->
+    <!-- Slim header: name, fuel pill, one status line -->
     <header class="app-header">
       <div class="header-top">
         <div class="brand-title">
@@ -46,45 +46,21 @@
           <span class="header-eyebrow">BC Gas Finder</span>
         </div>
 
-        <div class="header-actions">
-          <button id="configToggleBtn" class="refresh-btn config-toggle-btn" aria-label="Fuel Settings" title="Change Gasoline Type">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"></circle>
-              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-            </svg>
-            <span class="refresh-label">Fuel</span>
-          </button>
-
-          <button id="refreshBtn" class="refresh-btn" aria-label="Refresh gas prices" title="Refresh prices">
-            <svg id="refreshIcon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"></path>
-            </svg>
-            <span class="refresh-label">Refresh</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- iOS large title, full-width on its own row -->
-      <div class="header-title-block">
-        <h1 class="header-h1">Gas Prices</h1>
-        <p class="header-subtitle" id="headerSubtitle">Metro Vancouver, BC</p>
-      </div>
-
-      <!-- Live Sync Status Banner (Clickable to open settings) -->
-      <div class="status-strip">
-        <div class="status-indicator">
-          <span class="pulse-dot"></span>
-          <span id="updateTimeText" class="update-text">Updating prices...</span>
-        </div>
-        <button id="statusFuelBadgeBtn" class="fuel-type-badge fuel-badge-interactive" title="Click to change gasoline type or area">
+        <button id="fuelPillBtn" class="fuel-type-badge fuel-badge-interactive" aria-label="Change gasoline type" title="Change gasoline type">
           <span class="fuel-dot"></span>
-          <span id="fuelBadgeText">Regular Gas (87)</span>
+          <span id="fuelBadgeText">Regular 87</span>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
       </div>
+
+      <p class="header-status">
+        <span class="pulse-dot"></span>
+        <span id="headerStatusText">Updating prices…</span>
+        <button id="refreshPricesBtn" class="text-btn" type="button">Refresh prices</button>
+      </p>
     </header>
 
-    <!-- Collapsible Preferences Drawer / Modal (Hidden by default, opened via Area & Fuel button) -->
+    <!-- Fuel sheet: one selector, applies immediately, Done closes -->
     <div id="configDrawer" class="config-drawer" style="display: none;" aria-hidden="true">
       <div class="config-backdrop" id="configBackdrop"></div>
       <div class="config-modal-card">
@@ -97,9 +73,9 @@
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
               </svg>
             </span>
-            <h3 class="drawer-title">Gasoline Preferences</h3>
+            <h3 class="drawer-title">Gasoline</h3>
           </div>
-          <button id="closeConfigDrawerBtn" class="drawer-close-btn" aria-label="Close preferences">
+          <button id="closeConfigDrawerBtn" class="drawer-close-btn" aria-label="Close">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -108,7 +84,6 @@
         </div>
 
         <div class="drawer-body">
-          <!-- Gasoline Type Selector -->
           <div class="pref-group">
             <div class="pref-label-row">
               <span class="pref-icon icon-blue">
@@ -135,117 +110,45 @@
             <p class="pref-note">Only Regular is reported live by the GasBuddy feed. Other grades are disabled until a source reports them — they are never estimated.</p>
           </div>
 
-          <!-- Save Default & Done Buttons -->
           <div class="drawer-actions">
-            <button id="saveDefaultBtn" class="btn-save-default" aria-label="Save current fuel type as default" title="Save this gasoline type as your default">
-              <svg id="saveDefaultIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-              </svg>
-              <span id="saveBtnText">Save as Default</span>
-            </button>
             <button id="applyPreferencesBtn" class="btn-done-modal">Done</button>
-          </div>
-
-          <!-- Saved Notification Toast -->
-          <div id="saveToast" class="save-toast" style="display: none;" role="status" aria-live="polite">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span id="saveToastText">Area &amp; fuel saved as default!</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Main Content -->
-    <main class="main-content">
-
-      <!-- Highlighted Cheapest Gas Banner / Card -->
-      <section id="cheapestGasSection" class="cheapest-hero-section" aria-label="Cheapest Gas in Selected Area">
-        <div class="cheapest-card" id="cheapestCard">
-          <div class="cheapest-badge-row">
-            <span class="cheapest-pill">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <span id="cheapestPillText">Lowest Price in Region</span>
-            </span>
-            <span id="cheapestSavingsBadge" class="savings-tag">Save up to 16¢/L</span>
+    <!-- Filter sheet: search + brand, one place -->
+    <div id="filterSheet" class="config-drawer" style="display: none;" aria-hidden="true">
+      <div class="config-backdrop" id="filterBackdrop"></div>
+      <div class="config-modal-card">
+        <div class="sheet-grabber" aria-hidden="true"></div>
+        <div class="drawer-header">
+          <div class="drawer-title-group">
+            <h3 class="drawer-title">Filter</h3>
           </div>
+          <button id="closeFilterSheetBtn" class="drawer-close-btn" aria-label="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
 
-          <div class="cheapest-content">
-            <div class="cheapest-station-info">
-              <div class="station-brand-meta">
-                <span id="heroBrandIcon" class="brand-avatar">C</span>
-                <div>
-                  <h2 id="heroStationName" class="hero-station-name">Loading...</h2>
-                  <p id="heroStationCity" class="hero-station-city">Surrey, BC</p>
-                </div>
-              </div>
-              <p id="heroStationAddress" class="hero-station-address">Finding best price...</p>
-              <div class="hero-time-source">
-                <span id="heroLastReported" class="meta-item">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  <span id="heroReportedText">Checking reports...</span>
-                </span>
-                <span class="meta-separator">•</span>
-                <span id="heroSource" class="meta-item source-tag">⚡ Via Live Report</span>
-              </div>
-            </div>
-
-            <div class="cheapest-price-box">
-              <div class="price-value-container">
-                <span id="heroPrice" class="hero-price">--.-</span>
-                <span class="hero-price-unit">¢<small>/L</small></span>
-              </div>
-              <span id="heroPricePerLitre" class="hero-price-sub">$0.000 / Litre</span>
+        <div class="drawer-body">
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="stationSearchInput" class="search-input" placeholder="Search brand, street, or neighborhood…" autocomplete="off">
+              <button id="clearSearchBtn" class="clear-search-btn" aria-label="Clear search" style="display: none;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
             </div>
           </div>
 
-          <!-- Hero Action Buttons -->
-          <div class="cheapest-actions dual-actions">
-            <a id="heroGoogleMapBtn" href="#" class="btn-navigate-hero btn-hero-google" target="_blank" rel="noopener noreferrer" aria-label="Open directions in Google Maps">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
-                <circle cx="12" cy="9" r="2.5"></circle>
-              </svg>
-              <span>Google Maps</span>
-            </a>
-            <a id="heroAppleMapBtn" href="#" class="btn-navigate-hero btn-hero-apple" target="_blank" rel="noopener noreferrer" aria-label="Open directions in Apple Maps">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
-              </svg>
-              <span>Apple Maps</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Nearest to you: the 5 closest stations, shown when the main list is sorted by lowest price -->
-      <section id="nearestSection" class="nearest-section" aria-label="Nearest gas stations to you" hidden>
-        <div class="nearest-heading-row">
-          <h2 class="list-heading">Nearest to you</h2>
-          <span id="nearestAccuracyText" class="nearest-accuracy"></span>
-        </div>
-        <div id="nearestList" class="nearest-list"></div>
-        <div id="nearestEmpty" class="nearest-empty" hidden>
-          <p id="nearestEmptyText" class="nearest-empty-text">Finding your location…</p>
-          <button id="nearestLocateBtn" class="location-refresh-btn nearest-locate-btn" type="button">Update location</button>
-        </div>
-      </section>
-
-      <!-- Filter Controls & Search -->
-      <section class="controls-section">
-        <!-- Dynamic City / District Filter Tabs -->
-        <div class="filter-tabs-wrapper">
-          <div class="filter-tabs" id="filterTabsContainer" role="tablist" aria-label="Filter gas stations by city or district">
-            <!-- Dynamically populated via app.js -->
-          </div>
-        </div>
-
-        <!-- Brand Filter Pills -->
-        <div class="brand-filter-wrapper">
-          <div class="brand-pills" role="tablist" aria-label="Filter gas stations by brand">
+          <div class="filter-brand-list" id="filterBrandList" role="tablist" aria-label="Filter gas stations by brand">
             <button class="brand-pill active" data-brand="all">All Brands</button>
             <button class="brand-pill" data-brand="Chevron"><span class="dot-brand dot-chevron"></span>Chevron</button>
             <button class="brand-pill" data-brand="Shell"><span class="dot-brand dot-shell"></span>Shell</button>
@@ -257,51 +160,117 @@
             <button class="brand-pill" data-brand="Smart Gas"><span class="dot-brand dot-smartgas"></span>Smart Gas</button>
             <button class="brand-pill" data-brand="Co-op"><span class="dot-brand dot-coop"></span>Co-op</button>
           </div>
-        </div>
 
-        <!-- Search Bar -->
-        <div class="search-container">
-          <div class="search-input-wrapper">
-            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="stationSearchInput" class="search-input" placeholder="Search brand (Shell, Chevron...), street, or neighborhood..." autocomplete="off">
-            <button id="clearSearchBtn" class="clear-search-btn" aria-label="Clear search" style="display: none;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+          <div class="drawer-actions">
+            <button id="clearFilterBtn" class="btn-save-default">Clear filters</button>
+            <button id="applyFilterBtn" class="btn-done-modal">Done</button>
           </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Sort: lowest price or nearest to you -->
-        <div class="sort-row">
-          <div class="sort-controls">
-            <div class="sort-segmented" role="tablist" aria-label="Sort stations by price or distance">
-              <button id="sortPriceBtn" class="sort-option" data-sort="price" role="tab" aria-selected="false">Lowest price</button>
-              <button id="sortNearestBtn" class="sort-option active" data-sort="nearest" role="tab" aria-selected="true">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
-                Nearest to me
-              </button>
+    <!-- Main Content -->
+    <main class="main-content">
+
+      <!-- Hero: the closest station, visually elevated -->
+      <section id="cheapestGasSection" class="cheapest-hero-section" aria-label="Closest gas station to you">
+        <div class="cheapest-card" id="cheapestCard">
+          <div class="cheapest-badge-row">
+            <span class="cheapest-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path>
+                <circle cx="12" cy="9" r="2.5"></circle>
+              </svg>
+              <span id="cheapestPillText">Closest to you</span>
+            </span>
+          </div>
+
+          <div class="cheapest-content">
+            <div class="cheapest-station-info">
+              <div class="station-brand-meta">
+                <span id="heroBrandIcon" class="brand-avatar">C</span>
+                <div>
+                  <h2 id="heroStationName" class="hero-station-name">Finding the closest gas…</h2>
+                  <p id="heroStationCity" class="hero-station-city"></p>
+                </div>
+              </div>
+              <p id="heroStationAddress" class="hero-station-address"></p>
+              <p id="heroDistanceText" class="hero-distance-text"></p>
             </div>
-            <button id="refreshLocationBtn" class="location-refresh-btn" type="button" aria-label="Update my location" title="Fetch your current location again">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"></path></svg>
-              <span class="refresh-location-label">Update location</span>
-            </button>
+
+            <div class="cheapest-price-box">
+              <div class="price-value-container">
+                <span id="heroPrice" class="hero-price">--.-</span>
+                <span class="hero-price-unit">¢<small>/L</small></span>
+              </div>
+              <span id="heroPricePerLitre" class="hero-price-sub">$0.000 / Litre</span>
+            </div>
           </div>
-          <p id="locationStatusText" class="location-status" role="status" aria-live="polite"></p>
+
+          <div class="cheapest-actions">
+            <a id="heroNavigateBtn" href="#" class="btn-navigate-hero" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+              </svg>
+              <span id="heroNavigateText">Navigate</span>
+            </a>
+          </div>
         </div>
 
-        <!-- Section Title & Station Count -->
-        <div class="list-header">
-          <div class="list-title-group">
-            <h2 class="list-heading" id="stationListHeading">All Gas Stations</h2>
-          </div>
-          <span class="showing-count" id="showingCountText">Loading stations...</span>
+        <!-- Location off: one plain card, one action -->
+        <div class="location-off-card" id="locationOffCard" hidden>
+          <h2 class="location-off-title">Location is off</h2>
+          <p id="locationOffText" class="location-off-text">We can't show what's near you without your location.</p>
+          <button id="turnOnLocationBtn" class="btn-navigate-hero location-off-btn" type="button">Turn on location</button>
         </div>
+
+        <!-- Cheapest in scope: one quiet line, tap to switch the list to Cheapest -->
+        <button id="cheapestLine" class="cheapest-line" type="button">
+          <span id="cheapestLineText">Cheapest in Metro Vancouver: …</span>
+          <span class="cheapest-line-arrow" aria-hidden="true">›</span>
+        </button>
       </section>
 
-      <!-- Station List -->
+      <!-- City tabs + Filter -->
+      <section class="controls-section">
+        <div class="filter-tabs-wrapper">
+          <div class="filter-tabs" id="filterTabsContainer" role="tablist" aria-label="Filter gas stations by city or district">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </div>
+        <button id="filterBtn" class="filter-btn" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          <span>Filter</span>
+          <span id="filterActiveText" class="filter-active-text"></span>
+        </button>
+      </section>
+
+      <!-- The list: Near you, one switch, one order -->
       <section class="stations-list-section">
+        <div class="list-header">
+          <div class="list-title-group">
+            <h2 class="list-heading" id="stationListHeading">Near you</h2>
+            <span id="listAccuracyText" class="list-accuracy"></span>
+          </div>
+          <button id="updateLocationBtn" class="text-btn" type="button">Update location</button>
+        </div>
+
+        <div class="sort-segmented" role="tablist" aria-label="Sort stations by distance or price">
+          <button id="viewClosestBtn" class="sort-option active" data-view="closest" role="tab" aria-selected="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
+            Closest
+          </button>
+          <button id="viewCheapestBtn" class="sort-option" data-view="cheapest" role="tab" aria-selected="false">Cheapest</button>
+        </div>
+
+        <span class="showing-count" id="showingCountText">Loading stations…</span>
+
+        <div id="listSkeleton" class="list-skeleton" hidden aria-hidden="true">
+          <div class="skeleton-row"><div class="skeleton-bar skeleton-bar-wide"></div><div class="skeleton-bar skeleton-bar-narrow"></div></div>
+          <div class="skeleton-row"><div class="skeleton-bar skeleton-bar-wide"></div><div class="skeleton-bar skeleton-bar-narrow"></div></div>
+          <div class="skeleton-row"><div class="skeleton-bar skeleton-bar-wide"></div><div class="skeleton-bar skeleton-bar-narrow"></div></div>
+        </div>
+
         <div id="stationsList" class="stations-grid" aria-live="polite">
           <!-- Populated dynamically via app.js -->
         </div>
@@ -315,130 +284,19 @@
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
             </svg>
           </div>
-          <h3>No gas stations found</h3>
-          <p>Try clearing your search term or switching to "All Areas".</p>
+          <h3 id="emptyStateTitle">No gas stations found</h3>
+          <p id="emptyStateText">Try clearing your search or filters.</p>
           <button id="resetFiltersBtn" class="btn-secondary">Reset Filters</button>
-        </div>
-      </section>
-
-      <!-- Information & Official Websites Section -->
-      <section class="info-section">
-        <div class="info-card">
-          <div class="info-header">
-            <div class="info-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="16" x2="12" y2="12"></line>
-                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-              </svg>
-            </div>
-            <h4>Live Data Sources & Brand Portals</h4>
-          </div>
-          <p class="info-text">
-            This tracker monitors real-time regular gasoline prices exclusively from <strong>GasBuddy's live community driver reports</strong> across the <strong>Surrey Area</strong> (Surrey, Delta, Ladner, Tsawwassen, White Rock), <strong>Vancouver</strong> (Downtown, East Vancouver, North &amp; West Vancouver), and <strong>Burnaby</strong>. Every displayed price reflects an authentic, recent report directly from drivers at the pump.
-          </p>
-
-          <div class="official-portals-grid">
-            <a href="https://www.chevron.ca" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-chevron"></span>
-                <strong>Chevron Canada</strong>
-              </div>
-              <p class="portal-desc">Official stations &amp; Journie Rewards (Save up to 7¢/L)</p>
-              <span class="portal-link-text">Visit chevron.ca →</span>
-            </a>
-
-            <a href="https://www.shell.ca/en_ca/drivers/shell-station-locator.html" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-shell"></span>
-                <strong>Shell Canada</strong>
-              </div>
-              <p class="portal-desc">Station locator &amp; BCAA / CAA partner discount (Save 3¢/L)</p>
-              <span class="portal-link-text">Visit shell.ca →</span>
-            </a>
-
-            <a href="https://www.petro-canada.ca/en/personal/gas-station-locations" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-petro"></span>
-                <strong>Petro-Canada</strong>
-              </div>
-              <p class="portal-desc">Station locations &amp; Petro-Points / RBC card link (Save 3¢/L)</p>
-              <span class="portal-link-text">Visit petro-canada.ca →</span>
-            </a>
-
-            <a href="https://www.esso.ca/en-ca/find-station" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-esso"></span>
-                <strong>Esso &amp; Mobil Canada</strong>
-              </div>
-              <p class="portal-desc">Official finder &amp; PC Optimum rewards (Earn 10-40 pts/L)</p>
-              <span class="portal-link-text">Visit esso.ca →</span>
-            </a>
-
-            <a href="https://cancopetroleum.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-canco"></span>
-                <strong>Canco Petroleum</strong>
-              </div>
-              <p class="portal-desc">Independent BC price leader &amp; Canco Cash Rewards</p>
-              <span class="portal-link-text">Visit cancopetroleum.ca →</span>
-            </a>
-
-            <a href="https://supersave.ca/gas-stations/" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-supersave"></span>
-                <strong>Super Save Gas BC</strong>
-              </div>
-              <p class="portal-desc">BC independent pricing leader across Surrey, Delta &amp; Burnaby</p>
-              <span class="portal-link-text">Visit supersave.ca →</span>
-            </a>
-
-            <a href="https://centex.ca/locations/" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-centex"></span>
-                <strong>Centex Petroleum</strong>
-              </div>
-              <p class="portal-desc">Western Canada independent pumps &amp; discount fuel</p>
-              <span class="portal-link-text">Visit centex.ca →</span>
-            </a>
-
-            <a href="https://www.smartgas.ca" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-smartgas"></span>
-                <strong>Smart Gas</strong>
-              </div>
-              <p class="portal-desc">Independent low price fuel on Canada Way in Burnaby</p>
-              <span class="portal-link-text">Visit smartgas.ca →</span>
-            </a>
-
-            <a href="https://www.co-op.crs" target="_blank" rel="noopener noreferrer" class="portal-card">
-              <div class="portal-top">
-                <span class="portal-brand-dot dot-coop"></span>
-                <strong>Co-op Petroleum</strong>
-              </div>
-              <p class="portal-desc">Member equity cash back &amp; high quality fuels in Delta</p>
-              <span class="portal-link-text">Visit co-op.crs →</span>
-            </a>
-          </div>
-
-          <div class="info-sources-list" id="sourcesList">
-            <!-- Feed chips dynamically filled -->
-          </div>
         </div>
       </section>
     </main>
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p class="footer-meta">
-        <span>Gas Price Finder • Surrey, Vancouver &amp; Burnaby BC</span>
-      </p>
-      <p class="footer-subtext">
-        Tapping <strong>Open in Maps</strong> opens the selected station directly in Apple Maps on iOS or Google Maps on Android.
-      </p>
+      <p class="footer-meta">Prices from GasBuddy driver reports · Distances are straight-line.</p>
     </footer>
   </div>
 
-  <script src="js/app.js?v=5.4"></script>
+  <script src="js/app.js?v=6.0"></script>
 </body>
 </html>
