@@ -4,6 +4,7 @@
  * Closest stations first by default; cheapest one tap away.
  * One list, one order. The view is session-only — every fresh open
  * is Closest. Only the fuel type is remembered.
+ * The city tab follows your live location unless you pick one.
  */
 
 (function () {
@@ -230,6 +231,7 @@
   let userLocation = null; // { lat, lng, accuracy, timestamp } once known
   let locationState = 'unknown'; // unknown | locating | ready | denied | unavailable
   let userPickedCheapest = false; // the user tapped Cheapest themselves this session
+  let userPickedCity = false; // the user tapped a city tab themselves this session
   // True when the fix we are showing came from an earlier, successful
   // request and a later request failed (e.g. location revoked) or the
   // fix is older than 15 minutes (e.g. driving). The heading then says
@@ -759,6 +761,41 @@
   /**
    * Dynamically render filter tabs (city filters across Metro Vancouver)
    */
+  /**
+   * The city tab for the live location: the region of the nearest station
+   * with coordinates. The tabs are regions, not cities — Surrey Area covers
+   * Surrey, Delta and White Rock; Vancouver covers Vancouver, North and
+   * West Vancouver — and every station carries its region, so the nearest
+   * station's region is the tab. Returns null with no location, no
+   * stations, or no station with coordinates.
+   */
+  function regionForLocation() {
+    if (!userLocation || !appData.stations || !appData.stations.length) return null;
+    let best = null;
+    let bestKm = Infinity;
+    for (const st of appData.stations) {
+      if (typeof st.latitude !== 'number' || typeof st.longitude !== 'number') continue;
+      const km = haversineKm(userLocation.lat, userLocation.lng, st.latitude, st.longitude);
+      if (km < bestKm) { bestKm = km; best = st; }
+    }
+    if (!best) return null;
+    const known = REGION_CONFIGS.all_metro.tabs.some(t => t.id === best.region);
+    return known ? best.region : null;
+  }
+
+  /**
+   * Auto-select the city tab from the live location — unless the user
+   * picked a tab themselves this session, in which case their choice
+   * sticks. Returns true when the tab changed (so the tabs re-render).
+   */
+  function maybeAutoSelectCity() {
+    if (userPickedCity) return false;
+    const region = regionForLocation();
+    if (!region || region === currentFilter.city) return false;
+    currentFilter.city = region;
+    return true;
+  }
+
   function renderFilterTabs() {
     if (!filterTabsContainer) return;
     const regConfig = REGION_CONFIGS.all_metro;
@@ -800,6 +837,7 @@
         btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
 
+        userPickedCity = true;
         currentFilter.city = tab.id;
         render();
       });
@@ -1181,6 +1219,9 @@
    * there's a fix.
    */
   function render() {
+    // The city tab follows the live location — unless the user picked a
+    // tab themselves this session. Rebuild the tabs when it changes.
+    if (maybeAutoSelectCity()) renderFilterTabs();
     const filtered = getFilteredStations();
     updateLocationButton();
     updateViewUI();
@@ -1321,6 +1362,9 @@
         }
         if (stationSearchInput) stationSearchInput.value = '';
         currentFilter.search = '';
+        // Reset restores the defaults — including the city tab following
+        // the live location again, so forget the manual pick.
+        userPickedCity = false;
         currentFilter.city = 'all';
         currentFilter.brand = 'all';
         if (clearSearchBtn) clearSearchBtn.style.display = 'none';
