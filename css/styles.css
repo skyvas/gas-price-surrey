@@ -19,7 +19,7 @@
   --separator-strong: rgba(60, 60, 67, 0.29);
   --text: #000000;
   --text-secondary: rgba(60, 60, 67, 0.60);
-  --text-tertiary: rgba(60, 60, 67, 0.30);
+  --text-tertiary: rgba(60, 60, 67, 0.75);
   --accent-green: #34C759;
   --accent-green-dark: #248A3D;
   --accent-blue: #007AFF;
@@ -61,7 +61,7 @@
     --separator-strong: rgba(84, 84, 88, 0.80);
     --text: #FFFFFF;
     --text-secondary: rgba(235, 235, 245, 0.60);
-    --text-tertiary: rgba(235, 235, 245, 0.30);
+    --text-tertiary: rgba(235, 235, 245, 0.60);
     --accent-green: #30D158;
     --accent-green-dark: #30D158;
     --accent-blue: #0A84FF;
@@ -242,29 +242,6 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .fuel-badge-interactive:active { transform: scale(0.96); }
 .fuel-dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--accent-blue); }
 
-/* GasBuddy live strip (kept for compatibility) */
-.live-feed-strip {
-  background: var(--card);
-  border: 0.5px solid var(--separator);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: var(--shadow-sm);
-}
-.live-strip-content { display: flex; flex-direction: column; gap: 2px; }
-.live-badge-label { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-green-dark); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-.live-feed-text { font-size: 14px; color: var(--text-secondary); line-height: 1.4; }
-.live-stats-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 8px; border-top: 0.5px solid var(--separator); }
-.live-stat-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; color: var(--text-secondary); background: var(--fill); padding: 4px 10px; border-radius: var(--radius-full); }
-.live-stat-chip strong { color: var(--text); font-weight: 700; }
-.chip-dot { width: 6px; height: 6px; border-radius: 50%; background-color: var(--accent-green); display: inline-block; }
-.stat-official .chip-dot { background: var(--accent-green); }
-.stat-crowdsourced .chip-dot { background: var(--accent-blue); }
-.stat-directory .chip-dot { background: #AF52DE; }
-.stat-total .chip-dot { background: var(--text-tertiary); }
-
 /* Main content */
 .main-content { display: flex; flex-direction: column; gap: 24px; width: 100%; }
 
@@ -370,9 +347,9 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   transition: background var(--transition-fast), transform var(--transition-fast);
 }
 .btn-save-default:active { transform: scale(0.97); }
-.btn-save-default.saved { background: var(--accent-green); color: #fff; }
+.btn-save-default.saved { background: var(--accent-green); color: #062B12; }
 .btn-done-modal {
-  background: var(--accent-green); color: #fff; border: none;
+  background: var(--accent-green); color: #062B12; border: none;
   border-radius: var(--radius-md); min-height: 44px;
   font-weight: 600; font-size: 17px; cursor: pointer;
   transition: transform var(--transition-fast), filter var(--transition-fast);
@@ -414,7 +391,7 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .cheapest-badge-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
 .cheapest-pill {
   display: inline-flex; align-items: center; gap: 6px;
-  background: var(--accent-green); color: #fff;
+  background: var(--accent-green); color: #062B12;
   font-size: 13px; font-weight: 700; letter-spacing: 0.01em; text-transform: uppercase;
   padding: 6px 12px; border-radius: var(--radius-full);
   box-shadow: var(--shadow-sm);
@@ -422,6 +399,9 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .cheapest-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 16px; position: relative; z-index: 1; }
 .cheapest-station-info { flex: 1; min-width: 0; }
 .station-brand-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+/* The name/city column must be allowed to shrink, or one unbroken long
+   word forces the hero info column wide and paints over the price. */
+.station-brand-meta > div { min-width: 0; }
 .brand-avatar {
   width: 44px; height: 44px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
@@ -429,7 +409,7 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   box-shadow: var(--shadow-sm); padding: 0;
 }
 .brand-avatar svg { width: 100%; height: 100%; display: block; }
-.hero-station-name { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.02em; word-break: break-word; }
+.hero-station-name { font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; letter-spacing: -0.02em; word-break: break-word; overflow-wrap: anywhere; }
 .hero-station-city { font-size: 15px; font-weight: 600; color: var(--accent-green-dark); }
 .hero-station-address { font-size: 15px; color: var(--text-secondary); margin-bottom: 4px; line-height: 1.35; word-break: break-word; }
 .hero-distance-text { font-size: 13px; color: var(--text-tertiary); margin: 0; }
@@ -452,7 +432,7 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 .btn-navigate-hero {
   display: flex; align-items: center; justify-content: center; gap: 7px;
   width: 100%; min-height: 48px;
-  background: var(--accent-green); color: #fff;
+  background: var(--accent-green); color: #062B12;
   text-decoration: none;
   font-weight: 600; font-size: 17px;
   border: none; border-radius: var(--radius-md);
@@ -569,7 +549,7 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 }
 .brand-pill:hover { background: var(--fill-strong); }
 .brand-pill:active { transform: scale(0.96); }
-.brand-pill.active { background: var(--accent-green); color: #fff; font-weight: 600; box-shadow: var(--shadow-sm); }
+.brand-pill.active { background: var(--accent-green); color: #062B12; font-weight: 600; box-shadow: var(--shadow-sm); }
 
 .dot-brand { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .dot-chevron { background: #0066b2; }
@@ -607,7 +587,7 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 2px 8px;
   margin-top: 6px; padding: 0 4px;
   position: sticky;
-  top: calc(env(safe-area-inset-top) + 98px);
+  top: calc(env(safe-area-inset-top) + 94px);
   z-index: 20;
   background: var(--bg);
   padding-top: 6px; padding-bottom: 6px;
@@ -674,12 +654,12 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   box-shadow: var(--shadow-sm); padding: 0;
 }
 .brand-badge svg { width: 100%; height: 100%; display: block; }
-.station-title { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.25; letter-spacing: -0.01em; }
+.station-title { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1.25; letter-spacing: -0.01em; overflow-wrap: anywhere; }
 .station-city-pill {
   font-size: 13px; font-weight: 600; color: var(--accent-blue);
   background: var(--blue-tint); padding: 3px 8px; border-radius: 6px;
 }
-.station-card-address { font-size: 15px; color: var(--text-secondary); line-height: 1.35; margin-top: 2px; }
+.station-card-address { font-size: 15px; color: var(--text-secondary); line-height: 1.35; margin-top: 2px; overflow-wrap: anywhere; }
 
 .station-price-box { text-align: right; flex-shrink: 0; }
 .price-main { display: flex; align-items: baseline; justify-content: flex-end; }

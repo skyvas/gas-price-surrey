@@ -67,21 +67,23 @@
   // Application State
   let appData = {
     metadata: null,
-    cheapest_by_region: {},
-    cheapest_by_city: {},
     stations: []
   };
 
   // No area setting any more (v5.3): the app always shows the whole of
   // Metro Vancouver, nearest to your location. Region is fixed.
   let currentFilter = {
-    region: 'all_metro', // Fixed: whole Metro Vancouver
     fuelType: 'regular',   // Default: Regular (87)
     city: 'all',
     brand: 'all',
     search: '',
     view: 'closest'        // Closest | Cheapest. Session-only, always starts Closest.
   };
+
+  // True when the price file failed to load and there is no data at all
+  // (first load). The page then shows an explicit error + retry instead
+  // of looking like it is still loading forever.
+  let dataLoadFailed = false;
 
   // DOM Elements
   const fuelTypeSelect = document.getElementById('fuelTypeSelect');
@@ -109,6 +111,8 @@
   const listSkeleton = document.getElementById('listSkeleton');
   const stationsList = document.getElementById('stationsList');
   const emptyState = document.getElementById('emptyState');
+  const emptyStateTitle = document.getElementById('emptyStateTitle');
+  const emptyStateText = document.getElementById('emptyStateText');
   const resetFiltersBtn = document.getElementById('resetFiltersBtn');
 
   // Fuel sheet elements
@@ -128,6 +132,7 @@
   const heroPrice = document.getElementById('heroPrice');
   const heroPricePerLitre = document.getElementById('heroPricePerLitre');
   const heroNavigateBtn = document.getElementById('heroNavigateBtn');
+  const heroNavigateText = document.getElementById('heroNavigateText');
   const locationOffCard = document.getElementById('locationOffCard');
   const locationOffText = document.getElementById('locationOffText');
   const turnOnLocationBtn = document.getElementById('turnOnLocationBtn');
@@ -229,9 +234,18 @@
    * keeps working (sorted by lowest price) if you decline or it fails.
    * Geolocation needs a secure (https) page; GitHub Pages is https.
    */
-  let userLocation = null; // { lat, lng } once known
+  let userLocation = null; // { lat, lng, accuracy, timestamp } once known
   let locationState = 'unknown'; // unknown | locating | ready | denied | unavailable
   let userPickedCheapest = false; // the user tapped Cheapest themselves this session
+  // True when the fix we are showing came from an earlier, successful
+  // request and a later request failed (e.g. location revoked) or the
+  // fix is older than 15 minutes (e.g. driving). The heading then says
+  // so instead of presenting stale distances as fresh.
+  let locationStale = false;
+  // Generation counter for location requests: callbacks from an older
+  // request (getCurrentPosition is not cancellable) must never kill a
+  // newer request's watch or flip its view.
+  let locationRequestId = 0;
 
   function haversineKm(lat1, lon1, lat2, lon2) {
     const R = 6371;
@@ -272,7 +286,6 @@
     if (!updateLocationBtn) return;
     const locating = locationState === 'locating';
     updateLocationBtn.disabled = locating;
-    updateLocationBtn.classList.toggle('locating', locating);
     updateLocationBtn.textContent = locating ? 'Locating…' : 'Update location';
   }
 
@@ -323,13 +336,20 @@
       // the heading + switch both say so. Nothing flips silently.
       locationState = 'unavailable';
       currentFilter.view = 'cheapest';
+      updateLocationButton();
       if (appData.stations && appData.stations.length) render();
       return;
     }
     stopLocationWatch();
-    locationBestAccuracy = Infinity;
+    // Keep the best fix we already have as the bar: a coarse first fix
+    // from a new request must not overwrite a good GPS fix from before.
+    locationBestAccuracy = (userLocation && typeof userLocation.accuracy === 'number')
+      ? userLocation.accuracy : Infinity;
     locationState = 'locating';
+    updateLocationButton();
     if (appData.stations && appData.stations.length) render();
+
+    const reqId = ++locationRequestId;
 
     const onFix = (pos) => {
       const acc = pos.coords.accuracy;
@@ -342,7 +362,8 @@
         if (haversineKm(userLocation.lat, userLocation.lng, lat, lng) < 0.05) return;
       }
       if (typeof acc === 'number') locationBestAccuracy = acc;
-      userLocation = { lat, lng, accuracy: acc };
+      userLocation = { lat, lng, accuracy: acc, timestamp: Date.now() };
+      locationStale = false;
       locationState = 'ready';
       // A fix means the default applies again — Closest — unless you
       // explicitly picked Cheapest yourself this session.
@@ -352,8 +373,11 @@
     };
     const onErr = (err) => {
       stopLocationWatch();
-      // A later failure must not throw away a good fix we already have.
-      if (userLocation) { locationState = 'ready'; return; }
+      // A later failure must not throw away a good fix we already have —
+      // but it must not be silent either: the fix is now last-known, and
+      // the heading says so, so a tap that appears to do nothing is
+      // explained instead of looking broken.
+      if (userLocation) { locationState = 'ready'; locationStale = true; render(); return; }
       locationState = (err && err.code === 1) ? 'denied' : 'unavailable';
       // Explicit, labelled fallback: the list becomes cheapest-first and
       // the heading + switch both say so. Nothing flips silently.
@@ -361,9 +385,28 @@
       if (appData.stations && appData.stations.length) render();
     };
     const opts = { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 };
-    navigator.geolocation.getCurrentPosition(onFix, onErr, opts);
-    locationWatchId = navigator.geolocation.watchPosition(onFix, onErr, opts);
-    locationWatchTimer = setTimeout(stopLocationWatch, 20000);
+    // Generation-guarded callbacks: getCurrentPosition cannot be
+    // cancelled, so a stale callback from an earlier request must not
+    // stop this request's watch or flip its view.
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { if (reqId === locationRequestId) onFix(pos); },
+      (err) => { if (reqId === locationRequestId) onErr(err); },
+      opts);
+    locationWatchId = navigator.geolocation.watchPosition(
+      (pos) => { if (reqId === locationRequestId) onFix(pos); },
+      (err) => { if (reqId === locationRequestId) onErr(err); },
+      opts);
+    // If no callback ever arrives (neither fix nor error), resolve the
+    // state after 20 s instead of leaving the page on skeletons forever.
+    locationWatchTimer = setTimeout(() => {
+      if (reqId !== locationRequestId) return;
+      stopLocationWatch();
+      if (locationState === 'locating' && !userLocation) {
+        locationState = 'unavailable';
+        currentFilter.view = 'cheapest';
+        render();
+      }
+    }, 20000);
   }
 
   /**
@@ -563,11 +606,19 @@
       }
 
       appData = await response.json();
+      dataLoadFailed = false;
       onDataLoaded();
     } catch (error) {
       console.error('Error fetching gas prices:', error);
-      if (headerStatusText) headerStatusText.textContent = 'Using cached directory';
       if (appData.stations && appData.stations.length > 0) {
+        // We still have the last good data: keep showing it, and say so.
+        if (headerStatusText) headerStatusText.textContent = 'Using cached directory';
+        render();
+      } else {
+        // No data at all: show an explicit error + retry instead of
+        // leaving the page looking like it is still loading forever.
+        dataLoadFailed = true;
+        if (headerStatusText) headerStatusText.textContent = "Couldn't load prices";
         render();
       }
     } finally {
@@ -655,25 +706,54 @@
   }
 
   /**
+   * The cheapest label must name what the number actually is. The line
+   * and the heading are computed from the fully filtered list (city +
+   * brand + search), so when a brand or search filter is active the
+   * label says so — "Cheapest Shell", not "Cheapest in Metro Vancouver"
+   * for the cheapest Shell.
+   */
+  function cheapestScopeLabel() {
+    if (currentFilter.brand !== 'all') {
+      return currentFilter.city === 'all'
+        ? `Cheapest ${currentFilter.brand}`
+        : `Cheapest ${currentFilter.brand} in ${scopeName()}`;
+    }
+    if (currentFilter.search) {
+      return currentFilter.city === 'all'
+        ? `Cheapest matching “${currentFilter.search}”`
+        : `Cheapest matching “${currentFilter.search}” in ${scopeName()}`;
+    }
+    return `Cheapest in ${scopeName()}`;
+  }
+
+  /**
    * The list heading says what the list actually is. "Near you" only
    * when the list really is nearest-first; otherwise it honestly says
    * "Cheapest in …". Accuracy appears once, next to the heading — and
-   * never as "±0 m".
+   * never as "±0 m". A fix that is last-known (a later request failed,
+   * or it is older than 15 minutes) is labelled as such.
    */
   function updateListHeading() {
     if (!stationListHeading) return;
+    if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+      stationListHeading.textContent = 'Prices unavailable';
+      if (listAccuracyText) listAccuracyText.textContent = '';
+      return;
+    }
     const locating = locationState === 'locating' && !userLocation;
     if (locating) {
       stationListHeading.textContent = 'Near you';
     } else if (currentFilter.view === 'cheapest' || !userLocation) {
-      stationListHeading.textContent = `Cheapest in ${scopeName()}`;
+      stationListHeading.textContent = cheapestScopeLabel();
     } else {
       stationListHeading.textContent = 'Near you';
     }
     if (listAccuracyText) {
       const acc = userLocation && userLocation.accuracy;
+      const stale = locationStale || (userLocation && userLocation.timestamp
+        && (Date.now() - userLocation.timestamp > 15 * 60 * 1000));
       listAccuracyText.textContent = (userLocation && typeof acc === 'number' && isFinite(acc) && acc > 0)
-        ? `±${Math.round(acc)} m` : '';
+        ? `±${Math.round(acc)} m${stale ? ' · last known' : ''}` : '';
     }
   }
 
@@ -749,7 +829,10 @@
    * cheapest first, or closest to you.
    */
   function getFilteredStations() {
-    let list = getRegionStations();
+    // Always work on a copy: sorting the master array in place made the
+    // order depend on whatever a previous sort left behind (e.g. which
+    // tied-cheapest station came first changed with location history).
+    let list = (getRegionStations() || []).slice();
 
     // Filter by city tab (All Metro shows every station)
     if (currentFilter.city !== 'all') {
@@ -783,27 +866,38 @@
     // Closest: closest first (price breaks ties); stations with no usable
     // coordinates sort last. Without a location yet, closest falls back
     // to cheapest so the list is never unsorted.
+    // Tie-breaks are explicit and location-independent for the primary
+    // key, so the same data always gives the same order: Cheapest ties
+    // break by file order (never by whether a distance sort ran before),
+    // Closest ties break by price, then file order.
+    const indexed = list.map((s, i) => ({ s, i }));
     if (currentFilter.view === 'closest' && userLocation) {
-      list.sort((a, b) => {
-        const da = getStationDistanceKm(a);
-        const db = getStationDistanceKm(b);
-        if (da === null && db === null) return 0;
+      indexed.sort((a, b) => {
+        const da = getStationDistanceKm(a.s);
+        const db = getStationDistanceKm(b.s);
+        if (da === null && db === null) return a.i - b.i;
         if (da === null) return 1;
         if (db === null) return -1;
         if (da !== db) return da - db;
-        const pa = getStationPrice(a);
-        const pb = getStationPrice(b);
-        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
       });
     } else {
-      list.sort((a, b) => {
-        const pa = getStationPrice(a);
-        const pb = getStationPrice(b);
-        return (pa === null ? Infinity : pa) - (pb === null ? Infinity : pb);
+      indexed.sort((a, b) => {
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
       });
     }
 
-    return list;
+    return indexed.map(x => x.s);
   }
 
   /**
@@ -818,6 +912,7 @@
   function renderHeroCard(filteredList) {
     const locating = locationState === 'locating' && !userLocation;
     const locationOff = !userLocation && (locationState === 'denied' || locationState === 'unavailable');
+    const noData = dataLoadFailed && !(appData.stations && appData.stations.length);
 
     // Location off: one plain card, one action. The hero card hides.
     if (locationOffCard) locationOffCard.hidden = !locationOff;
@@ -834,6 +929,48 @@
 
     if (locationOff) return;
 
+    // No data at all: an explicit error with a retry, not a hero that
+    // looks like it is still loading.
+    if (noData) {
+      cheapestCard.style.opacity = '1';
+      cheapestPillText.textContent = 'Prices unavailable';
+      heroStationName.textContent = 'Prices unavailable';
+      heroStationCity.textContent = '';
+      heroStationAddress.textContent = "Couldn't load the latest prices. Check your connection and try again.";
+      heroDistanceText.textContent = '';
+      heroPrice.textContent = '--.-';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateText) heroNavigateText.textContent = 'Try again';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'auto';
+      }
+      return;
+    }
+    if (heroNavigateText) heroNavigateText.textContent = 'Navigate';
+
+    // While the location is still being found, the hero waits — before
+    // any filter conclusion. An empty filter must not make the hero say
+    // "No Stations in Filter" while the list area still shows skeletons
+    // and "Finding your location…".
+    if (locating) {
+      cheapestCard.style.opacity = '1';
+      cheapestPillText.textContent = currentFilter.city === 'all'
+        ? 'Closest to you'
+        : `Closest to you in ${scopeName()}`;
+      heroStationName.textContent = 'Finding the closest gas…';
+      heroStationCity.textContent = '';
+      heroStationAddress.textContent = '';
+      heroDistanceText.textContent = '';
+      heroPrice.textContent = '--.-';
+      heroPricePerLitre.textContent = '';
+      if (heroNavigateBtn) {
+        heroNavigateBtn.removeAttribute('href');
+        heroNavigateBtn.style.pointerEvents = 'none';
+      }
+      return;
+    }
+
     if (!filteredList || filteredList.length === 0) {
       cheapestCard.style.opacity = '0.4';
       cheapestPillText.textContent = 'No Stations in Filter';
@@ -842,7 +979,7 @@
       heroStationAddress.textContent = 'Please adjust your filter.';
       heroDistanceText.textContent = '';
       heroPrice.textContent = '--.-';
-      heroPricePerLitre.textContent = '$0.000 / Litre';
+      heroPricePerLitre.textContent = '';
       if (heroNavigateBtn) {
         heroNavigateBtn.removeAttribute('href');
         heroNavigateBtn.style.pointerEvents = 'none';
@@ -860,17 +997,24 @@
       : `Closest to you in ${scopeName()}`;
 
     let topStation = null;
-    if (!locating && userLocation) {
-      const sorted = filteredList.slice().sort((a, b) => {
-        const da = getStationDistanceKm(a);
-        const db = getStationDistanceKm(b);
-        if (da === null && db === null) return 0;
+    if (userLocation) {
+      const indexed = filteredList.map((s, i) => ({ s, i }));
+      indexed.sort((a, b) => {
+        const da = getStationDistanceKm(a.s);
+        const db = getStationDistanceKm(b.s);
+        if (da === null && db === null) return a.i - b.i;
         if (da === null) return 1;
         if (db === null) return -1;
-        return da - db;
+        if (da !== db) return da - db;
+        const pa = getStationPrice(a.s);
+        const pb = getStationPrice(b.s);
+        const na = pa === null ? Infinity : pa;
+        const nb = pb === null ? Infinity : pb;
+        if (na !== nb) return na - nb;
+        return a.i - b.i;
       });
-      topStation = sorted[0];
-    } else if (!locating) {
+      topStation = indexed[0].s;
+    } else {
       // No location and not locating (should not normally happen — the
       // off card covers denied/unavailable): fall back to the cheapest.
       const priced = filteredList.filter(s => getStationPrice(s) !== null);
@@ -920,8 +1064,12 @@
    */
   function renderCheapestLine(filteredList) {
     if (!cheapestLine) return;
+    const locating = locationState === 'locating' && !userLocation;
     const priced = (filteredList || []).filter(s => getStationPrice(s) !== null);
-    if (!priced.length || currentFilter.view !== 'closest') {
+    // Hidden in Cheapest view (the list shows it), when the filter has
+    // no priced station, and while the location is still being found
+    // (the line names a station without a distance while the hero waits).
+    if (!priced.length || currentFilter.view !== 'closest' || locating) {
       cheapestLine.hidden = true;
       return;
     }
@@ -929,7 +1077,7 @@
     const price = getStationPrice(cheapest);
     const dist = formatDistanceKm(cheapest);
     const brand = cheapest.brand || cheapest.station_name;
-    cheapestLineText.textContent = `Cheapest in ${scopeName()}: ${brand} · ${cheapest.address} — ${price.toFixed(1)}¢${dist ? ` · ${dist} away` : ''}`;
+    cheapestLineText.textContent = `${cheapestScopeLabel()}: ${brand} · ${cheapest.address} — ${price.toFixed(1)}¢${dist ? ` · ${dist} away` : ''}`;
     cheapestLine.hidden = false;
   }
 
@@ -937,6 +1085,9 @@
    * Render station list items reflecting active gasoline type
    */
   function renderStationList(filteredList) {
+    // A keyboard/voiceover user tabbed onto a card loses focus when the
+    // list is rebuilt on every improving fix; restore it by card id.
+    const activeCardId = document.activeElement && document.activeElement.id;
     stationsList.innerHTML = '';
 
     const regionTotal = getRegionStations().length;
@@ -956,10 +1107,14 @@
     // not from list order, so it stays right when sorted by distance.
     const pricedList = filteredList.filter(s => getStationPrice(s) !== null);
     const minPrice = pricedList.length ? Math.min(...pricedList.map(s => getStationPrice(s))) : null;
+    // Only the first station at the minimum price gets the ★ tag — the
+    // one the cheapest line names. (Several stations can tie at 159.9¢.)
+    let cheapestTagged = false;
 
     filteredList.forEach((station, index) => {
       const stPrice = getStationPrice(station);
-      const isCheapest = stPrice !== null && (stPrice === minPrice);
+      const isCheapest = stPrice !== null && (stPrice === minPrice) && !cheapestTagged;
+      if (isCheapest) cheapestTagged = true;
       const diff = (stPrice === null || minPrice === null) ? null : (stPrice - minPrice).toFixed(1);
       const brandName = station.brand || station.station_name;
       const brandSlug = getBrandSlug(brandName);
@@ -1015,6 +1170,11 @@
 
       stationsList.appendChild(card);
     });
+
+    if (activeCardId) {
+      const restored = document.getElementById(activeCardId);
+      if (restored) restored.focus({ preventScroll: true });
+    }
   }
 
   /**
@@ -1042,7 +1202,19 @@
     updateFilterButton();
     updateListHeading();
     renderHeroCard(filtered);
-    const locating = locationState === 'locating' && !userLocation;
+    // No data at all: the empty state becomes the error state (title,
+    // copy, and a Try again button) instead of a filter message.
+    const noData = dataLoadFailed && !(appData.stations && appData.stations.length);
+    if (noData) {
+      if (emptyStateTitle) emptyStateTitle.textContent = 'Prices unavailable';
+      if (emptyStateText) emptyStateText.textContent = "Couldn't load the latest prices. Check your connection and try again.";
+      if (resetFiltersBtn) resetFiltersBtn.textContent = 'Try again';
+    } else {
+      if (emptyStateTitle) emptyStateTitle.textContent = 'No gas stations found';
+      if (emptyStateText) emptyStateText.textContent = 'Try clearing your search or filters.';
+      if (resetFiltersBtn) resetFiltersBtn.textContent = 'Reset Filters';
+    }
+    const locating = locationState === 'locating' && !userLocation && !noData;
     if (listSkeleton) listSkeleton.hidden = !locating;
     if (locating) {
       if (stationsList) stationsList.innerHTML = '';
@@ -1155,9 +1327,13 @@
       });
     }
 
-    // Reset Filters Button
+    // Reset Filters Button — or Try again when there is no data at all.
     if (resetFiltersBtn) {
       resetFiltersBtn.addEventListener('click', () => {
+        if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+          loadGasPrices(true);
+          return;
+        }
         if (stationSearchInput) stationSearchInput.value = '';
         currentFilter.search = '';
         currentFilter.city = 'all';
@@ -1210,6 +1386,17 @@
     if (refreshPricesBtn) {
       refreshPricesBtn.addEventListener('click', () => {
         loadGasPrices(true);
+      });
+    }
+
+    // Hero Navigate button: normally an anchor to maps; when the price
+    // file failed to load it is a Try again button instead.
+    if (heroNavigateBtn) {
+      heroNavigateBtn.addEventListener('click', (e) => {
+        if (dataLoadFailed && !(appData.stations && appData.stations.length)) {
+          e.preventDefault();
+          loadGasPrices(true);
+        }
       });
     }
 
